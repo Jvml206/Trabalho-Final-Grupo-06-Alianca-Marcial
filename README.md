@@ -43,7 +43,12 @@ Schemas:
 - public
 
 Tabelas
-- dim_instrutores
+- usuario
+- academia
+- instrutor
+- instituicao_apoiadora
+- pedido_ajuda
+- campeonato
 
 ---
 
