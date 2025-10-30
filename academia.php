@@ -17,7 +17,8 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     $Academia->setCep(filter_input(INPUT_POST, "cep", FILTER_SANITIZE_STRING));
     $Academia->setEstado(filter_input(INPUT_POST, "estado", FILTER_SANITIZE_STRING));
     $Academia->setInstagram(filter_input(INPUT_POST, "instagram", FILTER_SANITIZE_STRING));
-    $id = filter_input(INPUT_POST, 'id');
+    $Academia->setFkIdUsuario(filter_input(INPUT_POST, "fk_id_usuario", FILTER_SANITIZE_STRING));
+    $id = filter_input(INPUT_POST, 'id_academia');
     if (empty($id)):
         //Tenta adicionar e exibe a mensagemao usuário
         if ($Academia->add()) {
@@ -69,7 +70,7 @@ endif;
         if (filter_has_var(INPUT_POST, "btnEditar")) {
             $edtAcademia = new Academia();
             $id = intval(filter_input(INPUT_POST, "id"));
-            $Academia = $edtAcademia->search("id_academia", $id)[0];
+            $Academia = $edtAcademia->search("id_academia", $id);
         }
         ?>
 

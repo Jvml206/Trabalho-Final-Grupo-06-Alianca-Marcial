@@ -15,6 +15,7 @@ class Academia extends CRUD
     private $estado;
     private $instagram;
     private $email;
+    private $fk_id_usuario;
 
     public function getIdAcademia()
     {
@@ -130,13 +131,22 @@ class Academia extends CRUD
     {
         $this->email = $email;
     }
+    public function getFkIdUsuario()
+    {
+        return $this->fk_id_usuario;
+    }
+
+    public function setFkIdUsuario($fk_id_usuario)
+    {
+        $this->fk_id_usuario = $fk_id_usuario;
+    }
 
     // Métodos CRUD
     public function add()
     {
         $sql = "INSERT INTO $this->table 
-                (nome_fantasia, razao_social, cnpj, telefone, endereco, bairro, cidade, cep, estado, instagram, email) 
-                VALUES (:nome_fantasia, :razao_social, :cnpj, :telefone, :endereco, :bairro, :cidade, :cep, :estado, :instagram, :email)";
+                (nome_fantasia, razao_social, cnpj, telefone, endereco, bairro, cidade, cep, estado, instagram, email, fk_id_usuario)
+                VALUES (:nome_fantasia, :razao_social, :cnpj, :telefone, :endereco, :bairro, :cidade, :cep, :estado, :instagram, :email, :fk_id_usuario)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':nome_fantasia', $this->nome_fantasia);
@@ -150,6 +160,7 @@ class Academia extends CRUD
         $stmt->bindParam(':estado', $this->estado);
         $stmt->bindParam(':instagram', $this->instagram);
         $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':fk_id_usuario', $this->fk_id_usuario);
         return $stmt->execute();
     }
 
@@ -165,7 +176,8 @@ class Academia extends CRUD
                     cidade = :cidade, 
                     estado = :estado, 
                     instagram = :instagram,
-                    email = :email
+                    email = :email,
+                    fk_id_usuario = :fk_id_usuario
                 WHERE $campo = :id_academia";
 
         $stmt = $this->db->prepare($sql);
@@ -179,6 +191,7 @@ class Academia extends CRUD
         $stmt->bindParam(':estado', $this->estado);
         $stmt->bindParam(':instagram', $this->instagram);
         $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(":fk_id_usuario", $this->fk_id_usuario);
         $stmt->bindParam(":id_academia", $id, PDO::PARAM_INT);
         return $stmt->execute();
     }

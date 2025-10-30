@@ -29,7 +29,7 @@ abstract class CRUD
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->rowCount() > 0 ? $stmt->fetchAll(PDO::FETCH_OBJ) : null;
+        return $stmt->rowCount() > 0 ? $stmt->fetch(PDO::FETCH_OBJ) : null;
     }
 
     //método para Excluir um registro pelo ID
