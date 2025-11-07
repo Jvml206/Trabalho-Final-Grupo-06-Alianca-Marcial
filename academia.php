@@ -17,7 +17,6 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     $Academia->setCep(filter_input(INPUT_POST, "cep", FILTER_SANITIZE_STRING));
     $Academia->setEstado(filter_input(INPUT_POST, "estado", FILTER_SANITIZE_STRING));
     $Academia->setInstagram(filter_input(INPUT_POST, "instagram", FILTER_SANITIZE_STRING));
-    $Academia->setFkIdUsuario(filter_input(INPUT_POST, "fk_id_usuario", FILTER_SANITIZE_STRING));
     $id = filter_input(INPUT_POST, 'id_academia');
     if (empty($id)):
         //Tenta adicionar e exibe a mensagemao usuário
@@ -55,12 +54,12 @@ endif;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/baseSite.css">
-    <link rel="icon" href="Images/favicon-32x32F.png">
+    <link rel="icon" href="images/logo.png">
     <title>Cadastro de Academia</title>
 </head>
 
 <body>
-    <?php //require_once "_parts/_navAdmin.php"; ?>
+    <?php require_once "_parts/_navAdmin.php"; ?>
     <main class="container">
         <?php
         spl_autoload_register(function ($class) {
@@ -76,21 +75,25 @@ endif;
 
         <h2 class="text-center">Cadastro de Academia</h2>
 
-        <form action="academia.php" method="post" class="row g3 mt-3">
+        <form action="academia.php" method="post" class="row g3 mt-3" enctype="multipart/form-data"
+            id="form_valida_email">
 
             <input type="hidden" value="<?php echo $Academia->id_academia ?? null; ?>" name="id_academia">
 
-            <div class="col-md-6">
+            <div class="nome col-md-6">
                 <label for="nome_fantasia" class="form-label">Nome Fantasia</label>
                 <input type="text" name="nome_fantasia" id="nome_fantasia"
                     placeholder="Digite o Nome Fantasia da Academia" required class="form-control"
                     value="<?php echo $Academia->nome_fantasia ?? null; ?>">
-            </div>
 
-            <div class="col-md-6">
                 <label for="razao_social" class="form-label">Razão Social</label>
                 <input type="text" name="razao_social" id="razao_social" placeholder="Digite a Razão Social da Academia"
                     required class="form-control" value="<?php echo $Academia->razao_social ?? null; ?>">
+            </div>
+
+            <div class="col-md-4 logo">
+                <label for="logo" class="form-label">Logo da Academia</label>
+                <input type="file" name="logo" id="logo" class="form-control">
             </div>
 
             <div class="col-md-4">
@@ -102,19 +105,20 @@ endif;
             <div class="col-md-4">
                 <label for="telefone" class="form-label">Telefone</label>
                 <input type="text" name="telefone" id="telefone" placeholder="Digite o Telefone do Instrutor" required
-                class="form-control" value="<?php echo $Academia->telefone ?? null; ?>">
+                    class="form-control" value="<?php echo $Academia->telefone ?? null; ?>">
             </div>
-            
+
             <div class="col-md-4">
                 <label for="instagram" class="form-label">Instagram</label>
                 <input type="text" name="instagram" id="instagram" placeholder="Digite o Instagram da Academia" required
                     class="form-control" value="<?php echo $Academia->instagram ?? null; ?>">
             </div>
-            
+
             <div class="col-md-7">
                 <label for="endereco" class="form-label">Endereço</label>
-                <input type="text" name="endereco" id="endereco" placeholder="Digite o Endereço da Academia. Ex.: Rua São Paulo n°1532" required
-                    class="form-control" value="<?php echo $Academia->endereco ?? null; ?>">
+                <input type="text" name="endereco" id="endereco"
+                    placeholder="Digite o Endereço da Academia. Ex.: Rua São Paulo n°1532" required class="form-control"
+                    value="<?php echo $Academia->endereco ?? null; ?>">
             </div>
 
             <div class="col-md-5">
@@ -196,28 +200,32 @@ endif;
                 </select>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" id="email" placeholder="Digite o Email do Instrutor" required
+                <input type="email" name="email" id="email" placeholder="Digite o Email da Academia" required
                     class="form-control" value="<?php echo $Academia->email ?? null; ?>">
             </div>
-            <div class="col-md-6">
-                <label for="email" class="form-label">Confirme o Email</label>
-                <input type="email" name="email" id="email" placeholder="Digite o Email do Instrutor" required
-                    class="form-control" value="<?php echo $Academia->email ?? null; ?>">
+            <div class="col-md-12">
+                <label for="confirmaEmail" class="form-label">Confirme o Email</label>
+                <input type="email" name="confirmaEmail" id="confirmaEmail" placeholder="Digite a confirmação do E-mail"
+                    required class="form-control">
+                <div id="mensagem" class="alert alert-danger mt-2 mb-3"></div>
             </div>
 
             <div class="col-12 mt-3 d-flex gap-2">
-                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-marrom">Salvar</button>
+                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-success">Salvar</button>
                 <a href="listaAcademia.php" class="btn btn-outline-danger">Voltar</a>
             </div>
         </form>
     </main>
 
     <footer class="footer">
-        <?php //require_once "_parts/_footer.php"; ?>
+        <?php require_once "_parts/_footer.php"; ?>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="JS/controle.js"></script>
 </body>
 
 </html>

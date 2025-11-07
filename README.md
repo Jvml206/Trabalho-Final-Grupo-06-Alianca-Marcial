@@ -54,16 +54,14 @@ Tabelas
 
 ## 🚀 Como Executar o Projeto
 1. Clone este repositório  
-2. Crie o database Alianca_Marcial no pgAdmin
-3. Acesse o Query Tool do database
-4. Execute o script SQL  
-5. Configure `config.ini`  
+2. Execute o script SQL no MySQL
+3. Configure `config.ini`  
     ```
-    ['database']
-    
-    driver      = pgsql
+    [database]
+
+    driver      = mysql
     host        = localhost
-    port        = 5432
+    port        = 3306
     dbname      = Alianca_Marcial
     username    = 'seu user'
     password    = "'sua senha'"

@@ -49,7 +49,7 @@ endif;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/baseSite.css">
-    <link rel="icon" href="Images/favicon-32x32F.png">
+    <link rel="icon" href="Images/logo.png">
     <title>Cadastro de Instrutor</title>
 </head>
 
@@ -68,10 +68,6 @@ endif;
             $edtInstrutor = new Instrutor();
             $id = intval(filter_input(INPUT_POST, "id"));
             $Instrutor = $edtInstrutor->search("id_instrutor", $id);
-
-            echo '<pre>';
-            var_dump($Instrutor);
-            echo '</pre>';
         }
         ?>
 
