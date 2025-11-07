@@ -20,7 +20,6 @@ function enviarFormulario(url, codigo) {
     form.submit();
 }
 
-
 const email = document.querySelector('#email');
 const confirma = document.querySelector('#confirmaEmail');
 const mensagem = document.querySelector('#mensagem');
