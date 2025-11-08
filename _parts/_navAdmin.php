@@ -3,12 +3,12 @@
 
         <img src="Images/logo.png" alt="Logo Aliança Marcial" class="logoNav">
 
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="bi bi-list fs-2"></i>
-        </button>
-
         <div class="ms-auto">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-2"></i>
+            </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
 
@@ -33,7 +33,12 @@
                 </ul>
 
                 <ul class="navbar-nav">
-                    <?php if (isset($_SESSION['user_name'])): ?>
+                    <?php
+
+                    if (session_status() === PHP_SESSION_NONE) {
+                        session_start();
+                    }
+                    if (isset($_SESSION['user_name'])): ?>
                         <!-- Usuário Logado -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"

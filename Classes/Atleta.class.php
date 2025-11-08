@@ -12,6 +12,7 @@ class Atleta extends CRUD
     private $peso;
     private $categoria;
     private $fk_id_usuario;
+    private $fk_id_academia;
 
     public function getIdAtleta()
     {
@@ -93,13 +94,21 @@ class Atleta extends CRUD
     {
         $this->fk_id_usuario = $fk_id_usuario;
     }
+    public function getFkIdAcademia()
+    {
+        return $this->fk_id_academia;
+    }
+    public function setFkIdAcademia($fk_id_academia)
+    {
+        $this->fk_id_academia = $fk_id_academia;
+    }
 
     // Métodos CRUD
     public function add()
     {
         $sql = "INSERT INTO $this->table 
-                (nome_atleta, data_nascimento, biografia, sexo, peso, esporte, categoria, fk_id_usuario) 
-                VALUES (:nome_atleta, :data_nascimento, :biografia, :sexo, :peso, :esporte, :categoria, :fk_id_usuario)";
+                (nome_atleta, data_nascimento, biografia, sexo, peso, esporte, categoria, fk_id_academia, fk_id_usuario) 
+                VALUES (:nome_atleta, :data_nascimento, :biografia, :sexo, :peso, :esporte, :categoria, :fk_id_academia, :fk_id_usuario)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':nome_atleta', $this->nome_atleta);
@@ -109,6 +118,7 @@ class Atleta extends CRUD
         $stmt->bindParam(':peso', $this->peso);
         $stmt->bindParam(':esporte', $this->esporte);
         $stmt->bindParam(':categoria', $this->categoria);
+        $stmt->bindParam(':fk_id_academia', $this->fk_id_academia);
         $stmt->bindParam(':fk_id_usuario', $this->fk_id_usuario);
         return $stmt->execute();
     }
@@ -123,6 +133,7 @@ class Atleta extends CRUD
                     peso = :peso, 
                     esporte = :esporte, 
                     categoria = :categoria, 
+                    fk_id_academia = :fk_id_academia,
                     fk_id_usuario = :fk_id_usuario
                 WHERE $campo = :id_pedido_ajuda";
         
@@ -134,6 +145,7 @@ class Atleta extends CRUD
         $stmt->bindParam(':peso', $this->peso);
         $stmt->bindParam(':esporte', $this->esporte);
         $stmt->bindParam(':categoria', $this->categoria);
+        $stmt->bindParam(':fk_id_academia', $this->fk_id_academia);
         $stmt->bindParam(':fk_id_usuario', $this->fk_id_usuario);
         $stmt->bindParam(":id_pedido_ajuda", $id, PDO::PARAM_INT);
         return $stmt->execute();

@@ -18,10 +18,13 @@
                         <a class="nav-link" href="index.php">Início</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="ajudar.php">Ajudar</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="sobreNos.php">Sobre</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="produtosEx.php">Instituições Apoiadoras</a>
+                        <a class="nav-link" href="apoiadores.php">Apoiadores</a>
                     </li>
                 </ul>
 

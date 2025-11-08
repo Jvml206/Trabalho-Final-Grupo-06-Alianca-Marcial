@@ -53,7 +53,7 @@
                                 </button>
                             </form>
                             <form action="<?php echo htmlspecialchars("usuario.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $usuario->id_usuario ?>">
+                                <input type="hidden" name="id_usuario" value="<?php echo $usuario->id_usuario ?>">
                                 <button name="btnDeletar" class="btn btn-danger btn-sm" type="submit" title="Deletar"
                                     onclick="return confirm('Tem certeza que deseja deletar o usuário?');">
                                     <i class="bi bi-trash"></i>

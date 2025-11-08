@@ -10,9 +10,10 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     $fotoAntiga = filter_input(INPUT_POST, 'fotoAntiga');
     $Usuario->setFoto($fotoAntiga);
 
+    $Usuario->setNomeUsuario(filter_input(INPUT_POST, "nome_usuario", FILTER_SANITIZE_STRING));
     $Usuario->setEmail(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
     $senhaC = password_hash('senhaprovisoria', PASSWORD_DEFAULT);
-    $usuario->setSenhaUsuario($senhaC);
+    $Usuario->setSenha($senhaC);
     $Usuario->setTipoUsuario(filter_input(INPUT_POST, "tipo_usuario", FILTER_SANITIZE_STRING));
 
     $id_usuario = filter_input(INPUT_POST, "id_usuario", FILTER_SANITIZE_NUMBER_INT);
@@ -38,10 +39,24 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
 
     if (empty($id_usuario)):
         if ($Usuario->add()) {
-            echo "<script>alert('Cadastro de usuário realizado com sucesso, um email para definição de senha foi enviado para o email cadastrado.');window.location.href='usuario.php';</script>";
+            // Monta mensagem personalizada
+            $mensagem = "
+            <p>{$Usuario->getNomeUsuario()},</p>
+            <p>Seu cadastro foi realizado com sucesso! 🎉</p>
+            <p>Antes de acessar sua conta, é necessário criar uma senha de acesso.</p>";
+
+            // Envia o e-mail de recuperação/criação de senha
+            $Usuario->solicitarRecuperacaoSenha(
+                $Usuario->getEmail(),
+                $mensagem,
+                'Bem-vindo ao Sistema Aliança Marcial'
+            );
+
+            echo "<script>alert('Cadastro de usuário realizado com sucesso! Um e-mail para definição de senha foi enviado para o endereço cadastrado.');window.location.href='usuario.php';</script>";
         } else {
             echo "<script>alert('Erro ao cadastrar o usuário.');window.open(document.referrer,'_self');</script>";
         }
+
     else:
         if ($Usuario->update('id_usuario', $id_usuario)) {
             echo "<script>alert('Usuário alterado com sucesso.');window.location.href='listaUsuario.php';</script>";
@@ -103,10 +118,17 @@ endif;
             <div class="cadUsuario">
                 <div class="dadosUsuario">
                     <div>
+                        <label for="nome_usuario" class="form-label">Nome do Usuário</label>
+                        <input type="text" name="nome_usuario" id="nome_usuario" placeholder="Digite o Nome do Usuário"
+                            required class="form-control" value="<?php echo $Usuario->nome_usuario ?? null; ?>">
+                    </div>
+
+                    <div class="usuario">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" name="email" id="email" placeholder="Digite o Email do Usuário" required
                             class="form-control" value="<?php echo $Usuario->email ?? null; ?>">
                     </div>
+
                     <div class="usuario">
                         <label for="confirmaEmail" class="form-label">Confirme o Email</label>
                         <input type="email" name="confirmaEmail" id="confirmaEmail"
@@ -119,11 +141,8 @@ endif;
                         <select id="tipo_usuario" name="tipo_usuario" class="form-select"
                             aria-label="Default select example">
                             <option disabled <?= (!isset($Usuario->tipo_usuario)) ? 'selected' : '' ?>>Selecione o Tipo
-                                de
-                                Usuário</option>
+                                de Usuário</option>
                             <option value="Administrador" <?= (isset($Usuario->tipo_usuario) && $Usuario->tipo_usuario == 'Administrador') ? 'selected' : '' ?>>Administrador
-                            </option>
-                            <option value="Academia" <?= (isset($Usuario->tipo_usuario) && $Usuario->tipo_usuario == 'Academia') ? 'selected' : '' ?>>Academia
                             </option>
                             <option value="Atleta" <?= (isset($Usuario->tipo_usuario) && $Usuario->tipo_usuario == 'Atleta') ? 'selected' : '' ?>>Atleta
                             </option>

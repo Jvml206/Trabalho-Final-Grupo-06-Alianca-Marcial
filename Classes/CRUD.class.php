@@ -45,4 +45,15 @@ abstract class CRUD
             return false;
         }
     }
+
+    public function iniciaTrans(){
+        $this->db->beginTransaction();
+    }
+
+    public function confirmaTrans(){
+        $this->db->commit();
+    }
+    public function cancelarTrans(){
+        $this->db->rollBack();
+    }
 }

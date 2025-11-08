@@ -1,5 +1,20 @@
 @import url('base.css');
 
+.mainBemVindo {
+  display: flex;
+  justify-content: center;  /* Centraliza horizontalmente */
+  align-items: center;      /* Centraliza verticalmente */
+  height: calc(100vh - 150px); /* Ajuste se quiser descontar o tamanho do header/footer */
+}
+
+.bemVindo{
+    text-align: center;
+}
+.bemVindo h1 {
+    font-size: 4rem;
+    color: #3c2f2f;
+}
+
 .cadUsuario {
     display: flex;
     flex: 1;
@@ -12,7 +27,7 @@
 }
 
 .dadosUsuario .usuario{
-    margin: 30px auto 0;
+    margin: 20px auto 0;
 }
 
 .fotoCadUsuario {
@@ -23,8 +38,8 @@
 .foto-usuario-cadastro {
     display: block;
     margin: 10px auto 0;
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     border-radius: 50%;
     object-fit: cover;
 }

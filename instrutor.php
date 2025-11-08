@@ -1,4 +1,9 @@
 <?php
+session_start();
+$idUsuario = $_SESSION['user_id'];
+$nome = $_SESSION['user_name'] ?? 'Usuário';
+$email = $_SESSION['user_email'] ?? 'Email não informado';
+
 spl_autoload_register(function ($class) {
     require_once "Classes/{$class}.class.php";
 });
@@ -6,10 +11,10 @@ spl_autoload_register(function ($class) {
 $Instrutor = new Instrutor();
 
 if (filter_has_var(INPUT_POST, "btnCadastrar")):
-    $Instrutor->setNomeInstrutor(filter_input(INPUT_POST, "nome_instrutor", FILTER_SANITIZE_STRING));
+    $Instrutor->setNomeInstrutor($nome);
     $Instrutor->setDataNascimento(filter_input(INPUT_POST, "data_nascimento", FILTER_SANITIZE_STRING));
     $Instrutor->setTelefone(filter_input(INPUT_POST, "telefone", FILTER_SANITIZE_STRING));
-    $Instrutor->setEmail(filter_input(INPUT_POST, "email", FILTER_SANITIZE_STRING));
+    $Instrutor->setEmail($email);
     $Instrutor->setFkIdAcademia(filter_input(INPUT_POST, "fk_id_academia", FILTER_SANITIZE_NUMBER_INT));
     $Instrutor->setFkIdUsuario(filter_input(INPUT_POST, "fk_id_usuario", FILTER_SANITIZE_NUMBER_INT));
     $id = filter_input(INPUT_POST, 'id_instrutor');
@@ -73,7 +78,7 @@ endif;
 
         <h2 class="text-center">Cadastro de Instrutor</h2>
 
-        <form action="instrutor.php" method="post" class="row g3 mt-3">
+        <form action="instrutor.php" method="post" class="row g3 mt-3" id="form_valida_email">
 
             <input type="hidden" value="<?php echo $Instrutor->id_instrutor ?? null; ?>" name="id_instrutor">
 
@@ -85,8 +90,7 @@ endif;
 
             <div class="col-md-6">
                 <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-                <input type="date" name="data_nascimento" id="data_nascimento"
-                    placeholder="Digite a Data de Nascimento do Instrutor" required class="form-control"
+                <input type="date" name="data_nascimento" id="data_nascimento" required class="form-control"
                     value="<?php echo $Instrutor->data_nascimento ?? null; ?>">
             </div>
 
@@ -94,18 +98,6 @@ endif;
                 <label for="telefone" class="form-label">Telefone</label>
                 <input type="text" name="telefone" id="telefone" placeholder="Digite o Telefone do Instrutor" required
                     class="form-control" value="<?php echo $Instrutor->telefone ?? null; ?>">
-            </div>
-
-            <div class="col-md-12">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" id="email" placeholder="Digite o Email do Instrutor" required
-                    class="form-control" value="<?php echo $Instrutor->email ?? null; ?>">
-            </div>
-            <div class="col-md-12">
-                <label for="confirmaEmail" class="form-label">Confirme o Email</label>
-                <input type="email" name="confirmaEmail" id="confirmaEmail" placeholder="Digite a confirmação do E-mail"
-                    required class="form-control">
-                <div id="mensagem" class="alert alert-danger mt-2 mb-3"></div>
             </div>
 
             <div class="col-6">
@@ -121,9 +113,22 @@ endif;
                 </select>
             </div>
 
+            <div class="col-md-12">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" id="email" placeholder="Digite o Email do Instrutor" required
+                    class="form-control" value="<?php echo $Instrutor->email ?? null; ?>">
+            </div>
+            <div class="col-md-12">
+                <label for="confirmaEmail" class="form-label">Confirme o Email</label>
+                <input type="email" name="confirmaEmail" id="confirmaEmail" placeholder="Digite a confirmação do E-mail"
+                    required class="form-control">
+                <div id="mensagem" class="alert alert-danger mt-2 mb-3"></div>
+            </div>
+
+
             <div class="col-12 mt-3 d-flex gap-2">
                 <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-marrom">Salvar</button>
-                <a href="faq.php" class="btn btn-outline-danger">Voltar</a>
+                <a href="listaInstrutor.php" class="btn btn-outline-danger">Voltar</a>
             </div>
         </form>
     </main>
