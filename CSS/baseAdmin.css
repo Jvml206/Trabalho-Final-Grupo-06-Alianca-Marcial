@@ -1,1 +1,30 @@
 @import url('base.css');
+
+.cadUsuario {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.dadosUsuario {
+    flex: 1;
+}
+
+.dadosUsuario .usuario{
+    margin: 30px auto 0;
+}
+
+.fotoCadUsuario {
+    flex: 1;
+    align-items: center;
+}
+
+.foto-usuario-cadastro {
+    display: block;
+    margin: 10px auto 0;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}

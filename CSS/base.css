@@ -66,6 +66,15 @@ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   color: #D8E6D8; 
 }
 
+.nav-item{
+    font-size: 18px;
+}
+
+.logoNav {
+    width: 100px;
+    height: auto;
+}
+
 .btn-marrom {
     background-color: #6f4e37; 
     color: #fff;              
@@ -123,12 +132,19 @@ footer .rede-social {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 }
 
 footer .rede-social i {
     font-size: 35px;
     color: #e7e7e7;
+}
+
+.politicas a {
+    display: block;
+    margin: 5px 0;
+    color: #d8d6d6;
+    text-decoration: none;
 }
 
 @media (min-width: 550px) {

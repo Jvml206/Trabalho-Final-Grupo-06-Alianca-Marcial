@@ -49,7 +49,7 @@ endif;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/baseSite.css">
-    <link rel="icon" href="images/logo.png">
+    <link rel="icon" href="Images/logo.png">
     <title>Cadastro de Campeonato</title>
 </head>
 
@@ -113,8 +113,29 @@ endif;
 
             <div class="col-md-6">
                 <label for="esporte" class="form-label">Esporte</label>
-                <input type="text" name="esporte" id="esporte" placeholder="Digite o esporte do campeonato" required
-                    class="form-control" value="<?php echo $Campeonato->esporte ?? null; ?>">
+                <select id="esporte" name="esporte" class="form-select" aria-label="Default select example">
+                    <option disabled <?= (!isset($Campeonato->esporte)) ? 'selected' : '' ?>>Selecione o Esporte</option>
+                    <option value="Aikidô" <?= (isset($Campeonato->esporte) && $Campeonato->esporte == 'Aikidô') ? 'selected' : '' ?>>Aikidô
+                    </option>
+                    <option value="Boxe" <?= (isset($Campeonato->esporte) && $Campeonato->esporte == 'Boxe') ? 'selected' : '' ?>>Boxe
+                    </option>
+                    <option value="Capoeira" <?= (isset($Campeonato->esporte) && $Campeonato->esporte == 'Capoeira') ? 'selected' : '' ?>>Capoeira
+                    </option>
+                    <option value="Jiu-Jitsu Brasileiro" <?= (isset($Campeonato->esporte) && $Campeonato->esporte == 'Jiu-Jitsu Brasileiro') ? 'selected' : '' ?>>Jiu-Jitsu Brasileiro
+                    </option>
+                    <option value="Judô" <?= (isset($Campeonato->esporte) && $Campeonato->esporte == 'Judô') ? 'selected' : '' ?>>Judô
+                    </option>
+                    <option value="Karatê" <?= (isset($Campeonato->esporte) && $Campeonato->esporte == 'Karatê') ? 'selected' : '' ?>>Karatê
+                    </option>
+                    <option value="Kung Fu" <?= (isset($Campeonato->esporte) && $Campeonato->esporte == 'Kung Fu') ? 'selected' : '' ?>>Kung Fu
+                    </option>
+                    <option value="MMA" <?= (isset($Campeonato->esporte) && $Campeonato->esporte == 'MMA') ? 'selected' : '' ?>>MMA
+                    </option>
+                    <option value="Muay Thai" <?= (isset($Campeonato->esporte) && $Campeonato->esporte == 'Muay Thai') ? 'selected' : '' ?>>Muay Thai
+                    </option>
+                    <option value="Taekwondo" <?= (isset($Campeonato->esporte) && $Campeonato->esporte == 'Taekwondo') ? 'selected' : '' ?>>Taekwondo
+                    </option>
+                </select>
             </div>
 
             <div class="col-12 mt-3 d-flex gap-2">
@@ -125,9 +146,10 @@ endif;
     </main>
 
     <footer class="footer">
-        <?php //require_once "_parts/_footer.php"; ?>
+        <?php require_once "_parts/_footer.php"; ?>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JS/dataCampeonato.js"></script>
 </body>
 
 </html>

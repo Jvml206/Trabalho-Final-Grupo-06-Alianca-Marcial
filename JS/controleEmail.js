@@ -57,7 +57,3 @@ form.addEventListener('submit', function (e) {
         alert("Corrija o email antes de enviar.");
     }
 });
-
-$('#telefone').mask('(00) 00000-0000');
-$('#cep').mask('00000-000');
-$('#cnpj').mask('00.000.000/0000-00');

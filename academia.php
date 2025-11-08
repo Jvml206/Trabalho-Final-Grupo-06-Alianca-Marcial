@@ -54,7 +54,7 @@ endif;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/baseSite.css">
-    <link rel="icon" href="images/logo.png">
+    <link rel="icon" href="Images/logo.png">
     <title>Cadastro de Academia</title>
 </head>
 
@@ -93,7 +93,11 @@ endif;
 
             <div class="col-md-4 logo">
                 <label for="logo" class="form-label">Logo da Academia</label>
-                <input type="file" name="logo" id="logo" class="form-control">
+                <input type="file" name="foto" id="foto" accept="image/*" class="form-control">
+                <?php if (!empty($Academia->foto)): ?>
+                    <img src="Images/academia/<?php echo $Academia->foto; ?>" alt="Foto da Academia"
+                        class="mt-2 foto-academia-cadastro">
+                <?php endif; ?>
             </div>
 
             <div class="col-md-4">
@@ -225,7 +229,12 @@ endif;
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <script src="JS/controle.js"></script>
+    <script src="JS/controleEmail.js"></script>
+    <script>
+        $('#telefone').mask('(00) 00000-0000');
+        $('#cep').mask('00000-000');
+        $('#cnpj').mask('00.000.000/0000-00');
+    </script>
 </body>
 
 </html>

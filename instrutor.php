@@ -96,10 +96,16 @@ endif;
                     class="form-control" value="<?php echo $Instrutor->telefone ?? null; ?>">
             </div>
 
-            <div class="col-6">
+            <div class="col-md-12">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" name="email" id="email" placeholder="Digite o Email do Instrutor" required
                     class="form-control" value="<?php echo $Instrutor->email ?? null; ?>">
+            </div>
+            <div class="col-md-12">
+                <label for="confirmaEmail" class="form-label">Confirme o Email</label>
+                <input type="email" name="confirmaEmail" id="confirmaEmail" placeholder="Digite a confirmação do E-mail"
+                    required class="form-control">
+                <div id="mensagem" class="alert alert-danger mt-2 mb-3"></div>
             </div>
 
             <div class="col-6">
