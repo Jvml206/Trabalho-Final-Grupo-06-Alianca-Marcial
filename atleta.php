@@ -235,7 +235,7 @@ endif;
                     value="<?php echo $Atleta->data_nascimento ?? null; ?>">
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="sexo" class="form-label">Sexo</label>
                 <select id="sexo" name="sexo" class="form-select" aria-label="Default select example">
                     <option disabled <?= (!isset($Atleta->sexo)) ? 'selected' : '' ?>>Selecione o sexo</option>
@@ -246,9 +246,9 @@ endif;
                 </select>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <label for="peso" class="form-label">Peso</label>
-                <input type="text" name="peso" id="peso" placeholder="Digite o peso do Atleta. Ex.:102.65" required
+                <input type="text" name="peso" id="peso" placeholder="Digite o peso. Ex.:102.65 (Coloque as casas depois do ponto)" required
                     class="form-control" value="<?php echo $Atleta->peso ?? null; ?>">
             </div>
 
@@ -276,10 +276,6 @@ endif;
     <script src="JS/verificaUsuario.js"></script>
     <script>
         $('#peso').mask('000,00', { reverse: true });
-        $('form').on('submit', function () {
-            let peso = $('#peso').val().replace(',', '.');
-            $('#peso').val(peso);
-        });
         const usuariosExistentes = <?php echo json_encode($usuariosExistentes); ?>;
         configurarVerificacaoUsuario(usuariosExistentes);
     </script>

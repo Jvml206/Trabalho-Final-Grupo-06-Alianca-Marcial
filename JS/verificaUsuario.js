@@ -3,7 +3,7 @@ function configurarVerificacaoUsuario(listaUsuarios) {
     const nomeAtleta = document.querySelector('#nome_atleta');
     const mensagemUsuario = document.querySelector('#mensagemUsuario');
 
-    if (!nomeAtleta || !mensagemUsuario) return; // Evita erro se o elemento não existir
+    if (!nomeAtleta || !mensagemUsuario) return;
 
     mensagemUsuario.style.display = "none";
 
@@ -32,5 +32,5 @@ function configurarVerificacaoUsuario(listaUsuarios) {
     }
 
     // Verifica quando o campo perde o foco
-    nomeAtleta.addEventListener('blur', verificarUsuario);
+    nomeAtleta.addEventListener('input', verificarUsuario);
 }
