@@ -13,6 +13,7 @@ class Atleta extends CRUD
     private $categoria;
     private $fk_id_usuario;
     private $fk_id_academia;
+    private $fk_id_instrutor;
 
     public function getIdAtleta()
     {
@@ -102,13 +103,21 @@ class Atleta extends CRUD
     {
         $this->fk_id_academia = $fk_id_academia;
     }
+    public function getFkIdInstrutor()
+    {
+        return $this->fk_id_instrutor;
+    }
+    public function setFkIdInstrutor($fk_id_instrutor)
+    {
+        $this->fk_id_instrutor = $fk_id_instrutor;
+    }
 
     // Métodos CRUD
     public function add()
     {
         $sql = "INSERT INTO $this->table 
-                (nome_atleta, data_nascimento, biografia, sexo, peso, esporte, categoria, fk_id_academia, fk_id_usuario) 
-                VALUES (:nome_atleta, :data_nascimento, :biografia, :sexo, :peso, :esporte, :categoria, :fk_id_academia, :fk_id_usuario)";
+                (nome_atleta, data_nascimento, biografia, sexo, peso, esporte, categoria, fk_id_academia, fk_id_usuario, fk_id_instrutor) 
+                VALUES (:nome_atleta, :data_nascimento, :biografia, :sexo, :peso, :esporte, :categoria, :fk_id_academia, :fk_id_usuario, :fk_id_instrutor)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':nome_atleta', $this->nome_atleta);
@@ -120,6 +129,7 @@ class Atleta extends CRUD
         $stmt->bindParam(':categoria', $this->categoria);
         $stmt->bindParam(':fk_id_academia', $this->fk_id_academia);
         $stmt->bindParam(':fk_id_usuario', $this->fk_id_usuario);
+        $stmt->bindParam(':fk_id_instrutor', $this->fk_id_instrutor);
         return $stmt->execute();
     }
 
@@ -134,9 +144,10 @@ class Atleta extends CRUD
                     esporte = :esporte, 
                     categoria = :categoria, 
                     fk_id_academia = :fk_id_academia,
-                    fk_id_usuario = :fk_id_usuario
-                WHERE $campo = :id_pedido_ajuda";
-        
+                    fk_id_usuario = :fk_id_usuario,
+                    fk_id_instrutor = :fk_id_instrutor
+                WHERE $campo = :id_atleta";
+
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':nome_atleta', $this->nome_atleta);
         $stmt->bindParam(':data_nascimento', $this->data_nascimento);
@@ -147,8 +158,19 @@ class Atleta extends CRUD
         $stmt->bindParam(':categoria', $this->categoria);
         $stmt->bindParam(':fk_id_academia', $this->fk_id_academia);
         $stmt->bindParam(':fk_id_usuario', $this->fk_id_usuario);
-        $stmt->bindParam(":id_pedido_ajuda", $id, PDO::PARAM_INT);
+        $stmt->bindParam(':fk_id_instrutor', $this->fk_id_instrutor);
+        $stmt->bindParam(":id_atleta", $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
 
+    public function verificarPorUsuario($idUsuario)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM atleta WHERE fk_id_usuario = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $idUsuario, PDO::PARAM_INT);
+        $stmt->execute();
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $resultado['total'] > 0;
+    }
 }

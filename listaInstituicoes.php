@@ -6,12 +6,7 @@ $tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
 if ($tipoUsuario === 'Usuário') {
     echo "<script>alert('Você não tem permissão para acessar esta página.'); window.location.href='index.php';</script>";
     exit;
-}
-elseif ($tipoUsuario === 'Instrutor') {
-    echo "<script>alert('Você não tem permissão para acessar esta página.'); window.location.href='dashboardInstrutor.php';</script>";
-    exit;
-}
-?>
+}?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -22,7 +17,7 @@ elseif ($tipoUsuario === 'Instrutor') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/baseSite.css">
     <link rel="icon" href="Images/logo.png">
-    <title>Campeonatos</title>
+    <title>Instituições apoiadoras</title>
 </head>
 
 <body>
@@ -30,18 +25,16 @@ elseif ($tipoUsuario === 'Instrutor') {
 
     <main class="container mt-3">
         <div class="mt-3">
-            <h3>Campeonatos</h3>
+            <h3>Instituições apoiadoras</h3>
         </div>
         <div class="mt-3">
-            <a href="campeonato.php" class="btn btn-outline-success mb-3">Novo Campeonato</a>
+            <a href="academia.php" class="btn btn-outline-success mb-3">Nova Academia</a>
         </div>
         <table class="table">
             <thead class="table-success">
                 <tr>
                     <th>#</th>
-                    <th>Nome do Campeonato</th>
-                    <th>Esporte</th>
-                    <th>Data de Início</th>
+                    <th>Nome da Academia</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
@@ -52,27 +45,25 @@ elseif ($tipoUsuario === 'Instrutor') {
                     require_once "Classes/{$class}.class.php";
                 });
 
-                $c = new Campeonato();
-                $campeonatos = $c->all();
-                foreach ($campeonatos as $campeonato):
+                $a = new Academia();
+                $academias = $a->all();
+                foreach ($academias as $academia):
                     ?>
                     <tr>
-                        <td><?php echo $campeonato->id_campeonato ?></td>
-                        <td><?php echo $campeonato->nome_campeonato ?></td>
-                        <td><?php echo $campeonato->esporte ?></td>
-                        <td><?php echo date('d/m/Y', strtotime($campeonato->data_inicio)) ?></td>
+                        <td><?php echo $academia->id_academia ?></td>
+                        <td><?php echo $academia->nome_fantasia ?></td>
                         <td class="d-flex gap-1 justify-content-center">
-                            <form action="<?php echo htmlspecialchars("campeonato.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $campeonato->id_campeonato ?>">
+                            <form action="<?php echo htmlspecialchars("academia.php") ?>" method="post" class="d-flex">
+                                <input type="hidden" name="id" value="<?php echo $academia->id_academia ?>">
                                 <button name="btnEditar" class="btn btn-primary btn-sm" type="submit" title="Editar"
-                                    onclick="return confirm('Tem certeza que deseja editar o campeonato?');">
+                                    onclick="return confirm('Tem certeza que deseja editar a academia?');">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
                             </form>
-                            <form action="<?php echo htmlspecialchars("campeonato.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $campeonato->id_campeonato ?>">
+                            <form action="<?php echo htmlspecialchars("academia.php") ?>" method="post" class="d-flex">
+                                <input type="hidden" name="id" value="<?php echo $academia->id_academia ?>">
                                 <button name="btnDeletar" class="btn btn-danger btn-sm" type="submit" title="Deletar"
-                                    onclick="return confirm('Tem certeza que deseja deletar o campeonato?');">
+                                    onclick="return confirm('Tem certeza que deseja deletar a academia?');">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>

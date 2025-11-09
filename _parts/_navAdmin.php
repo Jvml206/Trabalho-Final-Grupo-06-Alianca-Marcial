@@ -16,6 +16,9 @@
                         <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="listaInstituicoes.php">Instituição Apoiadora</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="listaAcademia.php">Academias</a>
                     </li>
                     <li class="nav-item">

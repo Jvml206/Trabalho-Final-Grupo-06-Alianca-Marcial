@@ -1,4 +1,14 @@
 <?php
+require_once 'validaUser.php';
+
+$tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
+
+// Bloqueia o acesso se for "Usuário"
+if ($tipoUsuario === 'Usuário') {
+    echo "<script>alert('Você não tem permissão para acessar esta página.'); window.location.href='index.php';</script>";
+    exit;
+}
+
 spl_autoload_register(function ($class) {
     require_once "Classes/{$class}.class.php";
 });
@@ -40,8 +50,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     if (empty($id_usuario)):
         if ($Usuario->add()) {
             // Monta mensagem personalizada
-            $mensagem = "
-            <p>{$Usuario->getNomeUsuario()},</p>
+            $mensagem = "<p>{$Usuario->getNomeUsuario()},</p>
             <p>Seu cadastro foi realizado com sucesso! 🎉</p>
             <p>Antes de acessar sua conta, é necessário criar uma senha de acesso.</p>";
 
@@ -49,7 +58,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
             $Usuario->solicitarRecuperacaoSenha(
                 $Usuario->getEmail(),
                 $mensagem,
-                'Bem-vindo ao Sistema Aliança Marcial'
+                'Bem-vindo ao Sistema da Cooperativa Aliança Marcial'
             );
 
             echo "<script>alert('Cadastro de usuário realizado com sucesso! Um e-mail para definição de senha foi enviado para o endereço cadastrado.');window.location.href='usuario.php';</script>";
@@ -156,7 +165,7 @@ endif;
 
                 <div class="fotoCadUsuario">
                     <label for="foto" class="form-label">Foto</label>
-                    <input type="file" name="foto" id="foto" accept="image/*" class="form-control" required>
+                    <input type="file" name="foto" id="foto" accept="image/*" class="form-control" <?php echo empty($Usuario->foto) ? 'required' : null ?>>
                     <?php if (!empty($Usuario->foto)): ?>
                         <img src="Images/usuario/<?php echo $Usuario->foto; ?>" alt="Foto do Usuário"
                             class="mt-2 foto-usuario-cadastro">

@@ -2,14 +2,15 @@
 
 Integrantes:
 
-Angeline
-João Victor Machado lopes
-Matheus
+- Angeliny Cezário Narcizo de Oliveira
+- João Victor Machado lopes
+- Matheus Alexandre Alves Luz
 
 ## 🛠️ Tecnologias Utilizadas
 - PHP  
 - MySQL  
 - HTML, CSS, Bootstrap
+- JavaScript
 
 ---
 
@@ -29,8 +30,26 @@ Matheus
 /Script_BD
   scriptSQL.sql
 .gitignore
+academia.php
+atleta.php
+campeonato.php
 config.ini
+dashboard.php
+index.php
+instrutor.php
+listaAcademia.php
+listaAtleta.php
+listaCampeonato.php
+listaInstrutor.php
+listaUsuario.php
+login.php
+logout.php
 README.md
+redefinir_senha.php
+reset_senha.php
+solicitar_recuparecao.php
+usuario.php
+validarUser.php
       
 ```
 
@@ -44,6 +63,7 @@ Schemas:
 
 Tabelas
 - usuario
+- RecuperacaoSenha
 - academia
 - instrutor
 - instituicao_apoiadora
@@ -65,6 +85,14 @@ Tabelas
     dbname      = Alianca_Marcial
     username    = 'seu user'
     password    = "'sua senha'"
+
+    [email]
+    Host        = smtp.gmail.com
+    SMTPAuth    = true;
+    Username    = 'email que enviara a mensagem'
+    Password    = 'senha de app'
+    SMTPSecure  = PHPMailer::ENCRYPTION_STARTTLS
+    Port        = 587
     ```
 4. Acesse no navegador: `http://localhost/Trabalho-Final-Grupo-06-Alianca-Marcial`
 

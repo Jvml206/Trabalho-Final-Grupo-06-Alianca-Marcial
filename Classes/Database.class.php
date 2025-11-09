@@ -10,7 +10,7 @@ final class Database{
             $config = parse_ini_file(__DIR__.'/../config.ini',true)['database'];
             $dsn = '';
             if ($config['driver'] ==='mysql') {
-                $dsn = "mysql:host={$config['host']};port={$config['port']}; dbname={$config['dbname']}; charset=utf8";
+                $dsn = "mysql:host={$config['host']};port={$config['port']}; dbname={$config['dbname']}; charset=utf8mb4";
             }
             elseif ($config['driver'] === 'pgsql') {
                 $dsn = "pgsql:host={$config['host']}; port={$config['port']}; dbname={$config['dbname']}";

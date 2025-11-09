@@ -1,3 +1,26 @@
+<?php
+session_start();
+
+// Verifica se o usuário já está logado
+if (isset($_SESSION['user_id'])) {
+    switch ($_SESSION['tipo_usuario']) {
+        case 'Administrador':
+            header('Location: dashboard.php');
+            break;
+        case 'Instrutor':
+            header('Location: dashboard.php');
+            break;
+        case 'Atleta':
+            header('Location: dashboard.php');
+            break;
+        default:
+            header('Location: index.php');
+    }
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 

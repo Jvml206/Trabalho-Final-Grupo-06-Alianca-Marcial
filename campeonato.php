@@ -1,4 +1,18 @@
 <?php
+require_once 'validaUser.php';
+
+$tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
+
+// Bloqueia o acesso se for "Usuário"
+if ($tipoUsuario === 'Usuário') {
+    echo "<script>alert('Você não tem permissão para acessar esta página.'); window.location.href='index.php';</script>";
+    exit;
+}
+elseif ($tipoUsuario === 'Instrutor') {
+    echo "<script>alert('Você não tem permissão para acessar esta página.'); window.location.href='dashboardInstrutor.php';</script>";
+    exit;
+}
+
 spl_autoload_register(function ($class) {
     require_once "Classes/{$class}.class.php";
 });

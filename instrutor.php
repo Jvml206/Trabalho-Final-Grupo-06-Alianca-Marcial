@@ -1,8 +1,16 @@
 <?php
-session_start();
+require_once 'validaUser.php';
+
 $idUsuario = $_SESSION['user_id'];
-$nome = $_SESSION['user_name'] ?? 'Usuário';
-$email = $_SESSION['user_email'] ?? 'Email não informado';
+$nome = $_SESSION['user_name'];
+$email = $_SESSION['user_email'];
+$tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
+
+// Bloqueia o acesso se for "Usuário"
+if ($tipoUsuario === 'Usuário') {
+    echo "<script>alert('Você não tem permissão para acessar esta página.'); window.location.href='index.php';</script>";
+    exit;
+}
 
 spl_autoload_register(function ($class) {
     require_once "Classes/{$class}.class.php";
@@ -16,7 +24,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     $Instrutor->setTelefone(filter_input(INPUT_POST, "telefone", FILTER_SANITIZE_STRING));
     $Instrutor->setEmail($email);
     $Instrutor->setFkIdAcademia(filter_input(INPUT_POST, "fk_id_academia", FILTER_SANITIZE_NUMBER_INT));
-    $Instrutor->setFkIdUsuario(filter_input(INPUT_POST, "fk_id_usuario", FILTER_SANITIZE_NUMBER_INT));
+    $Instrutor->setFkIdUsuario($idUsuario);
     $id = filter_input(INPUT_POST, 'id_instrutor');
     if (empty($id)):
         //Tenta adicionar e exibe a mensagemao usuário
@@ -82,12 +90,6 @@ endif;
 
             <input type="hidden" value="<?php echo $Instrutor->id_instrutor ?? null; ?>" name="id_instrutor">
 
-            <div class="col-md-6 mb-3">
-                <label for="nome_instrutor" class="form-label">Nome</label>
-                <input type="text" name="nome_instrutor" id="nome_instrutor" placeholder="Digite o Nome do Instrutor"
-                    required class="form-control" value="<?php echo $Instrutor->nome_instrutor ?? null; ?>">
-            </div>
-
             <div class="col-md-6">
                 <label for="data_nascimento" class="form-label">Data de Nascimento</label>
                 <input type="date" name="data_nascimento" id="data_nascimento" required class="form-control"
@@ -112,19 +114,6 @@ endif;
                     <?php endforeach; ?>
                 </select>
             </div>
-
-            <div class="col-md-12">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" id="email" placeholder="Digite o Email do Instrutor" required
-                    class="form-control" value="<?php echo $Instrutor->email ?? null; ?>">
-            </div>
-            <div class="col-md-12">
-                <label for="confirmaEmail" class="form-label">Confirme o Email</label>
-                <input type="email" name="confirmaEmail" id="confirmaEmail" placeholder="Digite a confirmação do E-mail"
-                    required class="form-control">
-                <div id="mensagem" class="alert alert-danger mt-2 mb-3"></div>
-            </div>
-
 
             <div class="col-12 mt-3 d-flex gap-2">
                 <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-marrom">Salvar</button>

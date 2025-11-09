@@ -1,9 +1,24 @@
 <?php
+require_once 'validaUser.php';
+
+$tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
+$idUsuario = $_SESSION['user_id'];
+
+// Bloqueia o acesso se for "Usuário"
+if ($tipoUsuario === 'Usuário') {
+    echo "<script>alert('Você não tem permissão para acessar esta página.'); window.location.href='index.php';</script>";
+    exit;
+}
+
 spl_autoload_register(function ($class) {
     require_once "Classes/{$class}.class.php";
 });
 $Academia = new Academia();
 $academias = $Academia->all();
+$Instrutor = new Instrutor();
+$instrutores = $Instrutor->all();
+$Atleta = new Atleta();
+$atletas = $Atleta->all();
 ?>
 
 <!DOCTYPE html>
@@ -25,9 +40,14 @@ $academias = $Academia->all();
         <div class="mt-3">
             <h3>Atleta</h3>
         </div>
-        <div class="mt-3">
-            <a href="atleta.php" class="btn btn-outline-success mb-3">Novo Atleta</a>
-        </div>
+        <?php
+        if ($tipoUsuario != 'Atleta') { ?>
+            <div class="mt-3">
+                <a href="atleta.php" class="btn btn-outline-success mb-3">Novo Atleta</a>
+            </div>
+            <?php
+        }
+        ?>
         <table class="table">
             <thead class="table-success">
                 <tr>
@@ -35,20 +55,13 @@ $academias = $Academia->all();
                     <th>Nome do Atleta</th>
                     <th>Esporte</th>
                     <th>Academia</th>
+                    <th>Instrutor</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
 
             <body>
-                <?php
-                spl_autoload_register(function ($class) {
-                    require_once "Classes/{$class}.class.php";
-                });
-
-                $at = new Atleta();
-                $atletas = $at->all();
-                foreach ($atletas as $atleta):
-                    ?>
+                <?php foreach ($atletas as $atleta): ?>
                     <tr>
                         <td><?php echo $atleta->id_atleta ?></td>
                         <td><?php echo $atleta->nome_atleta ?></td>
@@ -56,6 +69,12 @@ $academias = $Academia->all();
                         <td><?php foreach ($academias as $a) {
                             if ($a->id_academia == $atleta->fk_id_academia) {
                                 echo $a->nome_fantasia;
+                                break;
+                            }
+                        } ?></td>
+                        <td><?php foreach ($instrutores as $i) {
+                            if ($i->id_instrutor == $atleta->fk_id_instrutor) {
+                                echo $i->nome_instrutor;
                                 break;
                             }
                         } ?></td>

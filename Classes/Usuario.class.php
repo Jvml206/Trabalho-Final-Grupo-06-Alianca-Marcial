@@ -125,6 +125,14 @@ class Usuario extends CRUD
         }
     }
 
+    public function usuariosAtletaExistentes()
+    {
+        $sql = "SELECT nome_usuario FROM $this->table WHERE tipo_usuario = 'Atleta'";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
     #Efetuar Login
     public function login()
     {
@@ -305,7 +313,7 @@ class Usuario extends CRUD
                     $mail->isHTML(true);
                     $mail->Subject = 'Recuperar de Senha';
                     $mail->Body = "
-                    <p>Olá $mensagem</p>
+                    <p>Olá$mensagem</p>
                     <p>Clique no link abaixo para criar uma nova senha:</p>
                     <p><a href='$link'>$link</a></p>
                     <p>Este link expira em 1 hora.</p>
