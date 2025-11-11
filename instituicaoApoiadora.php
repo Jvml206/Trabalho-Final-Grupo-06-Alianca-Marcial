@@ -49,7 +49,6 @@ elseif (filter_has_var(INPUT_POST, "btnDeletar")):
 endif;
 ?>
 
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 

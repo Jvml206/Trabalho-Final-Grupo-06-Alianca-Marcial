@@ -27,6 +27,9 @@ if(isset($nivelPermitido)){
             case 'Usuário':
                 $redirect = 'index.php';
                 break;
+            case 'Atleta':
+                $redirect = 'index.php';
+                break;
             default:
                 $redirect = 'dashboard.php';
         }

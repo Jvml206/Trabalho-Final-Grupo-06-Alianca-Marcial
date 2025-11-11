@@ -58,6 +58,7 @@ endif;
 
 <body>
     <?php require_once "_parts/_navAdmin.php"; ?>
+    
     <main class="container">
         <?php
         spl_autoload_register(function ($class) {

@@ -30,32 +30,46 @@
 
                 <ul class="navbar-nav">
                     <?php
-
                     if (session_status() === PHP_SESSION_NONE) {
                         session_start();
                     }
-                    if (isset($_SESSION['user_name'])): ?>
-                        <!-- Usuário Logado -->
+
+                    if (isset($_SESSION['user_name']) && isset($_SESSION['tipo_usuario'])):
+                        $tipoUsuario = $_SESSION['tipo_usuario'];
+                        $nomeUsuario = htmlspecialchars($_SESSION['user_name']);
+                        ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+                                <?php echo $nomeUsuario; ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item text-danger" href="dashboard.php">Dashboard</a></li>
+
+                                <?php if ($tipoUsuario === 'Administrador'): ?>
+                                    <li><a class="dropdown-item text-danger" href="dashboard.php">Dashboard</a></li>
+                                <?php elseif ($tipoUsuario === 'Instrutor'): ?>
+                                    <li><a class="dropdown-item text-danger" href="instrutor.php">Meus Dados</a></li>
+                                    <li><a class="dropdown-item text-danger" href="listaAtleta.php">Atletas</a></li>
+                                <?php elseif ($tipoUsuario === 'Usuário'): ?>
+                                    <li><a class="dropdown-item text-danger" href="usuario.php">Meus Dados</a></li>
+                                <?php elseif ($tipoUsuario === 'Atleta'): ?>
+                                    <li><a class="dropdown-item text-danger" href="atleta.php">Meus Dados</a></li>
+                                <?php endif; ?>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li><a class="dropdown-item text-danger" href="logout.php">Sair</a></li>
                             </ul>
                         </li>
+
                     <?php else: ?>
-                        <!-- Usuário Não Logado -->
+                        <!-- Usuário não logado -->
                         <li class="nav-item">
                             <a class="nav-link" href="login.php"><i class="bi bi-person-circle"></i> Entrar</a>
                         </li>
                     <?php endif; ?>
                 </ul>
+
             </div>
         </div>
     </div>

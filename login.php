@@ -11,7 +11,7 @@ if (isset($_SESSION['user_id'])) {
             header('Location: dashboard.php');
             break;
         case 'Atleta':
-            header('Location: dashboard.php');
+            header('Location: index.php');
             break;
         default:
             header('Location: index.php');

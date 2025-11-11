@@ -41,70 +41,70 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
         echo "<script>window.alert('Já existe um atleta vinculado a este usuário.'); window.history.back();</script>";
 
     else:
-    // Regras conforme o tipo de acesso
+        // Regras conforme o tipo de acesso
         if ($tipoUsuario === 'Administrador') {
-        $Usuario = new Usuario();
-        $nomeAtleta = trim(filter_input(INPUT_POST, "nome_atleta", FILTER_SANITIZE_STRING));
+            $Usuario = new Usuario();
+            $nomeAtleta = trim(filter_input(INPUT_POST, "nome_atleta", FILTER_SANITIZE_STRING));
 
-        // Verifica se o usuário existe
-        $usuarioExiste = $Usuario->searchString("nome_usuario", $nomeAtleta);
-        if (!$usuarioExiste) {
-            echo "<script>window.alert('Usuário informado não existe.'); window.history.back();</script>";
-            exit;
+            // Verifica se o usuário existe
+            $usuarioExiste = $Usuario->searchString("nome_usuario", $nomeAtleta);
+            if (!$usuarioExiste) {
+                echo "<script>window.alert('Usuário informado não existe.'); window.history.back();</script>";
+                exit;
+            }
+
+            // Se o usuário existir, continua o cadastro
+            $Atleta->setFkIdUsuario($idUsuario);
+            $Atleta->setFkIdAcademia(filter_input(INPUT_POST, "fk_id_academia", FILTER_SANITIZE_NUMBER_INT));
+            $Atleta->setFkIdInstrutor(filter_input(INPUT_POST, "fk_id_instrutor", FILTER_SANITIZE_NUMBER_INT));
+            $Atleta->setNomeAtleta($nomeAtleta);
+
+        } elseif ($tipoUsuario === 'Instrutor') {
+            $Usuario = new Usuario();
+            $Instrutor = new Instrutor();
+            $dadosInstrutor = $Instrutor->search("fk_id_usuario", $idUsuario);
+            $nomeAtleta = trim(filter_input(INPUT_POST, "nome_atleta", FILTER_SANITIZE_STRING));
+
+            // Verifica se o usuário existe
+            $usuarioExiste = $Usuario->searchString("nome_usuario", $nomeAtleta);
+            if (!$usuarioExiste) {
+                echo "<script>window.alert('Usuário informado não existe.'); window.history.back();</script>";
+                exit;
+            }
+
+            if (!$dadosInstrutor) {
+                echo "<script>window.alert('Erro: dados do instrutor não encontrados.'); window.history.back();</script>";
+                exit;
+            }
+
+            $Atleta->setNomeAtleta($nomeAtleta);
+            $Atleta->setFkIdUsuario($usuarioExiste->id_usuario);
+            $Atleta->setFkIdInstrutor($dadosInstrutor->id_instrutor);
+            $Atleta->setFkIdAcademia($dadosInstrutor->fk_id_academia);
+
+        } elseif ($tipoUsuario === 'Atleta') {
+            $Atleta->setNomeAtleta($nome);
+            $Atleta->setFkIdUsuario($idUsuario);
+            $Atleta->setFkIdAcademia(filter_input(INPUT_POST, "fk_id_academia", FILTER_SANITIZE_NUMBER_INT));
+            $Atleta->setFkIdInstrutor(filter_input(INPUT_POST, "fk_id_instrutor", FILTER_SANITIZE_NUMBER_INT));
         }
 
-        // Se o usuário existir, continua o cadastro
-        $Atleta->setFkIdUsuario($idUsuario);
-        $Atleta->setFkIdAcademia(filter_input(INPUT_POST, "fk_id_academia", FILTER_SANITIZE_NUMBER_INT));
-        $Atleta->setFkIdInstrutor(filter_input(INPUT_POST, "fk_id_instrutor", FILTER_SANITIZE_NUMBER_INT));
-        $Atleta->setNomeAtleta($nomeAtleta);
-
-    } elseif ($tipoUsuario === 'Instrutor') {
-        $Usuario = new Usuario();
-        $Instrutor = new Instrutor();
-        $dadosInstrutor = $Instrutor->search("fk_id_usuario", $idUsuario);
-        $nomeAtleta = trim(filter_input(INPUT_POST, "nome_atleta", FILTER_SANITIZE_STRING));
-
-        // Verifica se o usuário existe
-        $usuarioExiste = $Usuario->searchString("nome_usuario", $nomeAtleta);
-        if (!$usuarioExiste) {
-            echo "<script>window.alert('Usuário informado não existe.'); window.history.back();</script>";
-            exit;
-        }
-
-        if (!$dadosInstrutor) {
-            echo "<script>window.alert('Erro: dados do instrutor não encontrados.'); window.history.back();</script>";
-            exit;
-        }
-
-        $Atleta->setNomeAtleta($nomeAtleta);
-        $Atleta->setFkIdUsuario($usuarioExiste->id_usuario);
-        $Atleta->setFkIdInstrutor($dadosInstrutor->id_instrutor);
-        $Atleta->setFkIdAcademia($dadosInstrutor->fk_id_academia);
-
-    } elseif ($tipoUsuario === 'Atleta') {
-        $Atleta->setNomeAtleta($nome);
-        $Atleta->setFkIdUsuario($idUsuario);
-        $Atleta->setFkIdAcademia(filter_input(INPUT_POST, "fk_id_academia", FILTER_SANITIZE_NUMBER_INT));
-        $Atleta->setFkIdInstrutor(filter_input(INPUT_POST, "fk_id_instrutor", FILTER_SANITIZE_NUMBER_INT));
-    }
-
-    if (empty($id)):
-        //Tenta adicionar e exibe a mensagemao usuário
-        if ($Atleta->add()) {
-            echo "<script>window.alert('Cadastro de atleta realizado com sucesso.');window.location.href=atleta.php;</script>";
-        } else {
-            echo "<script>window.alert('Erro ao cadastrar o atleta.');window.open(document.referrer,'_self');</script>";
-        }
-    else:
-        if ($Atleta->update('id_atleta', $id)) {
-            echo "<script>window.alert('Atleta alterado com sucesso.'); 
+        if (empty($id)):
+            //Tenta adicionar e exibe a mensagemao usuário
+            if ($Atleta->add()) {
+                echo "<script>window.alert('Cadastro de atleta realizado com sucesso.');window.location.href=atleta.php;</script>";
+            } else {
+                echo "<script>window.alert('Erro ao cadastrar o atleta.');window.open(document.referrer,'_self');</script>";
+            }
+        else:
+            if ($Atleta->update('id_atleta', $id)) {
+                echo "<script>window.alert('Atleta alterado com sucesso.'); 
             window.location.href='listaAtleta.php';</script>";
-        } else {
-            echo "<script> window.alert('Erro ao alterar o atleta.');
+            } else {
+                echo "<script> window.alert('Erro ao alterar o atleta.');
             window.open(document.referrer, '_self'); </script>";
-        }
-    endif;
+            }
+        endif;
     endif;
 elseif (filter_has_var(INPUT_POST, "btnDeletar")):
     $id = intval(filter_input(INPUT_POST, "id"));
@@ -130,7 +130,17 @@ endif;
 </head>
 
 <body>
-    <?php require_once "_parts/_navAdmin.php"; ?>
+    <?php if (isset($_SESSION['tipo_usuario'])):
+        $tipoUsuario = $_SESSION['tipo_usuario'];
+
+        if ($tipoUsuario != 'Administrador'):
+            require_once "_parts/_navSite.php";
+        else:
+            require_once "_parts/_navAdmin.php";
+        endif;
+    endif; ?>
+
+
     <main class="container">
         <?php
         if (filter_has_var(INPUT_POST, "btnEditar")) {

@@ -47,7 +47,6 @@ elseif (filter_has_var(INPUT_POST, "btnDeletar")):
 endif;
 ?>
 
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -61,7 +60,16 @@ endif;
 </head>
 
 <body>
-    <?php require_once "_parts/_navAdmin.php"; ?>
+    <?php if (isset($_SESSION['tipo_usuario'])):
+        $tipoUsuario = $_SESSION['tipo_usuario'];
+
+        if ($tipoUsuario != 'Administrador'):
+            require_once "_parts/_navSite.php";
+        else:
+            require_once "_parts/_navAdmin.php";
+        endif;
+    endif; ?>
+    
     <main class="container">
         <?php
         spl_autoload_register(function ($class) {

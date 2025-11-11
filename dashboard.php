@@ -1,5 +1,4 @@
-<?php $nivelPermitido = ['Administrador', 'Instrutor', 'Atleta'];
-require_once 'validaUser.php';?>
+<?php require_once 'validaUser.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -14,7 +13,17 @@ require_once 'validaUser.php';?>
 </head>
 
 <body>
-    <?php require_once "_parts/_navAdmin.php"; ?>
+
+    <?php if (isset($_SESSION['tipo_usuario'])):
+        $tipoUsuario = $_SESSION['tipo_usuario'];
+
+        if ($tipoUsuario != 'Administrador'):
+            require_once "_parts/_navSite.php";
+        else:
+            require_once "_parts/_navAdmin.php";
+        endif;
+    endif; ?>
+
     <main class="mainBemVindo">
         <div class="bemVindo">
             <h1>Bem Vindo!</h1>
