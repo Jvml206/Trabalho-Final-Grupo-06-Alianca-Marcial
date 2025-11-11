@@ -1,16 +1,10 @@
 <?php
+$nivelPermitido = ['Administrador', 'Instrutor'];
 require_once 'validaUser.php';
 
 $idUsuario = $_SESSION['user_id'];
 $nome = $_SESSION['user_name'];
 $email = $_SESSION['user_email'];
-$tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
-
-// Bloqueia o acesso se for "Usuário"
-if ($tipoUsuario === 'Usuário') {
-    echo "<script>alert('Você não tem permissão para acessar esta página.'); window.location.href='index.php';</script>";
-    exit;
-}
 
 spl_autoload_register(function ($class) {
     require_once "Classes/{$class}.class.php";

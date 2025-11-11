@@ -165,9 +165,9 @@ class Atleta extends CRUD
 
     public function verificarPorUsuario($idUsuario)
     {
-        $sql = "SELECT COUNT(*) AS total FROM atleta WHERE fk_id_usuario = :id";
+        $sql = "SELECT COUNT(*) AS total FROM atleta WHERE fk_id_usuario = :id_usuario";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $idUsuario, PDO::PARAM_INT);
+        $stmt->bindParam(':id_usuario', $idUsuario, PDO::PARAM_INT);
         $stmt->execute();
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 

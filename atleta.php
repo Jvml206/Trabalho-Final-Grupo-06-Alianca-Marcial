@@ -1,4 +1,5 @@
 <?php
+$nivelPermitido = ['Administrador', 'Instrutor', 'Atleta'];
 require_once 'validaUser.php';
 
 spl_autoload_register(function ($class) {
@@ -26,12 +27,6 @@ if ($tipoUsuario === 'Atleta') {
     }
 }
 
-// Bloqueia o acesso se for "Usuário"
-if ($tipoUsuario === 'Usuário') {
-    echo "<script>window.alert('Você não tem permissão para acessar esta página.'); window.location.href='index.php';</script>";
-    exit;
-}
-
 if (filter_has_var(INPUT_POST, "btnCadastrar")):
     $Atleta->setDataNascimento(filter_input(INPUT_POST, "data_nascimento", FILTER_SANITIZE_STRING));
     $Atleta->setBiografia(filter_input(INPUT_POST, "biografia", FILTER_SANITIZE_STRING));
@@ -41,8 +36,13 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     $Atleta->setCategoria(filter_input(INPUT_POST, "categoria", FILTER_SANITIZE_STRING));
     $id = filter_input(INPUT_POST, 'id_atleta');
 
+    // Impedir que seja cadastrado um atleta com usuário já usado
+    if ($Atleta->verificarPorUsuario($idUsuario)):
+        echo "<script>window.alert('Já existe um atleta vinculado a este usuário.'); window.history.back();</script>";
+
+    else:
     // Regras conforme o tipo de acesso
-    if ($tipoUsuario === 'Administrador') {
+        if ($tipoUsuario === 'Administrador') {
         $Usuario = new Usuario();
         $nomeAtleta = trim(filter_input(INPUT_POST, "nome_atleta", FILTER_SANITIZE_STRING));
 
@@ -54,7 +54,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
         }
 
         // Se o usuário existir, continua o cadastro
-        $Atleta->setFkIdUsuario($id_usuario);
+        $Atleta->setFkIdUsuario($idUsuario);
         $Atleta->setFkIdAcademia(filter_input(INPUT_POST, "fk_id_academia", FILTER_SANITIZE_NUMBER_INT));
         $Atleta->setFkIdInstrutor(filter_input(INPUT_POST, "fk_id_instrutor", FILTER_SANITIZE_NUMBER_INT));
         $Atleta->setNomeAtleta($nomeAtleta);
@@ -82,17 +82,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
         $Atleta->setFkIdInstrutor($dadosInstrutor->id_instrutor);
         $Atleta->setFkIdAcademia($dadosInstrutor->fk_id_academia);
 
-        // Impedir que o instrutor cadastre um atleta com usuário já usado
-        if ($Atleta->verificarPorUsuario($idUsuarioNovo)) {
-            echo "<script>window.alert('Já existe um atleta vinculado a este usuário.'); window.history.back();</script>";
-            exit;
-        }
     } elseif ($tipoUsuario === 'Atleta') {
-        // Atleta só pode cadastrar um, ele mesmo
-        if (empty($id) && $Atleta->verificarPorUsuario($idUsuario)) {
-            echo "<script>window.alert('Você já está cadastrado.'); window.location.href='listaAtleta.php';</script>";
-            exit;
-        }
         $Atleta->setNomeAtleta($nome);
         $Atleta->setFkIdUsuario($idUsuario);
         $Atleta->setFkIdAcademia(filter_input(INPUT_POST, "fk_id_academia", FILTER_SANITIZE_NUMBER_INT));
@@ -114,6 +104,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
             echo "<script> window.alert('Erro ao alterar o atleta.');
             window.open(document.referrer, '_self'); </script>";
         }
+    endif;
     endif;
 elseif (filter_has_var(INPUT_POST, "btnDeletar")):
     $id = intval(filter_input(INPUT_POST, "id"));
@@ -248,7 +239,8 @@ endif;
 
             <div class="col-md-5">
                 <label for="peso" class="form-label">Peso</label>
-                <input type="text" name="peso" id="peso" placeholder="Digite o peso. Ex.:102.65 (Coloque as casas depois do ponto)" required
+                <input type="text" name="peso" id="peso"
+                    placeholder="Digite o peso. Ex.:102.65 (Coloque as casas depois do ponto)" required
                     class="form-control" value="<?php echo $Atleta->peso ?? null; ?>">
             </div>
 
@@ -275,7 +267,7 @@ endif;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script src="JS/verificaUsuario.js"></script>
     <script>
-        $('#peso').mask('000,00', { reverse: true });
+        $('#peso').mask('000.00', { reverse: true });
         const usuariosExistentes = <?php echo json_encode($usuariosExistentes); ?>;
         configurarVerificacaoUsuario(usuariosExistentes);
     </script>

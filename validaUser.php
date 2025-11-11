@@ -19,10 +19,22 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['tipo_usuario'])) {
     exit;
 }
 
-if(isset($nivelPermitidos)){
-    if (!$usuario->verificarNivelAcesso($nivelPermitidos)) {
-        // Redireciona para a página de login ou exibe mensagem de erro
-        echo "<script>window.alert('Usuário não tem nível de acesso necessário.'); window.location.href='dashboard.php';</script>";
-        exit();
+if(isset($nivelPermitido)){
+    $tipoUsuario = $_SESSION['tipo_usuario'];
+
+    if (!in_array($tipoUsuario, $nivelPermitido)) {
+        switch ($tipoUsuario) {
+            case 'Usuário':
+                $redirect = 'index.php';
+                break;
+            default:
+                $redirect = 'dashboard.php';
+        }
+
+        echo "<script>
+                alert('Você não tem permissão para acessar esta página.');
+                window.location.href='{$redirect}';
+              </script>";
+        exit;
     }
 }

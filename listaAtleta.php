@@ -1,14 +1,8 @@
 <?php
+$nivelPermitido = ['Administrador', 'Instrutor', 'Atleta'];
 require_once 'validaUser.php';
 
-$tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
 $idUsuario = $_SESSION['user_id'];
-
-// Bloqueia o acesso se for "Usuário"
-if ($tipoUsuario === 'Usuário') {
-    echo "<script>alert('Você não tem permissão para acessar esta página.'); window.location.href='index.php';</script>";
-    exit;
-}
 
 spl_autoload_register(function ($class) {
     require_once "Classes/{$class}.class.php";
@@ -40,14 +34,9 @@ $atletas = $Atleta->all();
         <div class="mt-3">
             <h3>Atleta</h3>
         </div>
-        <?php
-        if ($tipoUsuario != 'Atleta') { ?>
-            <div class="mt-3">
-                <a href="atleta.php" class="btn btn-outline-success mb-3">Novo Atleta</a>
-            </div>
-            <?php
-        }
-        ?>
+        <div class="mt-3">
+            <a href="atleta.php" class="btn btn-outline-success mb-3">Novo Atleta</a>
+        </div>
         <table class="table">
             <thead class="table-success">
                 <tr>
