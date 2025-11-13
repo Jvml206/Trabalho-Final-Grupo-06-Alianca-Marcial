@@ -123,8 +123,9 @@ endif;
 
         <form action="usuario.php" method="post" class="row g3 mt-3" enctype="multipart/form-data"
             id="form_valida_email">
-
+            
             <input type="hidden" value="<?php echo $Usuario->id_usuario ?? null; ?>" name="id_usuario">
+            <input type="hidden" name="fotoAntiga" value="<?php echo $Usuario->foto ?? ''; ?>">
             <div class="cadUsuario">
                 <div class="dadosUsuario">
                     <div>

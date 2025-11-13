@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS usuario (
     id_usuario INTEGER PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(150) NOT NULL UNIQUE,
     nome_usuario VARCHAR(150) NOT NULL,
-    senha VARCHAR(100) NOT NULL,
+    senha VARCHAR(100),
     tipo_usuario ENUM('Administrador', 'Atleta', 'Instrutor', 'Usuário') NOT NULL,
     foto TEXT NOT NULL
 );
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS atleta(
     peso DECIMAL(5,2),
     categoria VARCHAR(50) NOT NULL,
     fk_id_academia INTEGER NOT NULL,
-	fk_id_usuario INTEGER NOT NULL UNIQUE,
+	fk_id_usuario INTEGER NOT NULL,
     fk_id_instrutor INTEGER NOT NULL,
     FOREIGN KEY (fk_id_academia) REFERENCES academia(id_academia)
         ON DELETE CASCADE ON UPDATE CASCADE,
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS instrutor(
     telefone VARCHAR(20) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
     fk_id_academia INTEGER NOT NULL,
-	fk_id_usuario INTEGER NOT NULL UNIQUE,
+	fk_id_usuario INTEGER NOT NULL,
     FOREIGN KEY (fk_id_academia) REFERENCES academia(id_academia)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (fk_id_usuario) REFERENCES usuario(id_usuario)

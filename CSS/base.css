@@ -147,6 +147,39 @@ footer .rede-social i {
     text-decoration: none;
 }
 
+.cadUsuario {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.dadosUsuario {
+    flex: 1;
+}
+
+.dadosUsuario .usuario{
+    margin: 20px auto 0;
+}
+
+.fotoCadUsuario {
+    flex: 1;
+    align-items: center;
+}
+
+.foto-usuario-cadastro {
+    display: block;
+    margin: 10px auto 0;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.usuarioAtleta{
+    margin: 16px auto 0;
+}
+
 @media (min-width: 550px) {
     footer .r-linha {
         flex-direction: row;
