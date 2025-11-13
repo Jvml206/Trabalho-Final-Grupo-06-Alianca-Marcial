@@ -103,8 +103,7 @@ class Usuario extends CRUD
     {
         $sql = "UPDATE $this->table 
                 SET nome_usuario = :nome_usuario, 
-                    email = :email, 
-                    senha = :senha, 
+                    email = :email,
                     tipo_usuario = :tipo_usuario, 
                     foto = :foto
                 WHERE $campo = :id_usuario";
@@ -114,7 +113,6 @@ class Usuario extends CRUD
         try {
             $stmt->bindParam(':nome_usuario', $this->nome_usuario);
             $stmt->bindParam(':email', $this->email);
-            $stmt->bindParam(':senha', $this->senha);
             $stmt->bindParam(':tipo_usuario', $this->tipo_usuario);
             $stmt->bindParam(':foto', $this->foto);
             $stmt->bindParam(":id_usuario", $id, PDO::PARAM_INT);
@@ -127,10 +125,18 @@ class Usuario extends CRUD
 
     public function usuariosAtletaExistentes()
     {
-        $sql = "SELECT nome_usuario FROM $this->table WHERE tipo_usuario = 'Atleta'";
+        $sql = "SELECT * FROM $this->table WHERE tipo_usuario = 'Atleta'";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function usuariosAtletaDisponiveis()
+    {
+        $sql = "SELECT * FROM $this->table WHERE tipo_usuario = 'Atleta' AND id_usuario NOT IN (SELECT fk_id_usuario FROM atleta)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     #Efetuar Login
