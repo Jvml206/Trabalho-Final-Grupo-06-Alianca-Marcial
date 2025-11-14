@@ -1,4 +1,5 @@
 <?php
+$nivelPermitido = ['Administrador'];
 require_once 'validaUser.php';
 
 spl_autoload_register(function ($class) {

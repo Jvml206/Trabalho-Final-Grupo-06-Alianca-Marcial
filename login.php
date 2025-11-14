@@ -8,7 +8,7 @@ if (isset($_SESSION['user_id'])) {
             header('Location: dashboard.php');
             break;
         case 'Instrutor':
-            header('Location: dashboard.php');
+            header('Location: index.php');
             break;
         case 'Atleta':
             header('Location: index.php');
@@ -67,6 +67,9 @@ if (filter_has_var(INPUT_POST, "logar")) {
                 </div>
                 <div class="mt-3">
                     <a href="redefinir_senha.php">Esqueceu a senha?</a>
+                </div>
+                <div class="mt-3">
+                    <a href="usuario.php">Criar conta</a>
                 </div>
             </form>
         </div>
