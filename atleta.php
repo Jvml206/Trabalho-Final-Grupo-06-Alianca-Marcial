@@ -79,7 +79,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     if (empty($id)):
         //Tenta adicionar e exibe a mensagemao usuário
         if ($Atleta->add()) {
-            echo "<script>window.alert('Cadastro de atleta realizado com sucesso.');window.location.href=atleta.php;</script>";
+            echo "<script>window.alert('Cadastro de atleta realizado com sucesso.');window.location.href='index.php';window.location.href='atleta.php';</script>";
         } else {
             echo "<script>window.alert('Erro ao cadastrar o atleta.');window.open(document.referrer,'_self');</script>";
         }
@@ -118,8 +118,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
 
             if ($Usuario->update('id_usuario', $idUsuario)) {
                 $Atleta->update('id_atleta', $id);
-                echo "<script>window.alert('Atleta alterado com sucesso.'); 
-                window.location.href='atleta.php';</script>";
+                echo "<script>window.alert('Atleta alterado com sucesso.');window.location.href='atleta.php';</script>";
                 exit;
             }
             echo "<script>window.alert('Atleta alterado com sucesso.'); 
@@ -149,7 +148,17 @@ endif;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/baseSite.css">
     <link rel="icon" href="Images/logo.png">
-    <title>Cadastro de Atleta</title>
+    <?php if (isset($_SESSION['tipo_usuario'])):
+        $tipoUsuario = $_SESSION['tipo_usuario'];
+        if ($tipoUsuario != 'Administrador'):
+            ?>
+            <title>Cadastro de Atleta</title><?php
+        else:
+            ?>
+            <title>Conta</title><?php
+        endif;
+    endif;
+    ?>
 </head>
 
 <body>
@@ -181,7 +190,17 @@ endif;
         <form action="atleta.php" method="post" class="row g3 mt-3" enctype="multipart/form-data"
             id="form_valida_email">
 
-            <h2 class="text-center">Cadastro de Atleta</h2>
+            <?php if (isset($_SESSION['tipo_usuario'])):
+                $tipoUsuario = $_SESSION['tipo_usuario'];
+                if ($tipoUsuario === 'Administrador'):
+                    ?>
+                    <h2 class="text-center">Conta</h2><?php
+                else:
+                    ?>
+                    <h2 class="text-center">Cadastro de Atleta</h2><?php
+                endif;
+            endif;
+            ?>
             <input type="hidden" value="<?php echo $dadosAtleta->id_atleta ?? null; ?>" name="id_atleta">
 
             <!-- Alteração nos dados de usuario quando logado -->

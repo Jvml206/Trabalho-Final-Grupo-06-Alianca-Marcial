@@ -69,7 +69,7 @@ if (filter_has_var(INPUT_POST, "logar")) {
                     <a href="redefinir_senha.php">Esqueceu a senha?</a>
                 </div>
                 <div class="mt-3">
-                    <a href="usuario.php">Criar conta</a>
+                    <a href="criar_conta.php">Criar conta</a>
                 </div>
             </form>
         </div>

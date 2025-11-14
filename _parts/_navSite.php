@@ -51,7 +51,7 @@
                                     <li><a class="dropdown-item text-danger" href="instrutor.php">Meus Dados</a></li>
                                     <li><a class="dropdown-item text-danger" href="listaAtleta.php">Atletas</a></li>
                                 <?php elseif ($tipoUsuario === 'Usuário'): ?>
-                                    <li><a class="dropdown-item text-danger" href="usuario.php">Meus Dados</a></li>
+                                    <li><a class="dropdown-item text-danger" href="conta.php">Meus Dados</a></li>
                                 <?php elseif ($tipoUsuario === 'Atleta'): ?>
                                     <li><a class="dropdown-item text-danger" href="atleta.php">Meus Dados</a></li>
                                 <?php endif; ?>
