@@ -2,15 +2,83 @@
 
 .mainBemVindo {
   display: flex;
-  justify-content: center;  /* Centraliza horizontalmente */
-  align-items: center;      /* Centraliza verticalmente */
-  height: calc(100vh - 150px); /* Ajuste se quiser descontar o tamanho do header/footer */
+  justify-content: center;
+  /* Centraliza horizontalmente */
+  align-items: center;
+  /* Centraliza verticalmente */
+  height: calc(100vh - 150px);
+  /* Ajuste se quiser descontar o tamanho do header/footer */
 }
 
-.bemVindo{
-    text-align: center;
+.bemVindo {
+  text-align: center;
 }
+
 .bemVindo h1 {
-    font-size: 4rem;
-    color: #3c2f2f;
+  font-size: 4rem;
+  color: #3c2f2f;
+}
+
+.cadInstituicao {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.dadosInstituicao {
+  flex: 1;
+}
+
+.dadosInstituicao .instituicao {
+  margin: 20px auto 0;
+}
+
+.logo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+.foto-instituicao-cadastro {
+  display: block;
+  margin: 10px auto 0;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cadAcademia {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.dadosAcademia {
+  flex: 1;
+}
+
+.dadosAcademia .academia {
+  margin: 20px auto 0;
+}
+
+.foto-academia-cadastro {
+  display: block;
+  margin: 10px auto 0;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+@media (min-width: 1400px) {
+  .cadInstituicao {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 30px;
+  }
 }

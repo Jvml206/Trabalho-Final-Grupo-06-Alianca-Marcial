@@ -21,13 +21,13 @@ require_once 'validaUser.php';?>
             <h3>Instituições apoiadoras</h3>
         </div>
         <div class="mt-3">
-            <a href="academia.php" class="btn btn-outline-success mb-3">Nova Academia</a>
+            <a href="instituicaoApoiadora.php" class="btn btn-outline-success mb-3">Nova Instituição</a>
         </div>
         <table class="table">
             <thead class="table-success">
                 <tr>
                     <th>#</th>
-                    <th>Nome da Academia</th>
+                    <th>Nome da Instituição</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
@@ -38,25 +38,25 @@ require_once 'validaUser.php';?>
                     require_once "Classes/{$class}.class.php";
                 });
 
-                $a = new Academia();
-                $academias = $a->all();
-                foreach ($academias as $academia):
+                $i = new InstituicaoApoiadora();
+                $instituicoes = $i->all();
+                foreach ($instituicoes as $instituicao):
                     ?>
                     <tr>
-                        <td><?php echo $academia->id_academia ?></td>
-                        <td><?php echo $academia->nome_fantasia ?></td>
+                        <td><?php echo $instituicao->id_instituicao_apoiadora ?></td>
+                        <td><?php echo $instituicao->nome_fantasia ?></td>
                         <td class="d-flex gap-1 justify-content-center">
-                            <form action="<?php echo htmlspecialchars("academia.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $academia->id_academia ?>">
+                            <form action="<?php echo htmlspecialchars("instituicaoApoiadora.php") ?>" method="post" class="d-flex">
+                                <input type="hidden" name="id" value="<?php echo $instituicao->id_instituicao_apoiadora ?>">
                                 <button name="btnEditar" class="btn btn-primary btn-sm" type="submit" title="Editar"
-                                    onclick="return confirm('Tem certeza que deseja editar a academia?');">
+                                    onclick="return confirm('Tem certeza que deseja editar a instituição?');">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
                             </form>
-                            <form action="<?php echo htmlspecialchars("academia.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $academia->id_academia ?>">
+                            <form action="<?php echo htmlspecialchars("instituicaoApoiadora.php") ?>" method="post" class="d-flex">
+                                <input type="hidden" name="id" value="<?php echo $instituicao->id_instituicao_apoiadora ?>">
                                 <button name="btnDeletar" class="btn btn-danger btn-sm" type="submit" title="Deletar"
-                                    onclick="return confirm('Tem certeza que deseja deletar a academia?');">
+                                    onclick="return confirm('Tem certeza que deseja deletar a instituição?');">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>

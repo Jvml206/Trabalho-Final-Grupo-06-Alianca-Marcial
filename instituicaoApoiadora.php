@@ -22,6 +22,29 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     $InstituicaoApoiadora->setInstagram(filter_input(INPUT_POST, "instagram", FILTER_SANITIZE_STRING));
     $InstituicaoApoiadora->setDescricao(filter_input(INPUT_POST, "descricao", FILTER_SANITIZE_STRING));
     $id = filter_input(INPUT_POST, 'id_instituicao_apoiadora');
+
+    $logoAntiga = filter_input(INPUT_POST, 'logoAntiga');
+    $InstituicaoApoiadora->setLogo($logoAntiga);
+
+    if (isset($_FILES['logo']) && $_FILES['logo']['error'] == 0) {
+        $extensao = strtolower(pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION));
+        $permitidas = ['jpg', 'jpeg', 'png', 'gif'];
+
+        if (in_array($extensao, $permitidas)) {
+            $nomeLogo = uniqid("instituicao_") . "." . $extensao;
+            $destino = "Images/instituicao_apoiadora/" . $nomeLogo;
+            $caminhoAntigo = "Images/instituicao_apoiadora/" . $logoAntiga;
+
+            if (!empty($logoAntiga) && is_file($caminhoAntigo)) {
+                unlink($caminhoAntigo);
+            }
+
+            if (move_uploaded_file($_FILES['logo']['tmp_name'], $destino)) {
+                $InstituicaoApoiadora->setLogo($nomeLogo);
+            }
+        }
+    }
+
     if (empty($id)):
         //Tenta adicionar e exibe a mensagemao usuário
         if ($InstituicaoApoiadora->add()) {
@@ -32,7 +55,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     else:
         if ($InstituicaoApoiadora->update('id_instituicao_apoiadora', $id)) {
             echo "<script>window.alert('Instituição apoiadora alterada com sucesso.'); 
-            window.location.href='listaInstituicaoApoiadora.php';</script>";
+            window.location.href='listaInstituicoes.php';</script>";
         } else {
             echo "<script> window.alert('Erro ao alterar a Instituição apoiadora.');
             window.open(document.referrer, '_self'); </script>";
@@ -40,12 +63,18 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     endif;
 elseif (filter_has_var(INPUT_POST, "btnDeletar")):
     $id = intval(filter_input(INPUT_POST, "id"));
-    if ($InstituicaoApoiadora->delete("id_instituicao_apoiadora", $id)) {
-        header("location:listaInstituicaoApoiadora.php");
-    } else {
-        echo "<script>window.alert('Erro ao excluir'); window.open(document.referrer, '_self');</script>";
+    $delInstituicaoApoiadora = $InstituicaoApoiadora->search("id_instituicao_apoiadora", $id);
+
+    $fotoApagar = "Images/instituicao_apoiadora/" . $delInstituicaoApoiadora->logo;
+    if (!empty($delInstituicaoApoiadora->logo) && is_file($fotoApagar)) {
+        unlink($fotoApagar);
     }
 
+    if ($InstituicaoApoiadora->delete("id_instituicao_apoiadora", $id)) {
+        header("location:listaInstituicoes.php");
+    } else {
+        echo "<script>alert('Erro ao excluir conta.'); window.open(document.referrer, '_self');</script>";
+    }
 endif;
 ?>
 
@@ -56,7 +85,7 @@ endif;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/baseSite.css">
+    <link rel="stylesheet" href="CSS/baseAdmin.css">
     <link rel="icon" href="Images/logo.png">
     <title>Cadastro de Instituição Apoiadora</title>
 </head>
@@ -81,63 +110,72 @@ endif;
         <form action="instituicaoApoiadora.php" method="post" class="row g3 mt-3" enctype="multipart/form-data"
             id="form_valida_email">
 
-            <input type="hidden" value="<?php echo $InstituicaoApoiadora->id_instituicao_apoiadora ?? null; ?>" name="id_instituicao_apoiadora">
+            <input type="hidden" value="<?php echo $InstituicaoApoiadora->id_instituicao_apoiadora ?? null; ?>"
+                name="id_instituicao_apoiadora">
+            <input type="hidden" name="logoAntiga" value="<?php echo $InstituicaoApoiadora->logo ?? ''; ?>">
 
-            <div class="nome col-md-6">
-                <label for="nome_fantasia" class="form-label">Nome Fantasia</label>
-                <input type="text" name="nome_fantasia" id="nome_fantasia"
-                    placeholder="Digite o Nome Fantasia da Instituição Apoiadora" required class="form-control"
-                    value="<?php echo $InstituicaoApoiadora->nome_fantasia ?? null; ?>">
+            <div class="row gap-4 mb-3">
+                <div class="dadosInstituicao col-md-6">
+                    <label for="nome_fantasia" class="form-label">Nome Fantasia</label>
+                    <input type="text" name="nome_fantasia" id="nome_fantasia"
+                        placeholder="Digite o Nome Fantasia da Instituição Apoiadora" required class="form-control"
+                        value="<?php echo $InstituicaoApoiadora->nome_fantasia ?? null; ?>">
 
-                <label for="razao_social" class="form-label">Razão Social</label>
-                <input type="text" name="razao_social" id="razao_social" placeholder="Digite a Razão Social da Instituição Apoiadora"
-                    required class="form-control" value="<?php echo $InstituicaoApoiadora->razao_social ?? null; ?>">
-            </div>
+                    <div class="instituicao">
+                        <label for="razao_social" class="form-label">Razão Social</label>
+                        <input type="text" name="razao_social" id="razao_social"
+                            placeholder="Digite a Razão Social da Instituição Apoiadora" required class="form-control"
+                            value="<?php echo $InstituicaoApoiadora->razao_social ?? null; ?>">
+                    </div>
 
-            <div class="col-md-4 logo">
-                <label for="logo" class="form-label">Logo da Instituição Apoiadora</label>
-                <input type="file" name="foto" id="foto" accept="image/*" class="form-control">
-                <?php if (!empty($InstituicaoApoiadora->foto)): ?>
-                    <img src="Images/instituicao_apoiadora/<?php echo $InstituicaoApoiadora->foto; ?>" alt="Foto da Instituição Apoiadora"
-                        class="mt-2 foto-academia-cadastro">
-                <?php endif; ?>
-            </div>
+                    <div class="instituicao">
+                        <label for="cnpj" class="form-label">CNPJ</label>
+                        <input type="text" name="cnpj" id="cnpj" placeholder="Digite o CNPJ da Instituição Apoiadora"
+                            required class="form-control" value="<?php echo $InstituicaoApoiadora->cnpj ?? null; ?>">
+                    </div>
 
-            <div class="col-md-4">
-                <label for="cnpj" class="form-label">CNPJ</label>
-                <input type="text" name="cnpj" id="cnpj" placeholder="Digite o CNPJ da Instituição Apoiadora" required
-                    class="form-control" value="<?php echo $InstituicaoApoiadora->cnpj ?? null; ?>">
-            </div>
+                    <div class="instituicao">
+                        <label for="telefone" class="form-label">Telefone</label>
+                        <input type="text" name="telefone" id="telefone"
+                            placeholder="Digite o Telefone da Instituição Apoiadora" required class="form-control"
+                            value="<?php echo $InstituicaoApoiadora->telefone ?? null; ?>">
+                    </div>
 
-            <div class="col-md-4">
-                <label for="telefone" class="form-label">Telefone</label>
-                <input type="text" name="telefone" id="telefone" placeholder="Digite o Telefone da Instituição Apoiadora" required
-                    class="form-control" value="<?php echo $InstituicaoApoiadora->telefone ?? null; ?>">
-            </div>
+                    <div class="instituicao">
+                        <label for="instagram" class="form-label">Instagram</label>
+                        <input type="text" name="instagram" id="instagram"
+                            placeholder="Digite o Instagram da Instituição Apoiadora" required class="form-control"
+                            value="<?php echo $InstituicaoApoiadora->instagram ?? null; ?>">
+                    </div>
+                </div>
 
-            <div class="col-md-4">
-                <label for="instagram" class="form-label">Instagram</label>
-                <input type="text" name="instagram" id="instagram" placeholder="Digite o Instagram da Instituição Apoiadora" required
-                    class="form-control" value="<?php echo $InstituicaoApoiadora->instagram ?? null; ?>">
+                <div class="logo">
+                    <label for="logo" class="form-label">Logo da Instituição</label>
+                    <input type="file" name="logo" id="logo" accept="image/*" class="form-control" <?php echo empty($InstituicaoApoiadora->logo) ? 'required' : null ?>>
+                    <?php if (!empty($InstituicaoApoiadora->logo)): ?>
+                        <img src="Images/instituicao_apoiadora/<?php echo $InstituicaoApoiadora->logo; ?>"
+                            alt="Logo da Instituição Apoiadora" class="mt-2 foto-instituicao-cadastro">
+                    <?php endif; ?>
+                </div>
             </div>
 
             <div class="col-md-7">
                 <label for="endereco" class="form-label">Endereço</label>
                 <input type="text" name="endereco" id="endereco"
-                    placeholder="Digite o Endereço da Instituição Apoiadora. Ex.: Rua São Paulo n°1532" required class="form-control"
-                    value="<?php echo $InstituicaoApoiadora->endereco ?? null; ?>">
+                    placeholder="Digite o Endereço da Instituição Apoiadora. Ex.: Rua São Paulo n°1532" required
+                    class="form-control" value="<?php echo $InstituicaoApoiadora->endereco ?? null; ?>">
             </div>
 
             <div class="col-md-5">
                 <label for="bairro" class="form-label">Bairro</label>
-                <input type="text" name="bairro" id="bairro" placeholder="Digite o Bairro da Instituição Apoiadora" required
-                    class="form-control" value="<?php echo $InstituicaoApoiadora->bairro ?? null; ?>">
+                <input type="text" name="bairro" id="bairro" placeholder="Digite o Bairro da Instituição Apoiadora"
+                    required class="form-control" value="<?php echo $InstituicaoApoiadora->bairro ?? null; ?>">
             </div>
 
             <div class="col-md-7">
                 <label for="cidade" class="form-label">Cidade</label>
-                <input type="text" name="cidade" id="cidade" placeholder="Digite a Cidade da Instituição Apoiadora" required
-                    class="form-control" value="<?php echo $InstituicaoApoiadora->cidade ?? null; ?>">
+                <input type="text" name="cidade" id="cidade" placeholder="Digite a Cidade da Instituição Apoiadora"
+                    required class="form-control" value="<?php echo $InstituicaoApoiadora->cidade ?? null; ?>">
             </div>
 
             <div class="col-md-3">
@@ -221,8 +259,9 @@ endif;
 
             <div class="col-12">
                 <label for="descricao" class="form-label">Descrição</label>
-                <textarea type="text" name="descricao" id="descricao" placeholder="Digite uma descrição, no mínimo 200 caracteres"
-                    required minlength="200" class="form-control"><?php echo $InstituicaoApoiadora->descricao ?? null; ?></textarea>
+                <textarea type="text" name="descricao" id="descricao"
+                    placeholder="Digite uma descrição, no mínimo 200 caracteres" required minlength="200"
+                    class="form-control"><?php echo $InstituicaoApoiadora->descricao ?? null; ?></textarea>
             </div>
 
             <div class="col-12 mt-3 d-flex gap-2">

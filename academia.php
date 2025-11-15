@@ -21,6 +21,29 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     $Academia->setEstado(filter_input(INPUT_POST, "estado", FILTER_SANITIZE_STRING));
     $Academia->setInstagram(filter_input(INPUT_POST, "instagram", FILTER_SANITIZE_STRING));
     $id = filter_input(INPUT_POST, 'id_academia');
+
+    $logoAntiga = filter_input(INPUT_POST, 'logoAntiga');
+    $Academia->setLogo($logoAntiga);
+
+    if (isset($_FILES['logo']) && $_FILES['logo']['error'] == 0) {
+        $extensao = strtolower(pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION));
+        $permitidas = ['jpg', 'jpeg', 'png', 'gif'];
+
+        if (in_array($extensao, $permitidas)) {
+            $nomeLogo = uniqid("academia_") . "." . $extensao;
+            $destino = "Images/academia/" . $nomeLogo;
+            $caminhoAntigo = "Images/academia/" . $logoAntiga;
+
+            if (!empty($logoAntiga) && is_file($caminhoAntigo)) {
+                unlink($caminhoAntigo);
+            }
+
+            if (move_uploaded_file($_FILES['logo']['tmp_name'], $destino)) {
+                $Academia->setLogo($nomeLogo);
+            }
+        }
+    }
+
     if (empty($id)):
         //Tenta adicionar e exibe a mensagemao usuário
         if ($Academia->add()) {
@@ -39,12 +62,18 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     endif;
 elseif (filter_has_var(INPUT_POST, "btnDeletar")):
     $id = intval(filter_input(INPUT_POST, "id"));
+    $delAcademia = $Academia->search("id_academia", $id);
+
+    $fotoApagar = "Images/academia/" . $delAcademia->logo;
+    if (!empty($delAcademia->logo) && is_file($fotoApagar)) {
+        unlink($fotoApagar);
+    }
+
     if ($Academia->delete("id_academia", $id)) {
         header("location:listaAcademia.php");
     } else {
-        echo "<script>window.alert('Erro ao excluir'); window.open(document.referrer, '_self');</script>";
+        echo "<script>alert('Erro ao excluir conta.'); window.open(document.referrer, '_self');</script>";
     }
-
 endif;
 ?>
 
@@ -56,7 +85,7 @@ endif;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/baseSite.css">
+    <link rel="stylesheet" href="CSS/baseAdmin.css">
     <link rel="icon" href="Images/logo.png">
     <title>Cadastro de Academia</title>
 </head>
@@ -83,43 +112,51 @@ endif;
 
             <input type="hidden" value="<?php echo $Academia->id_academia ?? null; ?>" name="id_academia">
 
-            <div class="nome col-md-6">
-                <label for="nome_fantasia" class="form-label">Nome Fantasia</label>
-                <input type="text" name="nome_fantasia" id="nome_fantasia"
-                    placeholder="Digite o Nome Fantasia da Academia" required class="form-control"
-                    value="<?php echo $Academia->nome_fantasia ?? null; ?>">
+            <div class="row gap-4 mb-3">
+                <div class="dadosAcademia col-md-6">
+                    <label for="nome_fantasia" class="form-label">Nome Fantasia</label>
+                    <input type="text" name="nome_fantasia" id="nome_fantasia"
+                        placeholder="Digite o Nome Fantasia da Academia" required class="form-control"
+                        value="<?php echo $Academia->nome_fantasia ?? null; ?>">
 
-                <label for="razao_social" class="form-label">Razão Social</label>
-                <input type="text" name="razao_social" id="razao_social" placeholder="Digite a Razão Social da Academia"
-                    required class="form-control" value="<?php echo $Academia->razao_social ?? null; ?>">
+                    <div class="academia">
+                        <label for="razao_social" class="form-label">Razão Social</label>
+                        <input type="text" name="razao_social" id="razao_social"
+                            placeholder="Digite a Razão Social da Academia" required class="form-control"
+                            value="<?php echo $Academia->razao_social ?? null; ?>">
+                    </div>
+
+                    <div class="academia">
+                        <label for="cnpj" class="form-label">CNPJ</label>
+                        <input type="text" name="cnpj" id="cnpj" placeholder="Digite o CNPJ da Academia"
+                            required class="form-control" value="<?php echo $Academia->cnpj ?? null; ?>">
+                    </div>
+
+                    <div class="academia">
+                        <label for="telefone" class="form-label">Telefone</label>
+                        <input type="text" name="telefone" id="telefone"
+                            placeholder="Digite o Telefone da Academia" required class="form-control"
+                            value="<?php echo $Academia->telefone ?? null; ?>">
+                    </div>
+
+                    <div class="academia">
+                        <label for="instagram" class="form-label">Instagram</label>
+                        <input type="text" name="instagram" id="instagram"
+                            placeholder="Digite o Instagram da Academia" required class="form-control"
+                            value="<?php echo $Academia->instagram ?? null; ?>">
+                    </div>
+                </div>
+
+                <div class="logo">
+                    <label for="logo" class="form-label">Logo da Academia</label>
+                    <input type="file" name="logo" id="logo" accept="image/*" class="form-control" <?php echo empty($Academia->logo) ? 'required' : null ?>>
+                    <?php if (!empty($Academia->logo)): ?>
+                        <img src="Images/academia/<?php echo $Academia->logo; ?>"
+                            alt="Logo da Academia" class="mt-2 foto-academia-cadastro">
+                    <?php endif; ?>
+                </div>
             </div>
 
-            <div class="col-md-4 logo">
-                <label for="logo" class="form-label">Logo da Academia</label>
-                <input type="file" name="foto" id="foto" accept="image/*" class="form-control">
-                <?php if (!empty($Academia->foto)): ?>
-                    <img src="Images/academia/<?php echo $Academia->foto; ?>" alt="Foto da Academia"
-                        class="mt-2 foto-academia-cadastro">
-                <?php endif; ?>
-            </div>
-
-            <div class="col-md-4">
-                <label for="cnpj" class="form-label">CNPJ</label>
-                <input type="text" name="cnpj" id="cnpj" placeholder="Digite o CNPJ da Academia" required
-                    class="form-control" value="<?php echo $Academia->cnpj ?? null; ?>">
-            </div>
-
-            <div class="col-md-4">
-                <label for="telefone" class="form-label">Telefone</label>
-                <input type="text" name="telefone" id="telefone" placeholder="Digite o Telefone do Instrutor" required
-                    class="form-control" value="<?php echo $Academia->telefone ?? null; ?>">
-            </div>
-
-            <div class="col-md-4">
-                <label for="instagram" class="form-label">Instagram</label>
-                <input type="text" name="instagram" id="instagram" placeholder="Digite o Instagram da Academia" required
-                    class="form-control" value="<?php echo $Academia->instagram ?? null; ?>">
-            </div>
 
             <div class="col-md-7">
                 <label for="endereco" class="form-label">Endereço</label>

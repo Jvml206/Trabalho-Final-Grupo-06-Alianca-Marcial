@@ -15,6 +15,7 @@ class Academia extends CRUD
     private $estado;
     private $instagram;
     private $email;
+    private $logo;
 
     public function getIdAcademia()
     {
@@ -131,12 +132,22 @@ class Academia extends CRUD
         $this->email = $email;
     }
 
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+    }
+
     // Métodos CRUD
     public function add()
     {
         $sql = "INSERT INTO $this->table 
-                (nome_fantasia, razao_social, cnpj, telefone, endereco, bairro, cidade, cep, estado, instagram, email)
-                VALUES (:nome_fantasia, :razao_social, :cnpj, :telefone, :endereco, :bairro, :cidade, :cep, :estado, :instagram, :email)";
+                (nome_fantasia, razao_social, cnpj, telefone, endereco, bairro, cidade, cep, estado, instagram, logo)
+                VALUES (:nome_fantasia, :razao_social, :cnpj, :telefone, :endereco, :bairro, :cidade, :cep, :estado, :instagram, :logo)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':nome_fantasia', $this->nome_fantasia);
@@ -149,7 +160,7 @@ class Academia extends CRUD
         $stmt->bindParam(':cep', $this->cep);
         $stmt->bindParam(':estado', $this->estado);
         $stmt->bindParam(':instagram', $this->instagram);
-        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':logo', $this->logo);
         return $stmt->execute();
     }
 
@@ -166,7 +177,8 @@ class Academia extends CRUD
                     cep = :cep,
                     estado = :estado, 
                     instagram = :instagram,
-                    email = :email
+                    email = :email,
+                    logo = :logo
                 WHERE $campo = :id_academia";
 
         $stmt = $this->db->prepare($sql);
@@ -181,6 +193,7 @@ class Academia extends CRUD
         $stmt->bindParam(':estado', $this->estado);
         $stmt->bindParam(':instagram', $this->instagram);
         $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':logo', $this->logo);
         $stmt->bindParam(':id_academia', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }

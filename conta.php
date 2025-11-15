@@ -17,6 +17,7 @@ if (filter_has_var(INPUT_POST, "btnEditar")):
     $Usuario->setNomeUsuario(filter_input(INPUT_POST, "nome_usuario", FILTER_SANITIZE_STRING));
     $Usuario->setEmail(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
     $Usuario->setTipoUsuario(filter_input(INPUT_POST, "tipo_usuario", FILTER_SANITIZE_STRING));
+    $tipo_usuario = filter_input(INPUT_POST, "tipo_usuario", FILTER_SANITIZE_STRING);
 
     if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
         $extensao = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
@@ -42,6 +43,19 @@ if (filter_has_var(INPUT_POST, "btnEditar")):
     } else {
         echo "<script>alert('Erro ao alterar o usuário.');window.open(document.referrer,'_self');</script>";
     }
+elseif (filter_has_var(INPUT_POST, "btnExcluirConta")):
+    $delUsuario = $Usuario->search("id_usuario", $idUsuario);
+
+    $fotoApagar = "Images/usuario/" . $delUsuario->foto;
+    if (!empty($delUsuario->foto) && is_file($fotoApagar)) {
+        unlink($fotoApagar);
+    }
+
+    if ($Usuario->delete("id_usuario", $idUsuario)) {
+        require_once 'exclusaoConta.php';
+    } else {
+        echo "<script>alert('Erro ao excluir conta.'); window.open(document.referrer, '_self');</script>";
+    }
 endif;
 ?>
 
@@ -52,9 +66,9 @@ endif;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/baseAdmin.css">
+    <link rel="stylesheet" href="CSS/baseSite.css">
     <link rel="icon" href="Images/logo.png">
-    <title>Cadastre-se</title>
+    <title>Conta</title>
 </head>
 
 <body>
@@ -66,10 +80,9 @@ endif;
 
     <main class="container">
 
-        <h2 class="text-center">Cadastro de Usuário</h2>
+        <h2 class="text-center">Conta</h2>
 
-        <form action="conta.php" method="post" class="row g3 mt-3" enctype="multipart/form-data"
-            id="form_valida_email">
+        <form action="conta.php" method="post" class="row g3 mt-3" enctype="multipart/form-data" id="form_valida_email">
 
             <input type="hidden" name="fotoAntiga" value="<?php echo $usuario->foto ?? ''; ?>">
             <div class="cadUsuario">
@@ -92,21 +105,6 @@ endif;
                             placeholder="Digite a confirmação do E-mail" required class="form-control">
                         <div id="mensagem" class="alert alert-danger mt-2 mb-3"></div>
                     </div>
-
-                    <div class="usuario">
-                        <label for="tipo_usuario" class="form-label">Tipo de Usuário</label>
-                        <select id="tipo_usuario" name="tipo_usuario" class="form-select"
-                            aria-label="Default select example">
-                            <option disabled <?= (!isset($usuario->tipo_usuario)) ? 'selected' : '' ?>>Selecione o Tipo
-                                de Usuário</option>
-                            <option value="Atleta" <?= (isset($usuario->tipo_usuario) && $usuario->tipo_usuario == 'Atleta') ? 'selected' : '' ?>>Atleta
-                            </option>
-                            <option value="Instrutor" <?= (isset($usuario->tipo_usuario) && $usuario->tipo_usuario == 'Instrutor') ? 'selected' : '' ?>>Instrutor
-                            </option>
-                            <option value="Usuário" <?= (isset($usuario->tipo_usuario) && $usuario->tipo_usuario == 'Usuário') ? 'selected' : '' ?>>Usuário
-                            </option>
-                        </select>
-                    </div>
                 </div>
 
                 <div class="fotoCadUsuario">
@@ -121,6 +119,8 @@ endif;
 
             <div class="col-12 mt-3 d-flex gap-2">
                 <button type="submit" name="btnEditar" id="btnEditar" class="btn btn-marrom">Salvar</button>
+                <button type="submit" name="btnExcluirConta" id="btnExcluirConta" class="btn btn-danger">Excluir
+                    Conta</button>
             </div>
         </form>
     </main>

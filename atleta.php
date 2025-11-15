@@ -135,7 +135,19 @@ elseif (filter_has_var(INPUT_POST, "btnDeletar")):
     } else {
         echo "<script>window.alert('Erro ao excluir'); window.open(document.referrer, '_self');</script>";
     }
+elseif (filter_has_var(INPUT_POST, "btnExcluirConta")):
+    $delUsuario = $Usuario->search("id_usuario", $idUsuario);
 
+    $fotoApagar = "Images/usuario/" . $delUsuario->foto;
+    if (!empty($delUsuario->foto) && is_file($fotoApagar)) {
+        unlink($fotoApagar);
+    }
+
+    if ($Usuario->delete("id_usuario", $idUsuario)) {
+        require_once 'exclusaoConta.php';
+    } else {
+        echo "<script>alert('Erro ao excluir conta.'); window.open(document.referrer, '_self');</script>";
+    }
 endif;
 ?>
 
@@ -386,10 +398,12 @@ endif;
             </div>
 
             <?php if ($tipoUsuario === 'Atleta'): ?>
-                <div class="col-12 mt-3 d-flex gap-2">
-                    <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-marrom mx-auto">
+                <div class="mt-3 d-flex gap-2 mx-auto w-auto">
+                    <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-marrom">
                         <?= isset($dadosAtleta->id_atleta) ? 'Atualizar' : 'Cadastrar' ?>
                     </button>
+                    <button type="submit" name="btnExcluirConta" id="btnExcluirConta" class="btn btn-danger">Excluir
+                    Conta</button>
                 </div>
             <?php elseif ($tipoUsuario === 'Administrador' || $tipoUsuario === 'Instrutor'): ?>
                 <div class="col-12 mt-3 d-flex gap-2 mx-auto">

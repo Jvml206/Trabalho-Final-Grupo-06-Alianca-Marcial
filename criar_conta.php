@@ -10,8 +10,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
 
     $Usuario->setNomeUsuario(filter_input(INPUT_POST, "nome_usuario", FILTER_SANITIZE_STRING));
     $Usuario->setEmail(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
-    $senhaC = password_hash('senha', PASSWORD_DEFAULT);
-    $Usuario->setSenha($senhaC);
+    $Usuario->setSenha('senha');
     $Usuario->setTipoUsuario(filter_input(INPUT_POST, "tipo_usuario", FILTER_SANITIZE_STRING));
 
     $id_usuario = filter_input(INPUT_POST, "id_usuario", FILTER_SANITIZE_NUMBER_INT);
@@ -59,7 +58,7 @@ endif;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/baseAdmin.css">
+    <link rel="stylesheet" href="CSS/baseSite.css">
     <link rel="icon" href="Images/logo.png">
     <title>Cadastre-se</title>
 </head>
@@ -69,7 +68,7 @@ endif;
 
     <main class="container">
 
-        <h2 class="text-center">Cadastro de Usuário</h2>
+        <h2 class="text-center">Cadastre-se</h2>
 
         <form action="criar_conta.php" method="post" class="row g3 mt-3" enctype="multipart/form-data"
             id="form_valida_email">

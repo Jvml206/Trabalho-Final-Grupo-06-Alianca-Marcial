@@ -101,7 +101,8 @@ CREATE TABLE IF NOT EXISTS instituicao_apoiadora (
     cep VARCHAR(9),
     estado VARCHAR(2),
     instagram VARCHAR(100),
-    descricao TEXT NOT NULL
+    descricao TEXT NOT NULL,
+    logo TEXT NOT NULL
 ) ENGINE=InnoDB;
 
 -- ============================

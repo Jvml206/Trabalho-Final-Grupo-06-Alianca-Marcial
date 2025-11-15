@@ -28,7 +28,7 @@ footer {
 .nav-custom {
     background-color: #3B5448;
     padding: 15px 30px;
-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .nav-custom .empresa {
@@ -37,7 +37,7 @@ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     letter-spacing: 1px;
     color: #D8E6D8;
     display: block;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .nav-custom .aurora {
@@ -45,7 +45,7 @@ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     color: #b7b7b7;
     display: block;
     margin-top: -5px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 
@@ -55,7 +55,7 @@ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     margin: 0 12px;
     text-transform: uppercase;
     transition: color 0.3s ease;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .nav-custom .nav-link:hover {
@@ -63,10 +63,10 @@ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .navbar-toggler i {
-  color: #D8E6D8; 
+    color: #D8E6D8;
 }
 
-.nav-item{
+.nav-item {
     font-size: 18px;
 }
 
@@ -76,8 +76,8 @@ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .btn-marrom {
-    background-color: #6f4e37; 
-    color: #fff;              
+    background-color: #6f4e37;
+    color: #fff;
     font-weight: bold;
     border: none;
     transition: background-color 0.3s ease;
@@ -85,7 +85,7 @@ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .btn-marrom:hover {
-    background-color: #5a3f2e; 
+    background-color: #5a3f2e;
     color: #fff;
 }
 
@@ -147,40 +147,7 @@ footer .rede-social i {
     text-decoration: none;
 }
 
-.cadUsuario {
-    display: flex;
-    flex: 1;
-    flex-direction: row;
-    gap: 30px;
-}
-
-.dadosUsuario {
-    flex: 1;
-}
-
-.dadosUsuario .usuario{
-    margin: 20px auto 0;
-}
-
-.fotoCadUsuario {
-    flex: 1;
-    align-items: center;
-}
-
-.foto-usuario-cadastro {
-    display: block;
-    margin: 10px auto 0;
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.usuarioAtleta{
-    margin: 16px auto 0;
-}
-
-@media (min-width: 550px) {
+@media (min-width: 1400px) {
     footer .r-linha {
         flex-direction: row;
         justify-content: space-between;

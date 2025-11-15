@@ -181,6 +181,13 @@ class Usuario extends CRUD
         exit();
     }
 
+    public function contaExcluida()
+    {
+        session_unset();
+        session_destroy();
+        echo "<script>alert('Conta excluida com sucesso.'); window.location.href='index.php';</script>";
+        exit();
+    }
     #Expirar 
 
     public function sessaoExpirou()

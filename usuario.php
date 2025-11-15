@@ -15,7 +15,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
 
     $Usuario->setNomeUsuario(filter_input(INPUT_POST, "nome_usuario", FILTER_SANITIZE_STRING));
     $Usuario->setEmail(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
-    $Usuario->setSenha('senhaprovisoria');
+    $Usuario->setSenha('senha');
     $Usuario->setTipoUsuario(filter_input(INPUT_POST, "tipo_usuario", FILTER_SANITIZE_STRING));
 
     $id_usuario = filter_input(INPUT_POST, "id_usuario", FILTER_SANITIZE_NUMBER_INT);
