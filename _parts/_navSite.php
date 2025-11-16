@@ -26,10 +26,20 @@
                     <li class="nav-item">
                         <a class="nav-link" href="apoiadores.php">Apoiadores</a>
                     </li>
-                    <?php if ($tipoUsuario === 'Atleta'): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="listaPedidoAjuda.php">Ajuda</a>
-                        </li>
+                    <?php
+                    if (session_status() === PHP_SESSION_NONE) {
+                        session_start();
+                    }
+
+                    if (isset($_SESSION['user_name']) && isset($_SESSION['tipo_usuario'])):
+                        $tipoUsuario = $_SESSION['tipo_usuario'];
+                        $nomeUsuario = htmlspecialchars($_SESSION['user_name']);
+                        ?>
+                        <?php if ($tipoUsuario === 'Atleta'): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="listaPedidoAjuda.php">Ajuda</a>
+                            </li>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </ul>
 
