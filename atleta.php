@@ -13,12 +13,12 @@ $instrutor = $Instrutor->all();
 $Atleta = new Atleta();
 $Usuario = new Usuario();
 $usuario = $Usuario->all();
-$usuariosExistentes = $Usuario->usuariosAtletaExistentes();
 $usuariosDisponiveis = $Usuario->usuariosAtletaDisponiveis();
 
 $idUsuario = $_SESSION['user_id'];
 $nome = $_SESSION['user_name'];
-$tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
+$email = $_SESSION['user_email'];
+$tipoUsuario = $_SESSION['tipo_usuario'];
 
 // Se o usuário for "Atleta", verifica se já possui cadastro
 if ($tipoUsuario === 'Atleta') {
@@ -42,21 +42,22 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     $Atleta->setCategoria(filter_input(INPUT_POST, "categoria", FILTER_SANITIZE_STRING));
     $id = filter_input(INPUT_POST, 'id_atleta');
 
-    $Usuario = new Usuario();
-    $nomeAtleta = trim(filter_input(INPUT_POST, "nome_atleta", FILTER_SANITIZE_STRING));
-
-    // Busca o usuário pelo nome informado
-    $usuarioEncontrado = $Usuario->searchString("nome_usuario", $nomeAtleta);
-    $fkUsuario = $Usuario->search("id_usuario", $idUsuario);
 
     if ($tipoUsuario === 'Administrador') {
-        $Atleta->setFkIdUsuario($fkUsuario);
+        $nomeAtleta = trim(filter_input(INPUT_POST, "nome_atleta", FILTER_SANITIZE_STRING));
+        $usuarioEncontrado = $Usuario->searchAtleta("nome_usuario", $nomeAtleta);
+        $fkUsuario = $Usuario->search("id_usuario", $usuarioEncontrado->id_usuario);
+
+        $Atleta->setFkIdUsuario($fkUsuario->id_usuario);
         $Atleta->setFkIdAcademia(filter_input(INPUT_POST, "fk_id_academia", FILTER_SANITIZE_NUMBER_INT));
         $Atleta->setFkIdInstrutor(filter_input(INPUT_POST, "fk_id_instrutor", FILTER_SANITIZE_NUMBER_INT));
         $Atleta->setNomeAtleta($nomeAtleta);
 
     } elseif ($tipoUsuario === 'Instrutor') {
-        $Instrutor = new Instrutor();
+        $nomeAtleta = trim(filter_input(INPUT_POST, "nome_atleta", FILTER_SANITIZE_STRING));
+        $usuarioEncontrado = $Usuario->searchAtleta("nome_usuario", $nomeAtleta);
+        $fkUsuario = $Usuario->search("id_usuario", $usuarioEncontrado->id_usuario);
+
         $dadosInstrutor = $Instrutor->search("fk_id_usuario", $idUsuario);
 
         if (!$dadosInstrutor) {
@@ -65,7 +66,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
         }
 
         $Atleta->setNomeAtleta($nomeAtleta);
-        $Atleta->setFkIdUsuario($fkUsuario);
+        $Atleta->setFkIdUsuario($fkUsuario->id_usuario);
         $Atleta->setFkIdInstrutor($dadosInstrutor->id_instrutor);
         $Atleta->setFkIdAcademia($dadosInstrutor->fk_id_academia);
 
@@ -77,55 +78,57 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     }
 
     if (empty($id)):
-        //Tenta adicionar e exibe a mensagemao usuário
+        //Tenta adicionar e exibe a mensagem ao usuário
         if ($Atleta->add()) {
             echo "<script>window.alert('Cadastro de atleta realizado com sucesso.');window.location.href='index.php';window.location.href='atleta.php';</script>";
         } else {
             echo "<script>window.alert('Erro ao cadastrar o atleta.');window.open(document.referrer,'_self');</script>";
         }
     else:
-        if ($tipoUsuario === 'Atleta') {
+        if ($Atleta->update('id_atleta', $id)) {
 
-            $Usuario = new Usuario();
-            $usuarioAtual = $Usuario->search("id_usuario", $idUsuario);
+            if ($tipoUsuario === 'Atleta') {
 
-            $fotoAntiga = filter_input(INPUT_POST, 'fotoAntiga');
+                $usuarioAtual = $Usuario->search("id_usuario", $idUsuario);
 
-            $Usuario->setFoto($fotoAntiga);
-            $Usuario->setNomeUsuario(filter_input(INPUT_POST, "nome_usuario", FILTER_SANITIZE_STRING));
-            $Usuario->setEmail(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
-            $Usuario->setTipoUsuario($tipoUsuario);
+                $fotoAntiga = filter_input(INPUT_POST, 'fotoAntiga');
+                $Usuario->setFoto($fotoAntiga);
+                $Usuario->setNomeUsuario(filter_input(INPUT_POST, "nome_usuario", FILTER_SANITIZE_STRING));
+                $Usuario->setEmail($email);
+                $Usuario->setTipoUsuario($tipoUsuario);
 
-            if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
-                $extensao = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
-                $permitidas = ['jpg', 'jpeg', 'png', 'gif'];
+                // Upload da nova foto
+                if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
+                    $extensao = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
+                    $permitidas = ['jpg', 'jpeg', 'png', 'gif'];
 
-                if (in_array($extensao, $permitidas)) {
-                    $nomeFoto = uniqid("usuario_") . "." . $extensao;
-                    $destino = "Images/usuario/" . $nomeFoto;
-                    $caminhoAntigo = "Images/usuario/" . $fotoAntiga;
+                    if (in_array($extensao, $permitidas)) {
+                        $nomeFoto = uniqid("usuario_") . "." . $extensao;
+                        $destino = "Images/usuario/" . $nomeFoto;
+                        $caminhoAntigo = "Images/usuario/" . $fotoAntiga;
 
-                    if (!empty($fotoAntiga) && is_file($caminhoAntigo)) {
-                        var_dump($fotoAntiga, $caminhoAntigo, file_exists($caminhoAntigo));
-                        unlink($caminhoAntigo);
-                    }
+                        if (!empty($fotoAntiga) && is_file($caminhoAntigo)) {
+                            unlink($caminhoAntigo);
+                        }
 
-                    if (move_uploaded_file($_FILES['foto']['tmp_name'], $destino)) {
-                        $Usuario->setFoto($nomeFoto);
+                        if (move_uploaded_file($_FILES['foto']['tmp_name'], $destino)) {
+                            $Usuario->setFoto($nomeFoto);
+                        }
                     }
                 }
+
+                $Usuario->update('id_usuario', $idUsuario);
             }
 
-            if ($Usuario->update('id_usuario', $idUsuario)) {
-                $Atleta->update('id_atleta', $id);
-                echo "<script>window.alert('Atleta alterado com sucesso.');window.location.href='atleta.php';</script>";
+            if ($tipoUsuario === 'Administrador' || $tipoUsuario === 'Instrutor') {
+                echo "<script>window.alert('Atleta alterado com sucesso.');window.location.href='listaAtleta.php';</script>";
                 exit;
             }
-            echo "<script>window.alert('Atleta alterado com sucesso.'); 
-            window.location.href='listaAtleta.php';</script>";
+            echo "<script>window.alert('Atleta alterado com sucesso.');window.location.href='atleta.php';</script>";
+            exit;
         } else {
             echo "<script> window.alert('Erro ao alterar o atleta.');
-            window.open(document.referrer, '_self'); </script>";
+        window.open(document.referrer, '_self'); </script>";
         }
     endif;
 elseif (filter_has_var(INPUT_POST, "btnDeletar")):
@@ -160,28 +163,21 @@ endif;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/baseSite.css">
     <link rel="icon" href="Images/logo.png">
-    <?php if (isset($_SESSION['tipo_usuario'])):
-        $tipoUsuario = $_SESSION['tipo_usuario'];
-        if ($tipoUsuario != 'Administrador'):
-            ?>
-            <title>Cadastro de Atleta</title><?php
-        else:
-            ?>
-            <title>Conta</title><?php
-        endif;
+    <?php if ($tipoUsuario === 'Atleta'):
+        ?>
+        <title>Conta</title><?php
+    else:
+        ?>
+        <title>Cadastro de Atleta</title><?php
     endif;
     ?>
 </head>
 
 <body>
-    <?php if (isset($_SESSION['tipo_usuario'])):
-        $tipoUsuario = $_SESSION['tipo_usuario'];
-
-        if ($tipoUsuario != 'Administrador'):
-            require_once "_parts/_navSite.php";
-        else:
-            require_once "_parts/_navAdmin.php";
-        endif;
+    <?php if ($tipoUsuario != 'Administrador'):
+        require_once "_parts/_navSite.php";
+    else:
+        require_once "_parts/_navAdmin.php";
     endif;
     ?>
 
@@ -202,15 +198,12 @@ endif;
         <form action="atleta.php" method="post" class="row g3 mt-3" enctype="multipart/form-data"
             id="form_valida_email">
 
-            <?php if (isset($_SESSION['tipo_usuario'])):
-                $tipoUsuario = $_SESSION['tipo_usuario'];
-                if ($tipoUsuario === 'Administrador'):
-                    ?>
-                    <h2 class="text-center">Conta</h2><?php
-                else:
-                    ?>
-                    <h2 class="text-center">Cadastro de Atleta</h2><?php
-                endif;
+            <?php if ($tipoUsuario === 'Atleta'):
+                ?>
+                <h2 class="text-center">Conta</h2><?php
+            else:
+                ?>
+                <h2 class="text-center">Cadastro de Atleta</h2><?php
             endif;
             ?>
             <input type="hidden" value="<?php echo $dadosAtleta->id_atleta ?? null; ?>" name="id_atleta">
@@ -218,7 +211,7 @@ endif;
             <!-- Alteração nos dados de usuario quando logado -->
             <?php if (session_status() === PHP_SESSION_ACTIVE && $tipoUsuario === 'Atleta') {
                 $usuario = $Usuario->search("id_usuario", $idUsuario); ?>
-                <input type="hidden" name="fotoAntiga" value="<?php echo $usuario->foto ?? ''; ?>"></div>
+                <input type="hidden" name="fotoAntiga" value="<?php echo $usuario->foto ?? ''; ?>">
                 <div class="row gap-4 mb-3">
                     <div class="dadosUsuario col-md-6">
                         <div>
@@ -289,7 +282,7 @@ endif;
                 <div class="col-md-6">
                     <label for="fk_id_academia" class="form-label">Academia</label>
                     <select name="fk_id_academia" class="form-select" id="fk_id_academia" required>
-                        <option disabled <?= (!isset($dadosAtleta->fk_id_academia)) ? 'selected' : '' ?>>Selecione a Academia
+                        <option value="" disabled <?= (!isset($dadosAtleta->fk_id_academia)) ? 'selected' : '' ?>>Selecione a Academia
                         </option>
                         <?php foreach ($academia as $ac): ?>
                             <option value="<?= $ac->id_academia ?>">
@@ -303,10 +296,10 @@ endif;
                 <div class="col-md-6">
                     <label for="fk_id_academia" class="form-label">Academia</label>
                     <select name="fk_id_academia" class="form-select" id="fk_id_academia" required>
-                        <option disabled <?= (!isset($dadosAtleta->fk_id_academia)) ? 'selected' : '' ?>>Selecione a Academia
+                        <option value="" disabled <?= (!isset($dadosAtleta->fk_id_academia)) ? 'selected' : '' ?>>Selecione a Academia
                         </option>
                         <?php foreach ($academia as $ac): ?>
-                            <option value="<?= $ac->id_academia ?>">
+                            <option value="<?= $ac->id_academia ?>" <?= ($dadosAtleta->fk_id_academia == $ac->id_academia) ? 'selected' : '' ?>>
                                 <?= htmlspecialchars($ac->nome_fantasia) ?>
                             </option>
                         <?php endforeach; ?>
@@ -321,11 +314,11 @@ endif;
             <?php if ($tipoUsuario === 'Administrador' || $tipoUsuario === 'Atleta'): ?>
                 <div class="col-md-6">
                     <label for="fk_id_instrutor" class="form-label">Instrutor</label>
-                    <select name="fk_id_instrutor" class="form-select" id="fk_id_instrutor" required>
-                        <option disabled <?= (!isset($dadosAtleta->fk_id_instrutor)) ? 'selected' : '' ?>>Selecione o
+                    <select name="fk_id_instrutor" class="form-select" id="fk_id_instrutor" required disabled data-selected="<?= $dadosAtleta->fk_id_instrutor ?? '' ?>">
+                        <option value="" disabled <?= (!isset($dadosAtleta->fk_id_instrutor)) ? 'selected' : '' ?>>Selecione o
                             Instrutor</option>
                         <?php foreach ($instrutor as $ins): ?>
-                            <option value="<?= $ins->id_instrutor ?>">
+                            <option value="<?= $ins->id_instrutor ?>" data-academia="<?= $ins->fk_id_academia ?>">
                                 <?= htmlspecialchars($ins->nome_instrutor) ?>
                             </option>
                         <?php endforeach; ?>
@@ -403,7 +396,7 @@ endif;
                         <?= isset($dadosAtleta->id_atleta) ? 'Atualizar' : 'Cadastrar' ?>
                     </button>
                     <button type="submit" name="btnExcluirConta" id="btnExcluirConta" class="btn btn-danger">Excluir
-                    Conta</button>
+                        Conta</button>
                 </div>
             <?php elseif ($tipoUsuario === 'Administrador' || $tipoUsuario === 'Instrutor'): ?>
                 <div class="col-12 mt-3 d-flex gap-2 mx-auto">
@@ -421,6 +414,7 @@ endif;
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script src="JS/controleEmail.js"></script>
+    <script src="JS/instrutorDoAtleta.js"></script>
     <script>
         $('#peso').mask('000.00', { reverse: true });
     </script>

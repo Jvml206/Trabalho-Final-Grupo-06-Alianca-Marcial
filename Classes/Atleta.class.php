@@ -173,4 +173,13 @@ class Atleta extends CRUD
 
         return $resultado['total'] > 0;
     }
+    public function searchAll($academia, $id_academia, $instrutor, $id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE $academia = :id_academia AND $instrutor = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":id_academia", $id_academia);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }

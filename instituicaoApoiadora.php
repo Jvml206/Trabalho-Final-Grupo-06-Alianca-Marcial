@@ -46,7 +46,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     }
 
     if (empty($id)):
-        //Tenta adicionar e exibe a mensagemao usuário
+        //Tenta adicionar e exibe a mensagem ao usuário
         if ($InstituicaoApoiadora->add()) {
             echo "<script>window.alert('Cadastro de instituição apoiadora realizado com sucesso.');window.location.href=instituicaoApoiadora.php;</script>";
         } else {

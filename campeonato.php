@@ -18,7 +18,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     $Campeonato->setEsporte(filter_input(INPUT_POST, "esporte", FILTER_SANITIZE_STRING));
     $id = filter_input(INPUT_POST, 'id_campeonato');
     if (empty($id)):
-        //Tenta adicionar e exibe a mensagemao usuário
+        //Tenta adicionar e exibe a mensagem ao usuário
         if ($Campeonato->add()) {
             echo "<script>window.alert('Cadastro de campeonato realizado com sucesso.');window.location.href=campeonato.php;</script>";
         } else {

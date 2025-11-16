@@ -112,4 +112,14 @@ class Instrutor extends CRUD
         $stmt->bindParam(":id_instrutor", $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
+
+    public function verificarPorUsuario($idUsuario)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM instrutor WHERE fk_id_usuario = :id_usuario";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_usuario', $idUsuario, PDO::PARAM_INT);
+        $stmt->execute();
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado['total'] > 0;
+    }
 }

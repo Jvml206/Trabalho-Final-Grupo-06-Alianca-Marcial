@@ -45,7 +45,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     }
 
     if (empty($id)):
-        //Tenta adicionar e exibe a mensagemao usuário
+        //Tenta adicionar e exibe a mensagem ao usuário
         if ($Academia->add()) {
             echo "<script>window.alert('Cadastro de academia realizado com sucesso.');window.location.href=academia.php;</script>";
         } else {

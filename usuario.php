@@ -90,7 +90,7 @@ endif;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/baseAdmin.css">
+    <link rel="stylesheet" href="CSS/baseSite.css">
     <link rel="icon" href="Images/logo.png">
     <title>Cadastro de Usuário</title>
 </head>
@@ -123,7 +123,7 @@ endif;
 
         <form action="usuario.php" method="post" class="row g3 mt-3" enctype="multipart/form-data"
             id="form_valida_email">
-            
+
             <input type="hidden" value="<?php echo $Usuario->id_usuario ?? null; ?>" name="id_usuario">
             <input type="hidden" name="fotoAntiga" value="<?php echo $Usuario->foto ?? ''; ?>">
             <div class="cadUsuario">

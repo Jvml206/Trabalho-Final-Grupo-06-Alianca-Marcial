@@ -15,11 +15,11 @@ if ($usuario->sessaoExpirou()) {
 }
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['tipo_usuario'])) {
-    header("Location: login.php?error=not_logged_in"); 
+    header("Location: login.php?error=not_logged_in");
     exit;
 }
 
-if(isset($nivelPermitido)){
+if (isset($nivelPermitido)) {
     $tipoUsuario = $_SESSION['tipo_usuario'];
 
     if (!in_array($tipoUsuario, $nivelPermitido)) {

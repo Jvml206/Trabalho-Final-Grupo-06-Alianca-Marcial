@@ -123,17 +123,34 @@ class Usuario extends CRUD
         }
     }
 
-    public function usuariosAtletaExistentes()
+    public function searchAtleta(string $campo, string $valor)
     {
-        $sql = "SELECT * FROM $this->table WHERE tipo_usuario = 'Atleta'";
+        $sql = "SELECT * FROM $this->table WHERE $campo = :valor AND tipo_usuario = 'Atleta'";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->rowCount() > 0 ? $stmt->fetch(PDO::FETCH_OBJ) : null;
+    }
+    public function usuariosAtletaDisponiveis()
+    {
+        $sql = "SELECT u.* FROM $this->table u WHERE u.tipo_usuario = 'Atleta' AND NOT EXISTS ( SELECT 1 FROM atleta a WHERE a.fk_id_usuario = u.id_usuario)";
+
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function usuariosAtletaDisponiveis()
+    public function searchInstrutor(string $campo, string $valor)
     {
-        $sql = "SELECT * FROM $this->table WHERE tipo_usuario = 'Atleta' AND id_usuario NOT IN (SELECT fk_id_usuario FROM atleta)";
+        $sql = "SELECT * FROM $this->table WHERE $campo = :valor AND tipo_usuario = 'Instrutor'";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->rowCount() > 0 ? $stmt->fetch(PDO::FETCH_OBJ) : null;
+    }
+    public function usuariosInstrutorDisponiveis()
+    {
+        $sql = "SELECT u.* FROM $this->table u WHERE u.tipo_usuario = 'Instrutor' AND NOT EXISTS ( SELECT 1 FROM instrutor i WHERE i.fk_id_usuario = u.id_usuario)";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);

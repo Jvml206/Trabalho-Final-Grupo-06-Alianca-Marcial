@@ -3,6 +3,7 @@ $nivelPermitido = ['Administrador', 'Instrutor'];
 require_once 'validaUser.php';
 
 $idUsuario = $_SESSION['user_id'];
+$tipoUsuario = $_SESSION['tipo_usuario'];
 
 spl_autoload_register(function ($class) {
     require_once "Classes/{$class}.class.php";
@@ -12,7 +13,22 @@ $academias = $Academia->all();
 $Instrutor = new Instrutor();
 $instrutores = $Instrutor->all();
 $Atleta = new Atleta();
-$atletas = $Atleta->all();
+
+
+if ($tipoUsuario === 'Instrutor') {
+    $dadosInstrutor = $Instrutor->search("fk_id_usuario", $idUsuario);
+
+    if (!$dadosInstrutor) {
+        die("Erro: Instrutor não encontrado");
+    }
+}
+
+if ($tipoUsuario === 'Instrutor') {
+    $atletas = $Atleta->searchAll("fk_id_academia", $dadosInstrutor->fk_id_academia, "fk_id_instrutor", $dadosInstrutor->id_instrutor);
+} else {
+    // Administrador vê todos
+    $atletas = $Atleta->all();
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,15 +44,12 @@ $atletas = $Atleta->all();
 </head>
 
 <body>
-    <?php if (isset($_SESSION['tipo_usuario'])):
-        $tipoUsuario = $_SESSION['tipo_usuario'];
-
-        if ($tipoUsuario != 'Administrador'):
-            require_once "_parts/_navSite.php";
-        else:
-            require_once "_parts/_navAdmin.php";
-        endif;
-    endif; ?>
+    <?php if ($tipoUsuario != 'Administrador'):
+        require_once "_parts/_navSite.php";
+    else:
+        require_once "_parts/_navAdmin.php";
+    endif;
+    ?>
 
     <main class="container mt-3">
         <div class="mt-3">

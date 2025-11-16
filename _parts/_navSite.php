@@ -26,6 +26,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="apoiadores.php">Apoiadores</a>
                     </li>
+                    <?php if ($tipoUsuario === 'Atleta'): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="listaPedidoAjuda.php">Ajuda</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
 
                 <ul class="navbar-nav">

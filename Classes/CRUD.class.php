@@ -31,14 +31,6 @@ abstract class CRUD
         $stmt->execute();
         return $stmt->rowCount() > 0 ? $stmt->fetch(PDO::FETCH_OBJ) : null;
     }
-    public function searchString(string $campo, string $valor)
-    {
-        $sql = "SELECT * FROM $this->table WHERE $campo = :valor";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
-        $stmt->execute();
-        return $stmt->rowCount() > 0 ? $stmt->fetch(PDO::FETCH_OBJ) : null;
-    }
 
     //método para Excluir um registro pelo ID
     public function delete(string $campo, int $id)
@@ -49,19 +41,22 @@ abstract class CRUD
         try {
             return $stmt->execute();
         } catch (PDOException $e) {
-            error_log('Erro ao excluir registro' .$e->getMessage());
+            error_log('Erro ao excluir registro' . $e->getMessage());
             return false;
         }
     }
 
-    public function iniciaTrans(){
+    public function iniciaTrans()
+    {
         $this->db->beginTransaction();
     }
 
-    public function confirmaTrans(){
+    public function confirmaTrans()
+    {
         $this->db->commit();
     }
-    public function cancelarTrans(){
+    public function cancelarTrans()
+    {
         $this->db->rollBack();
     }
 }

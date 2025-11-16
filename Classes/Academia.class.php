@@ -146,8 +146,8 @@ class Academia extends CRUD
     public function add()
     {
         $sql = "INSERT INTO $this->table 
-                (nome_fantasia, razao_social, cnpj, telefone, endereco, bairro, cidade, cep, estado, instagram, logo)
-                VALUES (:nome_fantasia, :razao_social, :cnpj, :telefone, :endereco, :bairro, :cidade, :cep, :estado, :instagram, :logo)";
+                (nome_fantasia, razao_social, cnpj, telefone, endereco, bairro, cidade, cep, estado, instagram, email, logo)
+                VALUES (:nome_fantasia, :razao_social, :cnpj, :telefone, :endereco, :bairro, :cidade, :cep, :estado, :instagram, :email, :logo)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':nome_fantasia', $this->nome_fantasia);
@@ -160,6 +160,7 @@ class Academia extends CRUD
         $stmt->bindParam(':cep', $this->cep);
         $stmt->bindParam(':estado', $this->estado);
         $stmt->bindParam(':instagram', $this->instagram);
+        $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':logo', $this->logo);
         return $stmt->execute();
     }
