@@ -108,8 +108,8 @@ class PedidoAjuda extends CRUD
     public function add()
     {
         $sql = "INSERT INTO $this->table 
-                (titulo, descricao, valor_necessario, valor_atingido, pix, imagem, fk_id_academia, fk_id_instrutor, fk_id_atleta) 
-                VALUES (:titulo, :descricao, :valor_necessario, :valor_atingido, :pix, :imagem, :fk_id_academia, :fk_id_instrutor, :fk_id_atleta)";
+                (titulo, descricao, valor_necessario, valor_atingido, pix, imagem, fk_id_atleta) 
+                VALUES (:titulo, :descricao, :valor_necessario, :valor_atingido, :pix, :imagem, :fk_id_atleta)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':titulo', $this->titulo);
@@ -118,8 +118,6 @@ class PedidoAjuda extends CRUD
         $stmt->bindParam(':valor_atingido', $this->valor_atingido);
         $stmt->bindParam(':pix', $this->pix);
         $stmt->bindParam(':imagem', $this->imagem);
-        $stmt->bindParam(':fk_id_academia', $this->fk_id_academia);
-        $stmt->bindParam(':fk_id_instrutor', $this->fk_id_instrutor);
         $stmt->bindParam(':fk_id_atleta', $this->fk_id_atleta);
         return $stmt->execute();
     }
@@ -132,9 +130,7 @@ class PedidoAjuda extends CRUD
                     valor_necessario = :valor_necessario, 
                     valor_atingido = :valor_atingido, 
                     pix = :pix, 
-                    imagem = :imagem, 
-                    fk_id_academia = :fk_id_academia, 
-                    fk_id_instrutor = :fk_id_instrutor, 
+                    imagem = :imagem,
                     fk_id_atleta = :fk_id_atleta
                 WHERE $campo = :id_pedido_ajuda";
         
@@ -145,11 +141,18 @@ class PedidoAjuda extends CRUD
         $stmt->bindParam(':valor_atingido', $this->valor_atingido);
         $stmt->bindParam(':pix', $this->pix);
         $stmt->bindParam(':imagem', $this->imagem);
-        $stmt->bindParam(':fk_id_academia', $this->fk_id_academia);
-        $stmt->bindParam(':fk_id_instrutor', $this->fk_id_instrutor);
         $stmt->bindParam(':fk_id_atleta', $this->fk_id_atleta);
         $stmt->bindParam(":id_pedido_ajuda", $id, PDO::PARAM_INT);
         return $stmt->execute();
+    }
+
+    public function searchAll($usuario, $id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE $usuario = :fk_id_atleta";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":fk_id_atleta", $id);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
 }

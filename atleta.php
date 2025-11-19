@@ -26,9 +26,6 @@ if ($tipoUsuario === 'Atleta') {
     if ($existe) {
         // Se já existir cadastro, busca os dados para edição
         $dadosAtleta = $Atleta->search("fk_id_usuario", $idUsuario);
-    } else {
-        // Caso contrário, cria um novo objeto vazio (cadastro novo)
-        $Atleta = new Atleta();
     }
 }
 
@@ -180,7 +177,6 @@ endif;
         require_once "_parts/_navAdmin.php";
     endif;
     ?>
-
 
     <main class="container">
         <?php

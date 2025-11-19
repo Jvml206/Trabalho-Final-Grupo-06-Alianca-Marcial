@@ -34,7 +34,7 @@
                         <a class="nav-link" href="listaUsuario.php">Usuários</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="listaPedidoAjuda.php">Ajuda</a>
+                        <a class="nav-link" href="listaPedidoDeAjuda.php">Ajuda</a>
                     </li>
                 </ul>
 
