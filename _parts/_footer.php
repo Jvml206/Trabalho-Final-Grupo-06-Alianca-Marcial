@@ -6,7 +6,6 @@
         <h4 class="text-[22px] font-extrabold mb-3">Políticas</h4>
         <a href="politicaPrivacidade.php">Política de Privacidade</a>
         <a href="termosUso.php">Termos de Uso</a>
-        <a href="politicaCookies.php">Política de Cookies</a>
     </div>
     <div class="r-linha-item rede-social">
         <a href="mailto:contato@gmail.com" class="instagram" target="_blank"><i class="bi bi-envelope"></i></a>

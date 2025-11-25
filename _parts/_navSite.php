@@ -21,7 +21,7 @@
                         <a class="nav-link" href="ajudar.php">Ajudar</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="sobreNos.php">Sobre</a>
+                        <a class="nav-link" href="sobre.php">Sobre</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="apoiadores.php">Apoiadores</a>
