@@ -179,7 +179,7 @@ class Usuario extends CRUD
                 $_SESSION['tipo_usuario'] = $usuario->tipo_usuario;
                 $_SESSION['user_email'] = $usuario->email;
                 $_SESSION['ultimaAtividade'] = time();
-                $redirect_url = $_POST['redirect'] ?? 'dashboard.php';
+                $redirect_url = $_POST['redirect'] ?? 'bemVindo.php';
                 header("Location: $redirect_url");
                 exit();
             }

@@ -61,6 +61,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <footer class="footer mt-auto">
         <?php require_once "_parts/_footer.php"; ?>
     </footer>
+    <!-- Botão do VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+
+    <!-- Script do VLibras -->
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 </body>
 
 </html>

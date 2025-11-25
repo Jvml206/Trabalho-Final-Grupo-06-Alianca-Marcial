@@ -53,7 +53,7 @@ if (filter_has_var(INPUT_POST, "logar")) {
             <p>Login</p>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="row">
                 <input type="hidden" name="redirect"
-                    value="<?php echo isset($_GET['redirect']) ? htmlspecialchars($_GET['redirect']) : 'dashboard.php'; ?>">
+                    value="<?php echo isset($_GET['redirect']) ? htmlspecialchars($_GET['redirect']) : 'bemVindo.php'; ?>">
                 <div class="mb-3 col-12">
                     <label for="email" class="form-label">E-mail</label>
                     <input type="email" class="form-control" id="email" placeholder="E-mail" name="email">
@@ -73,12 +73,24 @@ if (filter_has_var(INPUT_POST, "logar")) {
                 </div>
             </form>
         </div>
-</div>
+    </div>
     <footer class="footer mt-auto">
         <?php require_once "_parts/_footer.php"; ?>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Botão do VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
 
+    <!-- Script do VLibras -->
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 </body>
 
 </html>
