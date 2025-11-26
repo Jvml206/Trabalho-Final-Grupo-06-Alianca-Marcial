@@ -13,7 +13,12 @@
 <body>
     <?php require_once "_parts/_navSite.php"; ?>
     <main>
+        <div class="ajuda">
 
+        </div>
+        <div class="campeonatos">
+
+        </div>
     </main>
     <footer>
         <?php require_once "_parts/_footer.php"; ?>

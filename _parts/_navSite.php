@@ -33,9 +33,14 @@
 
                     if (isset($_SESSION['user_name']) && isset($_SESSION['tipo_usuario'])):
                         $tipoUsuario = $_SESSION['tipo_usuario'];
+                        $idUsuario = $_SESSION['user_id'];
                         $nomeUsuario = htmlspecialchars($_SESSION['user_name']);
+                        spl_autoload_register(function ($class) {
+                            require_once "Classes/{$class}.class.php";
+                        });
+                        $Atleta = new Atleta();
                         ?>
-                        <?php if ($tipoUsuario === 'Atleta'): ?>
+                        <?php if ($tipoUsuario === 'Atleta' && $Atleta->verificarPorUsuario($idUsuario) === True): ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="listaPedidoDeAjuda.php">Ajuda</a>
                             </li>

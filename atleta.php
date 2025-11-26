@@ -278,7 +278,8 @@ endif;
                 <div class="col-md-6">
                     <label for="fk_id_academia" class="form-label">Academia</label>
                     <select name="fk_id_academia" class="form-select" id="fk_id_academia" required>
-                        <option value="" disabled <?= (!isset($dadosAtleta->fk_id_academia)) ? 'selected' : '' ?>>Selecione a Academia
+                        <option value="" disabled <?= (!isset($dadosAtleta->fk_id_academia)) ? 'selected' : '' ?>>Selecione a
+                            Academia
                         </option>
                         <?php foreach ($academia as $ac): ?>
                             <option value="<?= $ac->id_academia ?>">
@@ -292,10 +293,11 @@ endif;
                 <div class="col-md-6">
                     <label for="fk_id_academia" class="form-label">Academia</label>
                     <select name="fk_id_academia" class="form-select" id="fk_id_academia" required>
-                        <option value="" disabled <?= (!isset($dadosAtleta->fk_id_academia)) ? 'selected' : '' ?>>Selecione a Academia
+                        <option value="" disabled <?= (!isset($dadosAtleta->fk_id_academia)) ? 'selected' : '' ?>>Selecione a
+                            Academia
                         </option>
                         <?php foreach ($academia as $ac): ?>
-                            <option value="<?= $ac->id_academia ?>" <?= ($dadosAtleta->fk_id_academia == $ac->id_academia) ? 'selected' : '' ?>>
+                            <option value="<?= $ac->id_academia ?>" <?= (($dadosAtleta->fk_id_academia ?? null) == $ac->id_academia) ? 'selected' : '' ?>>
                                 <?= htmlspecialchars($ac->nome_fantasia) ?>
                             </option>
                         <?php endforeach; ?>
@@ -310,8 +312,10 @@ endif;
             <?php if ($tipoUsuario === 'Administrador' || $tipoUsuario === 'Atleta'): ?>
                 <div class="col-md-6">
                     <label for="fk_id_instrutor" class="form-label">Instrutor</label>
-                    <select name="fk_id_instrutor" class="form-select" id="fk_id_instrutor" required disabled data-selected="<?= $dadosAtleta->fk_id_instrutor ?? '' ?>">
-                        <option value="" disabled <?= (!isset($dadosAtleta->fk_id_instrutor)) ? 'selected' : '' ?>>Selecione o
+                    <select name="fk_id_instrutor" class="form-select" id="fk_id_instrutor" required disabled
+                        data-selected="<?= $dadosAtleta->fk_id_instrutor ?? '' ?>">
+                        <option value="" disabled <?= (!isset($dadosAtleta->fk_id_instrutor)) ? 'selected' : '' ?>>Selecione
+                            o
                             Instrutor</option>
                         <?php foreach ($instrutor as $ins): ?>
                             <option value="<?= $ins->id_instrutor ?>" data-academia="<?= $ins->fk_id_academia ?>">

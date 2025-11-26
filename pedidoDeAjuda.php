@@ -22,6 +22,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     $PedidoAjuda->setValorNecessario(filter_input(INPUT_POST, "valor_necessario", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION));
     $PedidoAjuda->setValorAtingido(filter_input(INPUT_POST, "valor_atingido", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION));
     $PedidoAjuda->setPix(filter_input(INPUT_POST, "pix", FILTER_SANITIZE_STRING));
+    $PedidoAjuda->setStatusValidacao('pendente');
 
     $id = filter_input(INPUT_POST, "id", FILTER_SANITIZE_NUMBER_INT);
 
@@ -46,20 +47,53 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
 
     if ($tipoUsuario === 'Administrador') {
         $PedidoAjuda->setFkIdAtleta(filter_input(INPUT_POST, "fk_id_atleta", FILTER_SANITIZE_NUMBER_INT));
+        $idAtleta = filter_input(INPUT_POST, "fk_id_atleta", FILTER_SANITIZE_NUMBER_INT);
     } else {
         $dadosAtleta = $Atleta->search("fk_id_usuario", $idUsuario);
         $PedidoAjuda->setFkIdAtleta($dadosAtleta->id_atleta);
+        $idAtleta = $dadosAtleta->id_atleta;
     }
-    
+
     if (empty($id)):
-        if ($PedidoAjuda->add()) {
-            echo "<script>window.alert('Cadastro de pedido de ajuda realizado com sucesso.');window.location.href='index.php';window.location.href='pedidoDeAjuda.php';</script>";
+        if ($tipoUsuario === 'Administrador') {
+            $idAtleta = filter_input(INPUT_POST, "fk_id_atleta", FILTER_SANITIZE_NUMBER_INT);
+            $idPedido = $PedidoAjuda->add();
+            $mensagem = "Há um novo pedido de validação pendente.";
+            $assunto = "Validação de Pedido de Ajuda";
+            $enviado = $PedidoAjuda->validacaoPedido($idAtleta, $mensagem, $assunto, $idPedido);
         } else {
-            echo "<script>window.alert('Erro ao cadastrar o pedido de ajuda.');window.open(document.referrer,'_self');</script>";
+            $dadosAtleta = $Atleta->search("fk_id_usuario", $idUsuario);
+            $idAtleta = $dadosAtleta->id_atleta;
+            $idPedido = $PedidoAjuda->add();
+            $mensagem = "Há um novo pedido de validação pendente.";
+            $assunto = "Validação de Pedido de Ajuda";
+            $enviado = $PedidoAjuda->validacaoPedido($idAtleta, $mensagem, $assunto, $idPedido);
+        }
+
+        if ($enviado) {
+            echo "<script>window.alert('Cadastro de pedido de ajuda realizado com sucesso, um email para validação do pedido foi enviado para o instrutor, ele tem até 72 horas para validar o pedido.');window.location.href='index.php';window.location.href='pedidoDeAjuda.php';</script>";
+        } else {
+            echo "<script>window.alert('Erro ao cadastrar o pedido de ajuda ou ao enviar o pedido de validação para o instrutor.');window.open(document.referrer,'_self');</script>";
         }
     else:
+        $pedidoAntigo = $PedidoAjuda->search("id_pedido_ajuda", $id);
+        $statusAntigo = $pedidoAntigo->status_validacao;
+
         if ($PedidoAjuda->update('id_pedido_ajuda', $id)) {
+            $novoValorNecessario = filter_input(INPUT_POST, 'valor_necessario');
+            $novoValorAtingido = filter_input(INPUT_POST, 'valor_atingido');
+            $novoTitulo = filter_input(INPUT_POST, 'titulo');
+            $novaDescricao = filter_input(INPUT_POST, 'descricao');
+            $novoPix = filter_input(INPUT_POST, 'pix');
+            $imagemAntiga = filter_input(INPUT_POST, 'imagemAntiga');
             
+            $somenteValorMudou =
+            ($pedidoAntigo->valor_atingido != $novoValorAtingido) &&
+                ($pedidoAntigo->valor_necessario == $novoValorNecessario) &&
+                ($pedidoAntigo->titulo == $novoTitulo) &&
+                ($pedidoAntigo->descricao == $novaDescricao) &&
+                ($pedidoAntigo->pix == $novoPix);
+
             if ($tipoUsuario === 'Administrador') {
                 $usuarioAtual = $PedidoAjuda->search("fk_id_atleta", (filter_input(INPUT_POST, "fk_id_atleta", FILTER_SANITIZE_NUMBER_INT)));
             } else {
@@ -67,7 +101,13 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
                 $usuarioAtual = $PedidoAjuda->search("fk_id_atleta", $dadosAtleta->id_atleta);
             }
 
-            $imagemAntiga = filter_input(INPUT_POST, 'imagemAntiga');
+            $PedidoAjuda->setStatusValidacao($pedidoAntigo->status_validacao);
+            if (!$somenteValorMudou) {
+                $PedidoAjuda->setStatusValidacao('pendente');
+                $mensagem = "Há um novo pedido de validação pendente.";
+                $assunto = "Validação de Pedido de Ajuda";
+                $enviado = $PedidoAjuda->validacaoPedido($usuarioAtual->fk_id_atleta, $mensagem, $assunto, $id);
+            }
 
             if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
                 $extensao = strtolower(pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION));
@@ -88,12 +128,16 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
                 }
             }
 
-            $PedidoAjuda->update('id_pedido_ajuda', $idUsuario);
+            $PedidoAjuda->update('id_pedido_ajuda', $id);
 
-            echo "<script>window.alert('Pedido alterado com sucesso.');window.location.href='listaPedidoDeAjuda.php';</script>";
+            if(!$somenteValorMudou) {
+            echo "<script>window.alert('Pedido alterado com sucesso, o instrutor foi notificado para validar o pedido.');window.location.href='listaPedidoDeAjuda.php';</script>";
             exit;
+            }else{
+                echo "<script>window.alert('Valor atingido alterado com sucesso.');window.location.href='listaPedidoDeAjuda.php';</script>";
+            }
         } else {
-            echo "<script> window.alert('Erro ao alterar o pedido de ajuda.');
+            echo "<script> window.alert('Erro ao alterar o pedido de ajuda ou ao enviar a notificação para o instrutor.');
         window.open(document.referrer, '_self'); </script>";
         }
     endif;
@@ -112,6 +156,13 @@ elseif (filter_has_var(INPUT_POST, "btnDeletar")):
     } else {
         echo "<script>alert('Erro ao excluir o pedido de ajuda.'); window.open(document.referrer, '_self');</script>";
     }
+elseif (filter_has_var(INPUT_GET, "acao")):
+    $id = intval(filter_input(INPUT_GET, "id"));
+    $acao = filter_input(INPUT_GET, "acao", FILTER_SANITIZE_STRING);
+
+    $status = ($acao == "marcar_atingida") ? "atingida" : "pendente";
+    $PedidoAjuda->statusMeta($id, $status);
+    header("location:listaPedidoDeAjuda.php");
 endif;
 ?>
 
@@ -142,7 +193,7 @@ endif;
         }
         ?>
 
-        <h2 class="text-center">Cadastro de Usuário</h2>
+        <h2 class="text-center">Cadastro de Pedido de Ajuda</h2>
 
         <form action="pedidoDeAjuda.php" method="post" class="row g3 mt-3" enctype="multipart/form-data">
 
@@ -178,8 +229,8 @@ endif;
 
             <div class="col-md-12">
                 <label for="descricao" class="form-label">Descrição</label>
-                <input type="text" name="descricao" id="descricao" placeholder="Digite a Descrição do Pedido" required
-                    class="form-control" value="<?php echo $pedidoAjuda->descricao ?? null; ?>">
+                <textarea name="descricao" id="descricao" placeholder="Digite a Descrição do Pedido" required
+                    class="form-control"><?php echo $pedidoAjuda->descricao ?? null; ?></textarea>
             </div>
 
             <div class="col-md-3">
