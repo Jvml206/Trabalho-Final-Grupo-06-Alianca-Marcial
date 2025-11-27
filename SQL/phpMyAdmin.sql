@@ -1,36 +1,44 @@
--- ============================
+-- Apaga e recria o schema
+DROP SCHEMA IF EXISTS Alianca_Marcial;
+CREATE SCHEMA IF NOT EXISTS Alianca_Marcial 
+    DEFAULT CHARACTER SET utf8mb4 
+    COLLATE utf8mb4_unicode_ci;
+
+USE Alianca_Marcial;
+
+-- ===============================
 -- TABELA USUARIO
--- ============================
-CREATE TABLE IF NOT EXISTS usuario (
-    id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+-- ===============================
+CREATE TABLE usuario (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(150) NOT NULL UNIQUE,
     nome_usuario VARCHAR(150) NOT NULL,
     senha VARCHAR(100),
     tipo_usuario ENUM('Administrador', 'Atleta', 'Instrutor', 'Usuário') NOT NULL,
     foto TEXT NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ============================
--- TABELA RECUPERACAO DE SENHA
--- ============================
-CREATE TABLE IF NOT EXISTS RecuperacaoSenha (
+-- ===============================
+-- RECUPERACAO DE SENHA
+-- ===============================
+CREATE TABLE RecuperacaoSenha (
     idRecuperacaoSenha INT AUTO_INCREMENT PRIMARY KEY,
     idUsuarioFK INT NOT NULL,
     tokenRecuperacaoSenha VARCHAR(200) NOT NULL UNIQUE,
     expiraRecuperacaoSenha DATETIME NOT NULL,
     usadoRecuperacaoSenha TINYINT(1) DEFAULT 0,
     criadoRecuperacaoSenha DATETIME DEFAULT CURRENT_TIMESTAMP,
-    INDEX (idUsuarioFK),
-    CONSTRAINT recuperacao_senha_usuario
-        FOREIGN KEY (idUsuarioFK) REFERENCES usuario(id_usuario)
+    KEY idUsuarioFK (idUsuarioFK),
+    CONSTRAINT fk_recuperacao_usuario FOREIGN KEY (idUsuarioFK)
+        REFERENCES usuario(id_usuario)
         ON DELETE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ============================
+-- ===============================
 -- TABELA ACADEMIA
--- ============================
-CREATE TABLE IF NOT EXISTS academia (
-    id_academia INT PRIMARY KEY AUTO_INCREMENT,
+-- ===============================
+CREATE TABLE academia (
+    id_academia INT AUTO_INCREMENT PRIMARY KEY,
     nome_fantasia VARCHAR(200) NOT NULL,
     razao_social VARCHAR(200) NOT NULL,
     cnpj VARCHAR(20) UNIQUE NOT NULL,
@@ -43,13 +51,13 @@ CREATE TABLE IF NOT EXISTS academia (
     estado VARCHAR(2),
     instagram VARCHAR(100),
     logo TEXT
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ============================
--- TABELA INSTRUTOR
--- ============================
-CREATE TABLE IF NOT EXISTS instrutor (
-    id_instrutor INT PRIMARY KEY AUTO_INCREMENT,
+-- ===============================
+-- TABELA INSTRUTOR (precisa vir antes do atleta)
+-- ===============================
+CREATE TABLE instrutor (
+    id_instrutor INT AUTO_INCREMENT PRIMARY KEY,
     nome_instrutor VARCHAR(150) NOT NULL,
     data_nascimento DATE NOT NULL,
     telefone VARCHAR(20) NOT NULL,
@@ -60,18 +68,18 @@ CREATE TABLE IF NOT EXISTS instrutor (
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (fk_id_usuario) REFERENCES usuario(id_usuario)
         ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ============================
+-- ===============================
 -- TABELA ATLETA
--- ============================
-CREATE TABLE IF NOT EXISTS atleta (
-    id_atleta INT PRIMARY KEY AUTO_INCREMENT,
+-- ===============================
+CREATE TABLE atleta (
+    id_atleta INT AUTO_INCREMENT PRIMARY KEY,
     nome_atleta VARCHAR(150) NOT NULL,
     data_nascimento DATE NOT NULL,
     biografia TEXT NOT NULL,
     sexo VARCHAR(1) NOT NULL,
-    esporte ENUM('Aikidô', 'Boxe', 'Capoeira', 'Jiu-Jitsu Brasileiro', 'Judô', 'Karatê', 'Kung Fu', 'MMA', 'Muay Thai', 'Taekwondo') NOT NULL,
+    esporte ENUM ('Aikidô', 'Boxe', 'Capoeira', 'Jiu-Jitsu Brasileiro', 'Judô', 'Karatê', 'Kung Fu', 'MMA', 'Muay Thai', 'Taekwondo') NOT NULL,
     peso DECIMAL(5,2),
     categoria VARCHAR(50) NOT NULL,
     fk_id_academia INT NOT NULL,
@@ -83,18 +91,18 @@ CREATE TABLE IF NOT EXISTS atleta (
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (fk_id_instrutor) REFERENCES instrutor(id_instrutor)
         ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ============================
--- TABELA INSTITUIÇÃO APOIADORA
--- ============================
-CREATE TABLE IF NOT EXISTS instituicao_apoiadora (
-    id_instituicao_apoiadora INT PRIMARY KEY AUTO_INCREMENT,
+-- ===============================
+-- INSTITUICAO APOIADORA
+-- ===============================
+CREATE TABLE instituicao_apoiadora (
+    id_instituicao_apoiadora INT AUTO_INCREMENT PRIMARY KEY,
     nome_fantasia VARCHAR(200) NOT NULL,
     razao_social VARCHAR(200) NOT NULL,
     cnpj VARCHAR(20) UNIQUE NOT NULL,
     telefone VARCHAR(20) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(100) UNIQUE NOT NULL,
     endereco VARCHAR(100),
     bairro VARCHAR(50),
     cidade VARCHAR(50),
@@ -103,34 +111,37 @@ CREATE TABLE IF NOT EXISTS instituicao_apoiadora (
     instagram VARCHAR(100),
     descricao TEXT NOT NULL,
     logo TEXT NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ============================
--- TABELA PEDIDO DE AJUDA
--- ============================
-CREATE TABLE IF NOT EXISTS pedido_ajuda (
-    id_pedido_ajuda INT PRIMARY KEY AUTO_INCREMENT,
+-- ===============================
+-- PEDIDO DE AJUDA
+-- ===============================
+CREATE TABLE pedido_ajuda (
+    id_pedido_ajuda INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(100) NOT NULL,
     descricao TEXT NOT NULL,
     valor_necessario DECIMAL(10,2) NOT NULL,
-    valor_atingido DECIMAL(10,2) NOT NULL DEFAULT 0,
+    valor_atingido DECIMAL(10,2) NOT NULL,
     pix VARCHAR(150) NOT NULL,
     imagem TEXT NOT NULL,
+    status_validacao ENUM('pendente', 'aprovado', 'reprovado') DEFAULT 'pendente',
+    token_validacao VARCHAR(255),
+    expira_validacao DATETIME NOT NULL,
     fk_id_atleta INT NOT NULL,
     FOREIGN KEY (fk_id_atleta) REFERENCES atleta(id_atleta)
         ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ============================
--- TABELA CAMPEONATO
--- ============================
-CREATE TABLE IF NOT EXISTS campeonato (
-    id_campeonato INT PRIMARY KEY AUTO_INCREMENT,
+-- ===============================
+-- CAMPEONATO
+-- ===============================
+CREATE TABLE campeonato (
+    id_campeonato INT AUTO_INCREMENT PRIMARY KEY,
     nome_campeonato VARCHAR(250) NOT NULL,
     data_inicio DATE NOT NULL,
     data_fim DATE NOT NULL,
     local VARCHAR(100) NOT NULL,
     pais VARCHAR(60) NOT NULL,
     cidade VARCHAR(85) NOT NULL,
-    esporte ENUM('Aikidô', 'Boxe', 'Capoeira', 'Jiu-Jitsu Brasileiro', 'Judô', 'Karatê', 'Kung Fu', 'MMA', 'Muay Thai', 'Taekwondo') NOT NULL
-) ENGINE=InnoDB;
+    esporte ENUM ('Aikidô', 'Boxe', 'Capoeira', 'Jiu-Jitsu Brasileiro', 'Judô', 'Karatê', 'Kung Fu', 'MMA', 'Muay Thai', 'Taekwondo') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
