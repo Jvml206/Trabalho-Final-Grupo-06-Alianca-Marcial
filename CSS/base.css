@@ -18,8 +18,8 @@
 
 body {
     font-family: var(--font-primaria);
-    background-color: var(--cor-fundo-escuro);
-    color: var(--cor-font-escura);
+    background-color: var(--cor-fundo-claro);
+    color: var(--cor-fonte-escura);
     margin: 0;
     padding: 0;
 }

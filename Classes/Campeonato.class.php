@@ -132,4 +132,20 @@ class Campeonato extends CRUD
         $stmt->bindParam(":id_campeonato", $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
+
+    public function allIndex()
+    {
+        $sql = "SELECT * FROM $this->table WHERE data_fim >= CURDATE() LIMIT 12";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function allCamp()
+    {
+        $sql = "SELECT * FROM $this->table WHERE data_fim >= CURDATE()";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }

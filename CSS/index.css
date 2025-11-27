@@ -1,0 +1,197 @@
+@import url('baseSite.css');
+
+.ajuda {
+    width: 100%;
+    max-width: 2000px;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 1px 10px rgb(12, 12, 12);
+    border-radius: 10px;
+    background: var(--cor-fundo-claro);
+}
+
+.campeonatos {
+    width: 100%;
+    max-width: 2000px;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 1px 10px rgb(12, 12, 12);
+    border-radius: 10px;
+    background: var(--cor-fundo-claro);
+}
+
+.box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* centraliza os itens */
+    gap: 20px;
+}
+
+.ajuda h2 {
+    border-bottom: 3px solid black;
+    padding: 5px;
+}
+
+.cardPedido {
+    width: 300px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    background: #ffffff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.cardPedido:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Container da imagem */
+.card-img-container-pedido {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+/* Imagem */
+.card-img-container-pedido img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Nome e textos */
+.cardPedido p {
+    margin: 8px 0 0 0;
+    padding: 0 15px;
+}
+
+.nomeAtleta {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.motivoAtleta {
+    font-size: 15px;
+    opacity: 0.8;
+}
+
+.academiaAtleta {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-bottom: 15px;
+}
+
+/* Botão */
+.btn-atleta {
+    background: #6c4328;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.btn-atleta:hover {
+    background: #4a2f1c;
+}
+
+.campeonatos h2 {
+    border-bottom: 3px solid black;
+    padding: 5px;
+}
+
+
+.overlay-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.overlay-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 5px;
+    filter: brightness(0.55);
+}
+
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #f2f2f2;
+    z-index: 2;
+    /* garante que o texto fica acima do filtro */
+}
+
+.overlay-text p.nomeCampeonato {
+    font-family: "Chetta Vissto";
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+    margin-bottom: 6px;
+}
+
+.overlay-text p.paisCampeonato,
+.overlay-text p.esporteCampeonato {
+    font-family: "Merriweather";
+    font-size: 16px;
+    margin-top: 6px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.pagCampeonato {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagCampeonato-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* centraliza os itens */
+    gap: 20px;
+}
+
+
+@media screen and (max-width: 1200px) {
+    .campeonato-box {
+        grid-template-columns: repeat(3, 300px);
+    }
+
+    .pagCampeonato-box {
+        grid-template-columns: repeat(3, 300px);
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .campeonato-box {
+        grid-template-columns: repeat(2, 300px);
+    }
+
+    .pagCampeonato-box {
+        grid-template-columns: repeat(2, 300px);
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .campeonato-box {
+        grid-template-columns: repeat(1, 300px);
+    }
+
+    .pagCampeonato-box {
+        grid-template-columns: repeat(1, 300px);
+    }
+}

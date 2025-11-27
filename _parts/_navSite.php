@@ -18,7 +18,7 @@
                         <a class="nav-link" href="index.php">Início</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ajudar.php">Ajudar</a>
+                        <a class="nav-link" href="pedidosDeAjuda.php">Ajudar</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="sobre.php">Sobre</a>
