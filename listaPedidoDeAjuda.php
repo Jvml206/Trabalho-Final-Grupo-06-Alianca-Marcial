@@ -66,7 +66,7 @@ if ($tipoUsuario === 'Atleta') {
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
-
+            
             <body>
                 <?php foreach ($pedidosAjuda as $pedidoAjuda): ?>
                     <tr>
@@ -79,8 +79,9 @@ if ($tipoUsuario === 'Atleta') {
                             }
                         } ?></td>
                         <td>
-                            <?= ($pedidoAjuda->status_validacao === 'aprovado') ? 'Aprovado'
-                                : (($pedidoAjuda->status_validacao === 'reprovado') ? 'Reprovado' : 'Pendente') ?>
+                            <?= ($pedidoAjuda->expira_validacao != NULL && strtotime($pedidoAjuda->expira_validacao) < time()) ? 'Tempo de validação expirado'
+                                : (($pedidoAjuda->status_validacao === 'aprovado') ? 'Aprovado'
+                                    : (($pedidoAjuda->status_validacao === 'reprovado') ? 'Reprovado' : 'Pendente')) ?>
                         </td>
                         <td class="align-middle text-center">
                             <?php if ($pedidoAjuda->meta == "atingida" || $pedidoAjuda->valor_atingido >= $pedidoAjuda->valor_necessario): ?>

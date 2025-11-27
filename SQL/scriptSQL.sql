@@ -100,6 +100,7 @@ CREATE TABLE IF NOT EXISTS pedido_ajuda(
     imagem TEXT NOT NULL,
 	status_validacao ENUM('pendente', 'aprovado', 'reprovado') DEFAULT 'pendente',
     token_validacao VARCHAR(255) NULL,
+    expira_validacao DATETIME NOT NULL,
     fk_id_atleta INTEGER NOT NULL,
     FOREIGN KEY (fk_id_atleta) REFERENCES atleta(id_atleta)
         ON DELETE CASCADE ON UPDATE CASCADE

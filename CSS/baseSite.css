@@ -34,3 +34,42 @@
 .usuarioAtleta {
     margin: 16px auto 0;
 }
+
+.main-index {
+    width: 90%;
+    max-width: 1600px;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 1px 10px rgb(12, 12, 12);
+    border-radius: 10px;
+    background: var(--cor-fundo-claro);
+}
+
+/* ver depois */
+.ajuda {
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 12px;
+    background: var(--cor-fundo-index);
+}
+
+.ajuda h2 {
+    border-bottom: 3px solid black;
+    padding: 5px;
+}
+
+.btn-atleta {
+    background-color: var(--cor-fundo-escuro);
+    color: var(--cor-fonte-vermelha);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.campeonatos h2 {
+    border-bottom: 3px solid black;
+    padding: 5px;
+}

@@ -12,13 +12,99 @@
 
 <body>
     <?php require_once "_parts/_navSite.php"; ?>
-    <main>
-        <div class="ajuda">
 
-        </div>
-        <div class="campeonatos">
+    <?php
+    spl_autoload_register(function ($class) {
+        require_once "Classes/{$class}.class.php";
+    });
+    $Atleta = new Atleta();
+    $Academia = new Academia();
+    $Campeonato = new Campeonato();
+    $PedidoAjuda = new PedidoAjuda();
+    ?>
+    <main class="container mt-2 main-index">
+        <section class="ajuda mt-2">
+            <h2 class="text-center texto">Atletas que precisam de ajuda</h2>
 
-        </div>
+            <div class="atleta-box">
+                <?php
+                $pedidoAjuda = $PedidoAjuda->all();
+                foreach ($pedidoAjuda as $pa):
+                    $id = intval($pa->id_pedido_ajuda);
+                    $idA = intval($pa->fk_id_atleta);
+                    $atleta = $Atleta->search('id_atleta', $idA);
+                    $academia = $Academia->search('id_academia', $atleta->fk_id_academia);
+                    ?>
+                    <div class="cardPedido d-flex align-items-center flex-column">
+                        <div class="card-img-container-pedido">
+                            <img src="Images/pedidoDeAjuda/<?php echo $pa->imagem; ?>">
+                        </div>
+                        <p class="nomeAtleta"><?php echo $atleta->nome_atleta ?></p>
+                        <p class="motivoAtleta"><?php echo $pa->titulo ?></p>
+                        <p class="academiaAtleta">Academia: <?php echo $academia->nome_fantasia ?></p>
+                        <a href="pedidoAtleta.php?id=<?php echo $id ?>" class="btn btn-atleta">Ver mais</a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            </div>
+        </section>
+
+        <section class="campeonatos mt-2">
+            <h2 class="text-center texto">Próximos Campeonatos</h2>
+
+            <div class="campeonato-box">
+                <?php
+                $campeonato = $Campeonato->all();
+                foreach ($campeonato as $c):
+                    date_default_timezone_set('America/Cuiaba');
+                    if (strtotime($c->data_fim) < strtotime(date('Y-m-d'))) {
+                        continue; // Pula campeonatos que já acabaram
+                    }
+                    $id = intval($c->id_campeonato);
+                    ?>
+                    <div class="cardCampeonato d-flex align-items-center flex-column">
+                        <div class="card-img-container-campeonato">
+                            <img src="Images/campeonatos/<?php echo $c->imagem; ?>">
+                        </div>
+                        <p class="nomeCampeonato"><?php echo $c->nome_campeonato ?></p>
+                        <p class="paisCampeonato"><?php echo $c->pais ?></p>
+                        <p class="esporteCampeonato"><?php echo $c->esporte ?></p>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-campeonato" data-bs-toggle="modal"
+                            data-bs-target="#campeonatoModal<?php echo $id; ?>">
+                            Ver mais
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="campeonatoModal<?php echo $id; ?>" tabindex="-1"
+                            aria-labelledby="campeonatoModalLabel<?php echo $id; ?>" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="campeonatoModalLabel<?php echo $id; ?>">
+                                            <?php echo $c->nome_campeonato ?></h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="localCampeonato">Local: <?php echo $c->local ?></p>
+                                        <p class="paisCampeonato">País: <?php echo $c->pais ?></p>
+                                        <p class="cidadeCampeonato">Cidade: <?php echo $c->cidade ?></p>
+                                        <p class="esporteCampeonato">Esporte: <?php echo $c->esporte ?></p>
+                                        <p class="dataCampeonato">De <?php echo date('d/m/Y', strtotime($c->data_inicio)) ?> à <?php echo date('d/m/Y', strtotime($c->data_fim)) ?></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            </div>
+        </section>
     </main>
     <footer>
         <?php require_once "_parts/_footer.php"; ?>
@@ -31,7 +117,6 @@
             <div class="vw-plugin-top-wrapper"></div>
         </div>
     </div>
-
     <!-- Script do VLibras -->
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>

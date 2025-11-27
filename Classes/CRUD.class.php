@@ -32,6 +32,15 @@ abstract class CRUD
         return $stmt->rowCount() > 0 ? $stmt->fetch(PDO::FETCH_OBJ) : null;
     }
 
+    public function searchStr(string $campo, string $string)
+    {
+        $sql = "SELECT * FROM $this->table WHERE $campo = :string";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":string", $string, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->rowCount() > 0 ? $stmt->fetch(PDO::FETCH_OBJ) : null;
+    }
+
     //método para Excluir um registro pelo ID
     public function delete(string $campo, int $id)
     {

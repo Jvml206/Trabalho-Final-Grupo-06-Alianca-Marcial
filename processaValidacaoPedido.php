@@ -4,8 +4,9 @@ spl_autoload_register(function ($class) {
 });
 
 $PedidoAjuda = new PedidoAjuda();
+$dadoPedido = $PedidoAjuda->searchStr("token_validacao", $_POST['token']);
 
-if (!isset($_POST['token']) || empty($_POST['token'])) {
+if (!isset($_POST['token']) || empty($_POST['token']) || strtotime($dadoPedido->expira_validacao) < time()) {
     die("Token inválido.");
 }
 
@@ -27,7 +28,7 @@ $pedido = $stmt->fetch(PDO::FETCH_OBJ);
 if ($acao === "aprovar") {
 
     $sql = "UPDATE pedido_ajuda 
-            SET status_validacao = 'aprovado', token_validacao = NULL 
+            SET status_validacao = 'aprovado', token_validacao = NULL, expira_validacao = NULL
             WHERE id_pedido_ajuda = :id";
 
     $stmt = $PedidoAjuda->getDb()->prepare($sql);
@@ -55,7 +56,7 @@ if ($acao === "aprovar") {
     $motivo = $_POST['motivo'];
 
     $sql = "UPDATE pedido_ajuda 
-            SET status_validacao = 'reprovado', token_validacao = NULL 
+            SET status_validacao = 'reprovado', token_validacao = NULL, expira_validacao = NULL
             WHERE id_pedido_ajuda = :id";
 
     $stmt = $PedidoAjuda->getDb()->prepare($sql);

@@ -208,13 +208,16 @@ class PedidoAjuda extends CRUD
 
             $dados = $stmt->fetch(PDO::FETCH_OBJ);
             $emailInstrutor = $dados->emailInstrutor;
-
+            
             // Gerar token único
             $token = bin2hex(random_bytes(32));
-            $sql = "UPDATE pedido_ajuda SET token_validacao = :token
+            $expiraValidacao = date('Y-m-d H:i:s', strtotime('+72 hours'));
+
+            $sql = "UPDATE pedido_ajuda SET token_validacao = :token, expira_validacao = :expira_validacao
                 WHERE id_pedido_ajuda = :idPedido";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':token', $token, PDO::PARAM_STR);
+            $stmt->bindParam(':expira_validacao', $expiraValidacao, PDO::PARAM_STR);
             $stmt->bindParam(':idPedido', $idPedido, PDO::PARAM_INT);
             $stmt->execute();
 
