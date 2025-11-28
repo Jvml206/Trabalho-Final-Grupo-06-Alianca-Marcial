@@ -86,9 +86,9 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
             $novaDescricao = filter_input(INPUT_POST, 'descricao');
             $novoPix = filter_input(INPUT_POST, 'pix');
             $imagemAntiga = filter_input(INPUT_POST, 'imagemAntiga');
-            
+
             $somenteValorMudou =
-            ($pedidoAntigo->valor_atingido != $novoValorAtingido) &&
+                ($pedidoAntigo->valor_atingido != $novoValorAtingido) &&
                 ($pedidoAntigo->valor_necessario == $novoValorNecessario) &&
                 ($pedidoAntigo->titulo == $novoTitulo) &&
                 ($pedidoAntigo->descricao == $novaDescricao) &&
@@ -130,10 +130,10 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
 
             $PedidoAjuda->update('id_pedido_ajuda', $id);
 
-            if(!$somenteValorMudou) {
-            echo "<script>window.alert('Pedido alterado com sucesso, o instrutor foi notificado para validar o pedido.');window.location.href='listaPedidoDeAjuda.php';</script>";
-            exit;
-            }else{
+            if (!$somenteValorMudou) {
+                echo "<script>window.alert('Pedido alterado com sucesso, o instrutor foi notificado para validar o pedido.');window.location.href='listaPedidoDeAjuda.php';</script>";
+                exit;
+            } else {
                 echo "<script>window.alert('Valor atingido alterado com sucesso.');window.location.href='listaPedidoDeAjuda.php';</script>";
             }
         } else {
@@ -199,70 +199,70 @@ endif;
 
             <input type="hidden" value="<?php echo $pedidoAjuda->id_pedido_ajuda ?? null; ?>" name="id">
             <input type="hidden" name="imagemAntiga" value="<?php echo $pedidoAjuda->imagem ?? ''; ?>">
-
-            <?php if ($tipoUsuario === 'Administrador'): ?>
-                <div class="mb-3">
-                    <label for="fk_id_atleta" class="form-label">Nome do Atleta</label>
-                    <select name="fk_id_atleta" class="form-select" id="fk_id_atleta" required>
-                        <option disabled <?= (!isset($dadosAtleta->id_atleta)) ? 'selected' : '' ?>>
-                            Selecione o Atleta
-                        </option>
-                        <?php
-                        $listaAtletas = $Atleta->all();
-                        foreach ($listaAtletas as $at):
-                            $nome = htmlspecialchars($at->nome_atleta);
-                            $selected = ($pedidoAjuda->fk_id_atleta ?? null) == $at->id_atleta ? 'selected' : '';
-                            ?>
-                            <option value="<?= $at->id_atleta ?>" <?= $selected ?>>
-                                <?= $nome ?>
+            <div class="row gap-4 mb-3">
+                <?php if ($tipoUsuario === 'Administrador'): ?>
+                    <div class="col-md-12">
+                        <label for="fk_id_atleta" class="form-label">Nome do Atleta</label>
+                        <select name="fk_id_atleta" class="form-select" id="fk_id_atleta" required>
+                            <option disabled <?= (!isset($dadosAtleta->id_atleta)) ? 'selected' : '' ?>>
+                                Selecione o Atleta
                             </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            <?php endif; ?>
-
-            <div class="col-md-12">
-                <label for="titulo" class="form-label">Título do pedido</label>
-                <input type="text" name="titulo" id="titulo" placeholder="Digite o Título do Pedido" required
-                    class="form-control" value="<?php echo $pedidoAjuda->titulo ?? null; ?>">
-            </div>
-
-            <div class="col-md-12">
-                <label for="descricao" class="form-label">Descrição</label>
-                <textarea name="descricao" id="descricao" placeholder="Digite a Descrição do Pedido" required
-                    class="form-control"><?php echo $pedidoAjuda->descricao ?? null; ?></textarea>
-            </div>
-
-            <div class="col-md-3">
-                <label for="valor_necessario" class="form-label">Valor de ajuda necessário</label>
-                <input type="text" name="valor_necessario" id="valor_necessario"
-                    placeholder="Digite o valor necessário. Em R$" required class="form-control"
-                    value="<?php echo $pedidoAjuda->valor_necessario ?? null; ?>">
-            </div>
-
-            <div class="col-md-3">
-                <label for="valor_atingido" class="form-label">Valor de ajuda atingido</label>
-                <input type="text" name="valor_atingido" id="valor_atingido"
-                    placeholder="Digite o valor atingido. Em R$" required class="form-control"
-                    value="<?php echo $pedidoAjuda->valor_atingido ?? null; ?>">
-            </div>
-
-            <div class="col-md-6">
-                <label for="pix" class="form-label">Pix para realizar a ajuda</label>
-                <input type="text" name="pix" id="pix" placeholder="Digite o Pix" required class="form-control"
-                    value="<?php echo $pedidoAjuda->pix ?? null; ?>">
-            </div>
-
-            <div class="col-md-6">
-                <label for="imagem" class="form-label">Foto</label>
-                <input type="file" name="imagem" id="imagem" accept="image/*" class="form-control" <?php echo empty($pedidoAjuda->imagem) ? 'required' : null ?>>
-            </div>
-
-            <div class="col-md-6">
-                <?php if (!empty($pedidoAjuda->imagem)): ?>
-                    <img src="Images/pedidoDeAjuda/<?php echo $pedidoAjuda->imagem; ?>" alt="Foto do Pedido de Ajuda"
-                        class="mt-2">
+                            <?php
+                            $listaAtletas = $Atleta->all();
+                            foreach ($listaAtletas as $at):
+                                $nome = htmlspecialchars($at->nome_atleta);
+                                $selected = ($pedidoAjuda->fk_id_atleta ?? null) == $at->id_atleta ? 'selected' : '';
+                                ?>
+                                <option value="<?= $at->id_atleta ?>" <?= $selected ?>>
+                                    <?= $nome ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                 <?php endif; ?>
+
+
+                <div class="dadosPedido col-md-6 col-12">
+                    <label for="titulo" class="form-label">Motivo do pedido</label>
+                    <input type="text" name="titulo" id="titulo" placeholder="Digite o Motivo do Pedido" required
+                        class="form-control" value="<?php echo $pedidoAjuda->titulo ?? null; ?>">
+
+                    <div class="detalheDadoPedido">
+                        <label for="valor_necessario" class="form-label">Valor de ajuda necessário</label>
+                        <input type="text" name="valor_necessario" id="valor_necessario"
+                            placeholder="Digite o valor necessário. Em R$" required class="form-control"
+                            value="<?php echo $pedidoAjuda->valor_necessario ?? null; ?>">
+                    </div>
+
+                    <div class="detalheDadoPedido">
+                        <label for="valor_atingido" class="form-label">Valor de ajuda atingido</label>
+                        <input type="text" name="valor_atingido" id="valor_atingido"
+                            placeholder="Digite o valor atingido. Em R$" required class="form-control"
+                            value="<?php echo $pedidoAjuda->valor_atingido ?? null; ?>">
+                    </div>
+
+                    <div class="detalheDadoPedido">
+                        <label for="pix" class="form-label">Pix para realizar a ajuda</label>
+                        <input type="text" name="pix" id="pix" placeholder="Digite o Pix" required class="form-control"
+                            value="<?php echo $pedidoAjuda->pix ?? null; ?>">
+                    </div>
+                </div>
+
+                <div class="fotoPedido col-md-5 col-12">
+                    <label for="imagem" class="form-label">Foto</label>
+                    <input type="file" name="imagem" id="imagem" accept="image/*" class="form-control" <?php echo empty($pedidoAjuda->imagem) ? 'required' : null ?>>
+                    <?php if (!empty($pedidoAjuda->imagem)): ?>
+                        <img src="Images/pedidoDeAjuda/<?php echo $pedidoAjuda->imagem; ?>" alt="Imagem do Pedido de Ajuda"
+                            class="mt-2 foto-pedido-cadastro">
+                    <?php endif; ?>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="descricao" class="form-label">Descrição</label>
+                    <textarea name="descricao" id="descricao"
+                        placeholder="Digite a Descrição do Pedido, no mínimo 200 caracteres" required minlength="200"
+                        class="form-control"><?php echo $pedidoAjuda->descricao ?? null; ?></textarea>
+                </div>
             </div>
 
             <div class="col-12 mt-3 d-flex gap-2">

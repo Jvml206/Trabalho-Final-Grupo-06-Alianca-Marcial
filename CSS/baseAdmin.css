@@ -1,12 +1,5 @@
 @import url('base.css');
 
-.cadInstituicao {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  gap: 30px;
-}
-
 .dadosInstituicao {
   flex: 1;
 }
@@ -31,13 +24,6 @@
   object-fit: cover;
 }
 
-.cadAcademia {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  gap: 30px;
-}
-
 .dadosAcademia {
   flex: 1;
 }
@@ -55,11 +41,22 @@
   object-fit: cover;
 }
 
-@media (min-width: 1400px) {
-  .cadInstituicao {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 30px;
+@media (max-width: 800px) {
+  .row.mb-3,
+  .row.gap-4{
+    flex-direction: column !important;
+  }
+
+  .dadosInstituicao,
+  .logo,
+  .dadosAcademia {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  .foto-instituicao-cadastro,
+  .foto-academia-cadastro {
+    width: 220px;
+    height: 220px;
   }
 }

@@ -34,3 +34,44 @@
 .usuarioAtleta {
     margin: 16px auto 0;
 }
+
+.dadosPedido {
+  flex: 1;
+}
+
+.dadosPedido .detalheDadoPedido {
+  margin: 20px auto 0;
+}
+
+.fotoPedido {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+.foto-pedido-cadastro {
+  display: block;
+  margin: 10px auto 0;
+  width: 250px;
+  height: 250px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+@media (max-width: 800px) {
+  .row.mb-3 {
+    flex-direction: column !important;
+  }
+
+  .dadosPedido,
+  .fotoPedido {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  .foto-pedido-cadastro {
+    width: 220px;
+    height: 220px;
+  }
+}
