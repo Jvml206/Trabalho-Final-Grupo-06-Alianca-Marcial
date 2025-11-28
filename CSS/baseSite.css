@@ -59,6 +59,15 @@
   object-fit: cover;
 }
 
+.foto-instituicao {
+  display: block;
+  margin: 10px auto 0;
+  width: 300px;
+  height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
 @media (max-width: 800px) {
   .row.mb-3 {
     flex-direction: column !important;

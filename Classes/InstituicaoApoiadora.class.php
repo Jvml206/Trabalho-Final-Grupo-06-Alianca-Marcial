@@ -4,18 +4,8 @@ class InstituicaoApoiadora extends CRUD
 {
     protected $table = "instituicao_apoiadora";
     private $id_instituicao_apoiadora;
-    private $nome_fantasia;
-    private $razao_social;
-    private $cnpj;
-    private $telefone;
-    private $email;
-    private $endereco;
-    private $bairro;
-    private $cidade;
-    private $cep;
-    private $estado;
-    private $instagram;
-    private $descricao;
+    private $nome_fantasia;    
+    private $link;
     private $logo;
 
     public function getIdInstituicaoApoiadora()
@@ -38,105 +28,15 @@ class InstituicaoApoiadora extends CRUD
         $this->nome_fantasia = $nome_fantasia;
     }
 
-    public function getRazaoSocial()
+    public function getLink()
     {
-        return $this->razao_social;
+        return $this->link;
     }
-
-    public function setRazaoSocial($razao_social)
+    public function setLink($link)
     {
-        $this->razao_social = $razao_social;
+        $this->link = $link;
     }
-
-    public function getCnpj()
-    {
-        return $this->cnpj;
-    }
-
-    public function setCnpj($cnpj)
-    {
-        $this->cnpj = $cnpj;
-    }
-
-    public function getTelefone()
-    {
-        return $this->telefone;
-    }
-
-    public function setTelefone($telefone)
-    {
-        $this->telefone = $telefone;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-    public function getEndereco()
-    {
-        return $this->endereco;
-    }
-
-    public function setEndereco($endereco)
-    {
-        $this->endereco = $endereco;
-    }
-
-    public function getBairro()
-    {
-        return $this->bairro;
-    }
-    public function setBairro($bairro)
-    {
-        $this->bairro = $bairro;
-    }
-
-    public function getCidade()
-    {
-        return $this->cidade;
-    }
-    public function setCidade($cidade)
-    {
-        $this->cidade = $cidade;
-    }
-
-    public function getCep()
-    {
-        return $this->cep;
-    }
-    public function setCep($cep)
-    {
-        $this->cep = $cep;
-    }
-    public function getEstado()
-    {
-        return $this->estado;
-    }
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-    }
-    public function getInstagram()
-    {
-        return $this->instagram;
-    }
-    public function setInstagram($instagram)
-    {
-        $this->instagram = $instagram;
-    }
-    public function getDescricao()
-    {
-        return $this->descricao;
-    }
-    public function setDescricao($descricao)
-    {
-        $this->descricao = $descricao;
-    }
+    
     public function getLogo()
     {
         return $this->logo;
@@ -150,22 +50,12 @@ class InstituicaoApoiadora extends CRUD
     public function add()
     {
         $sql = "INSERT INTO $this->table 
-                (nome_fantasia, razao_social, cnpj, telefone, endereco, bairro, cidade, cep, estado, instagram, email, descricao, logo) 
-                VALUES (:nome_fantasia, :razao_social, :cnpj, :telefone, :endereco, :bairro, :cidade, :cep, :estado, :instagram, :email, :descricao, :logo)";
+                (nome_fantasia, link, logo) 
+                VALUES (:nome_fantasia, :link, :logo)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':nome_fantasia', $this->nome_fantasia);
-        $stmt->bindParam(':razao_social', $this->razao_social);
-        $stmt->bindParam(':cnpj', $this->cnpj);
-        $stmt->bindParam(':telefone', $this->telefone);
-        $stmt->bindParam(':endereco', $this->endereco);
-        $stmt->bindParam(':bairro', $this->bairro);
-        $stmt->bindParam(':cidade', $this->cidade);
-        $stmt->bindParam(':cep', $this->cep);
-        $stmt->bindParam(':estado', $this->estado);
-        $stmt->bindParam(':instagram', $this->instagram);
-        $stmt->bindParam(':email', $this->email);
-        $stmt->bindParam(':descricao', $this->descricao);
+        $stmt->bindParam(':link', $this->link);
         $stmt->bindParam(':logo', $this->logo);
         return $stmt->execute();
     }
@@ -174,31 +64,13 @@ class InstituicaoApoiadora extends CRUD
     {
         $sql = "UPDATE $this->table 
                 SET nome_fantasia = :nome_fantasia, 
-                    razao_social = :razao_social, 
-                    cnpj = :cnpj, 
-                    telefone = :telefone, 
-                    endereco = :endereco, 
-                    bairro = :bairro, 
-                    cidade = :cidade, 
-                    estado = :estado, 
-                    instagram = :instagram,
-                    email = :email,
-                    descricao = :descricao,
+                    link = :link,
                     logo = :logo
                 WHERE $campo = :id_instituicao_apoiadora";
         
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':nome_fantasia', $this->nome_fantasia);
-        $stmt->bindParam(':razao_social', $this->razao_social);
-        $stmt->bindParam(':cnpj', $this->cnpj);
-        $stmt->bindParam(':telefone', $this->telefone);
-        $stmt->bindParam(':endereco', $this->endereco);
-        $stmt->bindParam(':bairro', $this->bairro);
-        $stmt->bindParam(':cidade', $this->cidade);
-        $stmt->bindParam(':estado', $this->estado);
-        $stmt->bindParam(':instagram', $this->instagram);
-        $stmt->bindParam(':email', $this->email);
-        $stmt->bindParam(':descricao', $this->descricao);
+        $stmt->bindParam(':link', $this->link);
         $stmt->bindParam(':logo', $this->logo);
         $stmt->bindParam(":id_instituicao_apoiadora", $id, PDO::PARAM_INT);
         return $stmt->execute();

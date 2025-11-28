@@ -85,6 +85,7 @@ if ($tipoUsuario === 'Atleta') {
                         </td>
                         <td class="align-middle text-center">
                             <?php if ($pedidoAjuda->meta == "atingida" || $pedidoAjuda->valor_atingido >= $pedidoAjuda->valor_necessario): ?>
+                                <?php $PedidoAjuda->metaAtingida($pedidoAjuda->id_pedido_ajuda) ?>
                                 <span class="badge bg-success">
                                     <i class="bi bi-check-circle"></i> Atingida
                                 </span>

@@ -160,8 +160,7 @@ elseif (filter_has_var(INPUT_GET, "acao")):
     $id = intval(filter_input(INPUT_GET, "id"));
     $acao = filter_input(INPUT_GET, "acao", FILTER_SANITIZE_STRING);
 
-    $status = ($acao == "marcar_atingida") ? "atingida" : "pendente";
-    $PedidoAjuda->statusMeta($id, $status);
+    $PedidoAjuda->statusMeta($id);
     header("location:listaPedidoDeAjuda.php");
 endif;
 ?>

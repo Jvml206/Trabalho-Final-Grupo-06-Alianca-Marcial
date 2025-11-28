@@ -165,6 +165,78 @@
     gap: 20px;
 }
 
+/* container do card */
+.cardPedido {
+  position: relative;    /* necessário para o overlay absoluto */
+  overflow: hidden;
+  width: 240px; /* ajuste se quiser */
+  border-radius: 6px;
+}
+
+/* garante que a imagem preencha e fique por baixo do overlay */
+.card-img-container-pedido img {
+  width: 100%;
+  height: 240px; /* ajuste conforme seu card */
+  object-fit: cover;
+  display: block;
+  transition: filter .25s ease;
+}
+
+/* quando atingida, escurece a imagem */
+.cardPedido.atingida .card-img-container-pedido img {
+  filter: brightness(.25); /* mais escuro */
+}
+
+/* overlay cobrindo todo o card */
+.cardPedido .overlay-atingida {
+  position: absolute;
+  inset: 0; /* top:0; right:0; bottom:0; left:0; */
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* conteúdo centralizado verticalmente */
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  z-index: 50; /* acima do conteúdo */
+  padding: 12px;
+  pointer-events: auto;
+}
+
+/* Esconde os textos do card normal quando estiver atingida */
+.cardPedido.atingida .nomeAtleta,
+.cardPedido.atingida .motivoAtleta,
+.cardPedido.atingida .academiaAtleta,
+.cardPedido.atingida .btn-antes {
+  display: none !important;
+}
+
+/* botão "Ver" fixado na parte inferior do overlay */
+.cardPedido .overlay-atingida .btn-ver-card {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  min-width: 120px;
+}
+
+/* se quiser um título maior */
+.overlay-atingida h4 {
+  margin: 0 0 6px 0;
+  font-size: 1.05rem;
+}
+.overlay-atingida p {
+  margin: 0 0 36px 0; /* espaço para o botão inferior */
+  font-size: .95rem;
+}
+
+.atleta-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
 
 @media screen and (max-width: 1200px) {
     .campeonato-box {

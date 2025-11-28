@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($nova_senha !== $confirmar_senha) {
         $mensagem = "<script>window.alert('As senhas não conferem!');</script>";
-        
+
     } else {
         $usuario = new Usuario;
         $usuario->redefinirSenha($token, $nova_senha);
@@ -44,16 +44,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="mb-3 col-12">
                     <label for="nova_senha" class="form-label">Nova Senha</label>
-                    <input type="password" class="form-control" id="nova_senha" placeholder="Nova Senha" name="nova_senha" required>
+                    <input type="password" class="form-control" id="nova_senha" placeholder="Nova Senha"
+                        name="nova_senha" required>
+                    <button type="button" id="toggleSenha" class="btn-marrom">
+                        👁️
+                    </button>
                 </div>
+                <p id="forcaSenha" class="fw-bold"></p>
+                <ol id="requisitos" class="mb-3 mt-3">
+                    <li id="minChar" class="invalido">Mínimo 10 caracteres</li>
+                    <li id="maiuscula" class="invalido">Pelo menos uma letra maiúscula</li>
+                    <li id="minuscula" class="invalido">Pelo menos uma letra minúscula</li>
+                    <li id="numero" class="invalido">Pelo menos um número</li>
+                    <li id="especial" class="invalido">Pelo menos um caractere especial (!@#$%^&*...)</li>
+                </ol>
 
                 <div class="mb-3 col-12">
                     <label for="confirmar_senha" class="form-label">Confirmar Nova Senha</label>
-                    <input type="password" class="form-control" id="confirmar_senha" placeholder="Confirmar Senha" name="confirmar_senha" required>
+                    <input type="password" class="form-control" id="confirmar_senha" placeholder="Confirmar Senha"
+                        name="confirmar_senha" required>
+                    <button type="button" id="toggleConfirmar" class="btn-marrom">
+                        👁️
+                    </button>
+                    <small id="msgConfirmacao"></small>
                 </div>
-
                 <div class="text-center">
-                    <button type="submit" class="btn">Redefinir Senha</button>
+                    <button type="submit" class="btn btn-success" name="btnSalvar" id="btnSalvar">Redefinir
+                        Senha</button>
                 </div>
             </form>
         </div>
@@ -61,6 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <footer class="footer mt-auto">
         <?php require_once "_parts/_footer.php"; ?>
     </footer>
+
+    <script src="JS/senha.js"></script>
     <!-- Botão do VLibras -->
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
@@ -68,7 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="vw-plugin-top-wrapper"></div>
         </div>
     </div>
-
     <!-- Script do VLibras -->
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>

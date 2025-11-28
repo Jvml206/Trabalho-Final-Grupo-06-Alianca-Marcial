@@ -178,9 +178,16 @@ class PedidoAjuda extends CRUD
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function statusMeta(int $id, string $status)
+    public function statusMeta(int $id)
     {
         $sql = "UPDATE $this->table SET meta = 'atingida', valor_atingido = valor_necessario WHERE id_pedido_ajuda = :id";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([':id' => $id]);
+    }
+
+    public function metaAtingida(int $id)
+    {
+        $sql = "UPDATE $this->table SET meta = 'atingida' WHERE id_pedido_ajuda = :id";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([':id' => $id]);
     }
@@ -345,5 +352,21 @@ class PedidoAjuda extends CRUD
             error_log("Erro ao enviar e-mail para atleta: {$mail->ErrorInfo}");
             return false;
         }
+    }
+
+    public function allIndex()
+    {
+        $sql = "SELECT * FROM $this->table WHERE status_validacao = 'aprovado' AND meta = 'pendente' LIMIT 12";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function allPedAju()
+    {
+        $sql = "SELECT * FROM $this->table WHERE status_validacao = 'aprovado'";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 }

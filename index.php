@@ -29,7 +29,7 @@
 
             <div class="box">
                 <?php
-                $pedidoAjuda = $PedidoAjuda->all();
+                $pedidoAjuda = $PedidoAjuda->allIndex();
                 foreach (array_slice($pedidoAjuda, 0, 12) as $pa):
                     $id = intval($pa->id_pedido_ajuda);
                     $idA = intval($pa->fk_id_atleta);
@@ -40,16 +40,51 @@
                         <div class="card-img-container-pedido">
                             <img src="Images/pedidoDeAjuda/<?php echo $pa->imagem; ?>">
                         </div>
-                        <p class="nomeAtleta"><?php echo $atleta->nome_atleta ?></p>
-                        <p class="motivoAtleta"><?php echo $pa->titulo ?></p>
-                        <p class="academiaAtleta">Academia: <?php echo $academia->nome_fantasia ?></p>
-                        <a href="pedidoAtleta.php?id=<?php echo $id ?>" class="btn btn-atleta">Ver mais</a>
+                        <p class="nomeAtleta"><?php echo $atleta->nome_atleta; ?></p>
+                        <p class="motivoAtleta"><?php echo $pa->titulo; ?></p>
+                        <p class="academiaAtleta">Academia: <?php echo $academia->nome_fantasia; ?></p>
+                        <button type="button" class="btn btn-success btn-antes" data-bs-toggle="modal"
+                            data-bs-target="#pedidoModal<?php echo $id; ?>">
+                            Ajudar
+                        </button>
                     </div>
                     <?php if (array_search($pa, array_slice($pedidoAjuda, 0, 12)) === 11): ?>
                         <div class="pagAjuda">
                             <a href="pedidosDeAjuda.php" class="btn btn-verMais">Ver mais pedidos de ajuda</a>
                         </div>
                     <?php endif; ?>
+                    <div class="modal fade" id="pedidoModal<?php echo $id; ?>" tabindex="-1"
+                        aria-labelledby="pedidoModalLabel<?php echo $id; ?>" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="pedidoModalLabel<?php echo $id; ?>">
+                                        <?php echo $pa->titulo ?>
+                                    </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="nomeAtleta">Atleta: <?php echo $atleta->nome_atleta ?></p>
+                                    <p class="esporteAtleta">Esporte: <?php echo $atleta->esporte ?></p>
+                                    <p class="nomeAcadAtleta">Academia: <?php echo $academia->nome_fantasia ?></p>
+                                    <p class="pixAtleta">Pix: <?php echo $pa->pix ?></p>
+                                    <div class="progress" role="progressbar" aria-label="Success example"
+                                        aria-valuenow="<?php echo $pa->valor_atingido / $pa->valor_necessario * 100 ?>"
+                                        aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar text-bg-success"
+                                            style="width: <?php echo ($pa->valor_atingido / $pa->valor_necessario) * 100 ?>%">
+                                            <?php echo number_format(($pa->valor_atingido / $pa->valor_necessario) * 100, 0, ',', '.'); ?>%
+                                        </div>
+                                    </div>
+                                    <p class="esporteCampeonato"><?php echo $pa->descricao ?></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
             </div>
         </section>
