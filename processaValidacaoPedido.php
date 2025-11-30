@@ -44,7 +44,7 @@ if ($acao === "aprovar") {
         $mensagem
     );
 
-    echo "<h2>Pedido aprovado com sucesso!</h2>";
+    echo "<script>window.alert('Pedido aprovado com sucesso!');window.location.href='index.php';</script>";
     exit;
 
 } elseif ($acao === "reprovar") {
@@ -75,8 +75,7 @@ if ($acao === "aprovar") {
         $mensagem
     );
 
-    echo "<h2>Pedido reprovado.</h2>";
-    echo "<p><b>Motivo:</b> $motivo</p>";
+    echo "<script>window.alert('Pedido reprovado.<b>Motivo:</b> $motivo');window.location.href='index.php';</script>";
     exit;
 }
 

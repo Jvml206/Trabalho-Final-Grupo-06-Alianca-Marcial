@@ -196,10 +196,10 @@ endif;
 
             <?php if ($tipoUsuario === 'Atleta'):
                 ?>
-                <h2 class="text-center">Conta</h2><?php
+                <h1 class="tituloh1">Conta</h1><?php
             else:
                 ?>
-                <h2 class="text-center">Cadastro de Atleta</h2><?php
+                <h1 class="tituloh1">Cadastro de Atleta</h1><?php
             endif;
             ?>
             <input type="hidden" value="<?php echo $dadosAtleta->id_atleta ?? null; ?>" name="id_atleta">

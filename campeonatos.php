@@ -19,9 +19,9 @@
     $Campeonato = new Campeonato();
     ?>
     <main>
-        <h1 class="text-center texto-camp">Próximos Campeonatos</h1>
+        <h1 class="tituloh1">Próximos Campeonatos</h1>
 
-        <div class="pagCampeonato-box">
+        <div class="box">
             <?php
             $campeonato = $Campeonato->allCamp();
             foreach ($campeonato as $c):
@@ -40,29 +40,27 @@
                         data-bs-target="#campeonatoModal<?php echo $id; ?>">
                         Ver mais
                     </button>
-
-                    <div class="modal fade" id="campeonatoModal<?php echo $id; ?>" tabindex="-1"
-                        aria-labelledby="campeonatoModalLabel<?php echo $id; ?>" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="campeonatoModalLabel<?php echo $id; ?>">
-                                        <?php echo $c->nome_campeonato ?>
-                                    </h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p class="localCampeonato">Local: <?php echo $c->local ?></p>
-                                    <p class="paisCampeonato">País: <?php echo $c->pais ?></p>
-                                    <p class="cidadeCampeonato">Cidade: <?php echo $c->cidade ?></p>
-                                    <p class="esporteCampeonato">Esporte: <?php echo $c->esporte ?></p>
-                                    <p class="dataCampeonato">De <?php echo date('d/m/Y', strtotime($c->data_inicio)) ?>
-                                        à <?php echo date('d/m/Y', strtotime($c->data_fim)) ?></p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                </div>
+                </div>
+                <div class="modal fade" id="campeonatoModal<?php echo $id; ?>" tabindex="-1"
+                    aria-labelledby="campeonatoModalLabel<?php echo $id; ?>" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="campeonatoModalLabel<?php echo $id; ?>">
+                                    <?php echo $c->nome_campeonato ?>
+                                </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="localCampeonato">Local: <?php echo $c->local ?></p>
+                                <p class="paisCampeonato">País: <?php echo $c->pais ?></p>
+                                <p class="cidadeCampeonato">Cidade: <?php echo $c->cidade ?></p>
+                                <p class="esporteCampeonato">Esporte: <?php echo $c->esporte ?></p>
+                                <p class="dataCampeonato">De <?php echo date('d/m/Y', strtotime($c->data_inicio)) ?>
+                                    à <?php echo date('d/m/Y', strtotime($c->data_fim)) ?></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                             </div>
                         </div>
                     </div>

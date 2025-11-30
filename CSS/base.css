@@ -1,25 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Caprasimo&family=Domine:wght@400..700&display=swap');
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css");
 
-:root{
+:root {
     --font-primaria: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    --cor-fundo-claro: #ffffff;
-    --cor-fundo-escuro: #000000;
-    --cor-fundo-vermelho: #ff0000;
-    /* --cor-fundo-index: linear-gradient(circle at top left, #242122, #141414); */
-    --cor-fonte-clara: #ffffff;
-    --cor-fonte-escura: #000000;
-    --cor-fonte-vermelha: #ff0000;
+    --cor-fundo: #0A0A0A;
+    --cor-card: #1A1A1A;
+    --cor-primaria: #8B0A11;
+    --cor-primaria-hover: #C1121F;
+    --cor-texto: #FFFFFF;
+    --cor-texto-secundario: #D0D0D0;
+    --cor-img-escura: brightness(0.55);
+    --cor-borda-titulo: var(--cor-primaria);
+    --body: #DADADA;
 }
 
-*{
+* {
     box-sizing: border-box;
 }
 
 body {
     font-family: var(--font-primaria);
-    background-color: var(--cor-fundo-claro);
-    color: var(--cor-fonte-escura);
+    background-color: #DADADA;
     margin: 0;
     padding: 0;
 }
@@ -36,37 +37,22 @@ main {
     flex: 1;
 }
 
-footer {
-    margin-top: auto;
-}
-
 .nav-custom {
-    background-color: #3B5448;
+    background-color: var(--cor-primaria);
     padding: 15px 30px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.nav-custom .empresa {
     font-size: 32px;
     font-weight: bold;
     letter-spacing: 1px;
-    color: #D8E6D8;
     display: block;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.nav-custom .aurora {
-    font-size: 12px;
     color: #b7b7b7;
-    display: block;
     margin-top: -5px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
-
 
 .nav-custom .nav-link {
     font-weight: 700;
-    color: #d1d1d1 !important;
+    color: #b7b7b7 !important;
     margin: 0 12px;
     text-transform: uppercase;
     transition: color 0.3s ease;
@@ -78,7 +64,7 @@ footer {
 }
 
 .navbar-toggler i {
-    color: #D8E6D8;
+    color: #b7b7b7;
 }
 
 .nav-item {
@@ -91,37 +77,17 @@ footer {
 }
 
 .navbarNav {
-  margin-left: auto !important;
-}
-
-.btn-marrom {
-    background-color: #6f4e37;
-    color: #fff;
-    font-weight: bold;
-    border: none;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-}
-
-.btn-marrom:hover {
-    background-color: #5a3f2e;
-    color: #fff;
-}
-
-/*Conteúdo*/
-h3 {
-    font-weight: 600;
-    color: #3c2f2f;
+    margin-left: auto !important;
 }
 
 footer {
-    background-color: #3B5448;
+    background-color: var(--cor-primaria);
     color: #d8d6d6;
     text-align: center;
     padding: 20px 40px;
-    margin-top: 40px;
     border-top: 2px solid #e0d5c6;
     width: 100%;
+    margin-top: 40px;
 }
 
 footer a {
@@ -164,6 +130,29 @@ footer .rede-social i {
     margin: 5px 0;
     color: #d8d6d6;
     text-decoration: none;
+}
+
+.tituloh1 {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 40px;
+    font-weight: 700;
+    color: var(--cor-primaria, #8B0A11);
+}
+
+.btn-vermelho {
+  background: var(--cor-primaria, #8B0A11);
+  color: #fff;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: .2s ease;
+  border: none;
+}
+
+.btn-vermelho:hover {
+  background: var(--cor-primaria-hover, #C1121F);
 }
 
 @media (min-width: 1400px) {

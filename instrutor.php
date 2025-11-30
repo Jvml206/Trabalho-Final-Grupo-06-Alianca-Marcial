@@ -161,10 +161,10 @@ endif;
 
         <?php if ($tipoUsuario === 'Instrutor'):
                 ?>
-                <h2 class="text-center">Conta</h2><?php
+                <h1 class="tituloh1">Conta</h1><?php
             else:
                 ?>
-                <h2 class="text-center">Cadastro de Instrutor</h2><?php
+                <h1 class="tituloh1">Cadastro de Instrutor</h1><?php
             endif;
             ?>
 

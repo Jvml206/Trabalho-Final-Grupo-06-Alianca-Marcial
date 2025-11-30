@@ -66,35 +66,35 @@ endif;
 <body>
     <?php require_once "_parts/_navSite.php";?>
 
-    <main class="container">
+    <main class="container criar_conta">
 
-        <h2 class="text-center">Cadastre-se</h2>
+        <h1 class="tituloh1">Cadastre-se</h1>
 
         <form action="criar_conta.php" method="post" class="row g3 mt-3" enctype="multipart/form-data"
             id="form_valida_email">
             <div class="cadUsuario">
                 <div class="dadosUsuario">
                     <div>
-                        <label for="nome_usuario" class="form-label">Nome do Usuário</label>
+                        <label for="nome_usuario" class="form-label tituloDado">Nome do Usuário</label>
                         <input type="text" name="nome_usuario" id="nome_usuario" placeholder="Digite o Nome do Usuário"
                             required class="form-control">
                     </div>
 
                     <div class="usuario">
-                        <label for="email" class="form-label">Email</label>
+                        <label for="email" class="form-label tituloDado">Email</label>
                         <input type="email" name="email" id="email" placeholder="Digite o Email do Usuário" required
                             class="form-control">
                     </div>
 
                     <div class="usuario">
-                        <label for="confirmaEmail" class="form-label">Confirme o Email</label>
+                        <label for="confirmaEmail" class="form-label tituloDado">Confirme o Email</label>
                         <input type="email" name="confirmaEmail" id="confirmaEmail"
                             placeholder="Digite a confirmação do E-mail" required class="form-control">
                         <div id="mensagem" class="alert alert-danger mt-2 mb-3"></div>
                     </div>
 
                     <div class="usuario">
-                        <label for="tipo_usuario" class="form-label">Tipo de Usuário</label>
+                        <label for="tipo_usuario" class="form-label tituloDado">Tipo de Usuário</label>
                         <select id="tipo_usuario" name="tipo_usuario" class="form-select"
                             aria-label="Default select example">
                             <option disabled>Selecione o Tipo
@@ -110,13 +110,14 @@ endif;
                 </div>
 
                 <div class="fotoCadUsuario">
-                    <label for="foto" class="form-label">Foto</label>
+                    <label for="foto" class="form-label tituloDado">Foto</label>
                     <input type="file" name="foto" id="foto" accept="image/*" class="form-control" required>
                 </div>
             </div>
 
-            <div class="col-12 mt-3 d-flex gap-2">
-                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-marrom">Salvar</button>
+            <div class="col-12 mt-3 d-flex gap-2 botoes">
+                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-vermelho">Salvar</button>
+                <a href="login.php" class="btn btn-vermelho">Voltar</a>
             </div>
         </form>
     </main>

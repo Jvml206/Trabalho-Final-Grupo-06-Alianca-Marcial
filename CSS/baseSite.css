@@ -1,38 +1,7 @@
 @import url('base.css');
 
-.cadUsuario {
-    display: flex;
-    flex: 1;
-    flex-direction: row;
-    gap: 30px;
-}
-
-.dadosUsuario {
-    flex: 1;
-}
-
-.dadosUsuario .usuario {
-    margin: 20px auto 0;
-}
-
-.fotoCadUsuario {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: center;
-}
-
-.foto-usuario-cadastro {
-    display: block;
-    margin: 10px auto 0;
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
 .usuarioAtleta {
-    margin: 16px auto 0;
+  margin: 16px auto 0;
 }
 
 .dadosPedido {
@@ -66,6 +35,165 @@
   height: 200px;
   border-radius: 10px;
   object-fit: cover;
+}
+
+/* Página Sobre */
+
+.mainSobre {
+  width: 90%;
+  max-width: 900px;
+  margin: 60px auto;
+  color: var(--cor-texto, #fff);
+  font-family: "Poppins", sans-serif;
+}
+
+.porque,
+.proposito,
+.finalidade,
+.ajuda,
+.pagamento {
+  background: #1A1A1A;
+  padding: 25px;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+  border-left: 4px solid var(--cor-primaria, #8B0A11);
+}
+
+.porqueTitulo,
+.propositoTitulo,
+.finalidadeTitulo,
+.ajudaTitulo,
+.pagamentoTitulo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--cor-primaria-hover, #C1121F);
+}
+
+.porqueTexto,
+.propositoTexto,
+.ajudaSub,
+.pagamentoSub,
+.listaAjudaNumeroItem,
+.listaPagamentoNumeroItem {
+  line-height: 1.6;
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: var(--cor-texto, #fff);
+}
+
+.listaFinalidade,
+.listaAjuda,
+.listaPagamento {
+  margin-left: 20px;
+  list-style: disc;
+}
+
+.listaFinalidadeItem,
+.listaAjudaNumero,
+.listaPagamentoNumero {
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.listaAjudaItem,
+.listaPagamentoItem {
+  list-style: none;
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+.listaAjudaNumeroItem,
+.listaPagamentoNumeroItem {
+  font-size: .95rem;
+  opacity: .9;
+}
+
+/* Criar conta */
+
+main.criar_conta {
+  background: var(--cor-card, #1A1A1A);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.cadUsuario {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.dadosUsuario {
+  gap: 20px;
+  flex: 1;
+}
+
+.form-control,
+.form-select {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #f8f8f8;
+  transition: all .2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #8A1C1C;
+  box-shadow: 0 0 0 2px rgba(138, 28, 28, 0.25);
+}
+
+.fotoCadUsuario {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+}
+
+#mensagem {
+  display: none;
+}
+
+.tituloDado {
+  color: var(--cor-texto-secundario, #d0d0d0);
+  font-size: 1.1rem;
+}
+
+.botoes a {
+    text-decoration: none;
+}
+
+.botoes a:hover {
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .cadUsuario {
+    flex-direction: column;
+  }
+}
+
+@media(max-width: 600px) {
+  main {
+    width: 92%;
+    margin: 40px auto;
+  }
+
+  .tituloh1 {
+    font-size: 2rem;
+  }
+
+  .porqueTitulo,
+  .propositoTitulo,
+  .finalidadeTitulo,
+  .ajudaTitulo,
+  .pagamentoTitulo {
+    font-size: 1.35rem;
+  }
 }
 
 @media (max-width: 800px) {

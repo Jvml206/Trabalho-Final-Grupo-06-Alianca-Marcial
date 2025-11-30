@@ -21,8 +21,8 @@
     $PedidoAjuda = new PedidoAjuda();
     ?>
     <main>
-        <h1 class="text-center texto-pedAju">Atletas que precisam de ajuda</h1>
-        <div class="atleta-box">
+        <h1 class="tituloh1">Atletas que precisam de ajuda</h1>
+        <div class="box">
             <?php
             $pedidoAjuda = $PedidoAjuda->allPedAju();
             foreach ($pedidoAjuda as $pa):
@@ -37,10 +37,10 @@
                         <img src="Images/pedidoDeAjuda/<?php echo htmlspecialchars($pa->imagem); ?>" alt="imagem pedido">
                     </div>
 
-                    <p class="nomeAtleta"><?php echo htmlspecialchars($atleta->nome_atleta); ?></p>
-                    <p class="motivoAtleta"><?php echo htmlspecialchars($pa->titulo); ?></p>
-                    <p class="academiaAtleta">Academia: <?php echo htmlspecialchars($academia->nome_fantasia); ?></p>
-                    <button type="button" class="btn btn-success btn-antes" data-bs-toggle="modal"
+                    <p class="nomeAtleta text-center"><?php echo htmlspecialchars($atleta->nome_atleta); ?></p>
+                    <p class="motivoAtleta text-center"><?php echo htmlspecialchars($pa->titulo); ?></p>
+                    <p class="academiaAtleta text-center">Academia: <?php echo htmlspecialchars($academia->nome_fantasia); ?></p>
+                    <button type="button" class="btn btn-success btn-ajudar" data-bs-toggle="modal"
                         data-bs-target="#pedidoModal<?php echo $id; ?>">
                         Ajudar
                     </button>
@@ -81,7 +81,7 @@
                                         %
                                     </div>
                                 </div>
-                                <p class="esporteCampeonato"><?php echo $pa->descricao ?></p>
+                                <p class="descricaoPedido justify"><?php echo $pa->descricao ?></p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

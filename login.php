@@ -28,8 +28,8 @@ if (isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/login.css">
     <link rel="stylesheet" href="CSS/baseSite.css">
+    <link rel="stylesheet" href="CSS/login.css">
     <link rel="icon" href="Images/logo.png">
     <title>Login</title>
 </head>
@@ -48,9 +48,9 @@ if (filter_has_var(INPUT_POST, "logar")) {
 
 <body>
     <?php require_once "_parts/_navSite.php"; ?>
-    <div class="flex-grow-1 d-flex justify-content-center align-items-center">
+    <main class="flex-grow-1 d-flex justify-content-center align-items-center">
         <div class="form-login">
-            <p>Login</p>
+            <h1 class="tituloh1">Login</h1>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="row">
                 <input type="hidden" name="redirect"
                     value="<?php echo isset($_GET['redirect']) ? htmlspecialchars($_GET['redirect']) : 'bemVindo.php'; ?>">
@@ -63,7 +63,7 @@ if (filter_has_var(INPUT_POST, "logar")) {
                     <input type="password" class="form-control" id="senha" placeholder="Senha" name="senha">
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn " name="logar">Entrar</button>
+                    <button type="submit" class="btn" name="logar">Entrar</button>
                 </div>
                 <div class="mt-3">
                     <a href="redefinir_senha.php">Esqueceu a senha?</a>
@@ -73,10 +73,11 @@ if (filter_has_var(INPUT_POST, "logar")) {
                 </div>
             </form>
         </div>
-    </div>
+    </main>
     <footer class="footer mt-auto">
         <?php require_once "_parts/_footer.php"; ?>
     </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Botão do VLibras -->
     <div vw class="enabled">
@@ -85,7 +86,6 @@ if (filter_has_var(INPUT_POST, "logar")) {
             <div class="vw-plugin-top-wrapper"></div>
         </div>
     </div>
-
     <!-- Script do VLibras -->
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>

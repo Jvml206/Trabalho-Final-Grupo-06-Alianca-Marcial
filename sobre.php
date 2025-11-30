@@ -12,8 +12,68 @@
 
 <body>
     <?php require_once "_parts/_navSite.php"; ?>
-    <main>
+    <main class="mainSobre">
+        <h1 class="tituloh1">Sobre Nós</h1>
 
+        <div class="porque">
+            <h3 class="porqueTitulo">Por que o site existe?</h3>
+            <p class="porqueTexto">
+                A plataforma Aliança Marcial foi criada para diminuir a desigualdade dentro das artes marciais. Muitas
+                pessoas talentosas são obrigadas a parar de treinar ou não participam de campeonatos por falta de
+                dinheiro, falta de apoio ou falta de oportunidade. O site existe para conectar atletas que precisam de
+                ajuda com pessoas dispostas a apoiar.
+            </p>
+        </div>
+        <div class="proposito">
+            <h3 class="propositoTitulo">Qual é o propósito do site?</h3>
+            <p class="propositoTexto">
+                O propósito é simples: transformar mensalidades acessíveis em apoio real para atletas. Pequenas
+                contribuições de vários membros viram um fundo coletivo que paga treinos, equipamentos e despesas
+                esportivas. O objetivo é manter atletas treinando e evoluindo.
+            </p>
+        </div>
+        <div class="finalidade">
+            <h3 class="finalidadeTitulo">Qual é a finalidade do projeto?</h3>
+            <ul class="listaFinalidade">
+                <li class="listaFinalidadeItem">Conectar atletas que precisam de ajuda com pessoas dispostas a apoiar;
+                </li>
+                <li class="listaFinalidadeItem">Ajudar atletas a continuar no esporte;</li>
+                <li class="listaFinalidadeItem">Fornecer uma plataforma segura e transparente para arrecadação de
+                    fundos;</li>
+                <li class="listaFinalidadeItem">Incentivar a prática esportiva e o desenvolvimento de talentos nas artes
+                    marciais;</li>
+                <li class="listaFinalidadeItem">Criar uma comunidade unida por disciplina e evolução;</li>
+                <li class="listaFinalidadeItem">Promover a inclusão social através do esporte;</li>
+                <li class="listaFinalidadeItem">Permitir que qualquer pessoa, mesmo com pouco dinheiro, faça parte do
+                    impacto.</li>
+            </ul>
+        </div>
+        <div class="ajuda">
+            <h3 class="ajudaTitulo">Como uma pessoa pode ajudar?</h3>
+            <p class="ajudaSub">Existem duas formas:</p>
+            <ol class="listaAjuda">
+                <li class="listaAjudaNumero">Se tornando um cooperado (R$20)</li>
+                <ul class="listaAjudaItem">
+                    <p class="listaAjudaNumeroItem">O valor vai direto para o fundo de apoio aos atletas.</p>
+                </ul>
+                <li class="listaAjudaNumero">Divulgando o projeto</li>
+                <ul class="listaAjudaItem">
+                    <p class="listaAjudaNumeroItem">Compartilhar o site, indicar atletas e trazer membros ajuda a
+                        aumentar o alcance e o número de apoiados.</p>
+                </ul>
+            </ol>
+        </div>
+        <div class="pagamento">
+            <h3 class="pagamentoTitulo">Como funciona o pagamento?</h3>
+            <p class="pagamentoSub">Pagamentos podem ser feitos via:</p>
+            <ol class="listaPagamento">
+                <li class="listaPagamentoNumero">Pix (rápido e sem taxas)</li>
+                <ul class="listaPagamentoItem">
+                    <p class="listaPagamentoNumeroItem">Após o pagamento, o sistema registra a assinatura e o usuário passa
+                        a contribuir automaticamente para o fundo mensal que apoia atletas.</p>
+                </ul>
+            </ol>
+        </div>
     </main>
     <footer>
         <?php require_once "_parts/_footer.php"; ?>

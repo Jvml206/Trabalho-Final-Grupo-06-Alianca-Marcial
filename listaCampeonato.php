@@ -19,7 +19,7 @@ require_once 'validaUser.php';
 
     <main class="container mt-3">
         <div class="mt-3">
-            <h3>Campeonatos</h3>
+            <h1 class="tituloh1">Campeonatos</h1>
         </div>
         <div class="mt-3">
             <a href="campeonato.php" class="btn btn-outline-success mb-3">Novo Campeonato</a>

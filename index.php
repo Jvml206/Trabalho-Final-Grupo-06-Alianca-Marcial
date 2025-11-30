@@ -23,10 +23,20 @@
     $Campeonato = new Campeonato();
     $PedidoAjuda = new PedidoAjuda();
     ?>
+
+    <div class="topo">
+        <div class="overlay-container-topo">
+            <img src="Images/artes_marciais.png" alt="Foto do topo da página" class="overlay-image-topo">
+            <div class="overlay-text-topo">
+                <h1>Aliança Marcial</h1>
+                <h2>O local onde você coopera e é cooperado</h2>
+            </div>
+        </div>
+    </div>
+
     <main class="container mt-2">
         <section class="ajuda mt-2">
             <h2 class="text-center texto">Atletas que precisam de ajuda</h2>
-
             <div class="box">
                 <?php
                 $pedidoAjuda = $PedidoAjuda->allIndex();
@@ -40,19 +50,15 @@
                         <div class="card-img-container-pedido">
                             <img src="Images/pedidoDeAjuda/<?php echo $pa->imagem; ?>">
                         </div>
-                        <p class="nomeAtleta"><?php echo $atleta->nome_atleta; ?></p>
-                        <p class="motivoAtleta"><?php echo $pa->titulo; ?></p>
-                        <p class="academiaAtleta">Academia: <?php echo $academia->nome_fantasia; ?></p>
-                        <button type="button" class="btn btn-success btn-antes" data-bs-toggle="modal"
+                        <p class="nomeAtleta text-center"><?php echo $atleta->nome_atleta; ?></p>
+                        <p class="motivoAtleta text-center"><?php echo $pa->titulo; ?></p>
+                        <p class="academiaAtleta text-center">Academia: <?php echo $academia->nome_fantasia; ?></p>
+                        <button type="button" class="btn btn-success btn-ajudar" data-bs-toggle="modal"
                             data-bs-target="#pedidoModal<?php echo $id; ?>">
                             Ajudar
                         </button>
                     </div>
-                    <?php if (array_search($pa, array_slice($pedidoAjuda, 0, 12)) === 11): ?>
-                        <div class="pagAjuda">
-                            <a href="pedidosDeAjuda.php" class="btn btn-verMais">Ver mais pedidos de ajuda</a>
-                        </div>
-                    <?php endif; ?>
+
                     <div class="modal fade" id="pedidoModal<?php echo $id; ?>" tabindex="-1"
                         aria-labelledby="pedidoModalLabel<?php echo $id; ?>" aria-hidden="true">
                         <div class="modal-dialog">
@@ -77,7 +83,7 @@
                                             <?php echo number_format(($pa->valor_atingido / $pa->valor_necessario) * 100, 0, ',', '.'); ?>%
                                         </div>
                                     </div>
-                                    <p class="esporteCampeonato"><?php echo $pa->descricao ?></p>
+                                    <p class="descricaoPedido justify"><?php echo $pa->descricao ?></p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -87,11 +93,15 @@
                     </div>
                 <?php endforeach; ?>
             </div>
+            <?php if (array_search($pa, array_slice($pedidoAjuda, 0, 12)) === 11): ?>
+                <div class="pagAjuda align-items-center text-center mt-3">
+                    <a href="pedidosDeAjuda.php" class="btn btn-verMais">Ver mais pedidos de ajuda</a>
+                </div>
+            <?php endif; ?>
         </section>
 
         <section class="campeonatos mt-2">
             <h2 class="text-center texto">Próximos Campeonatos</h2>
-
             <div class="box">
                 <?php
                 $campeonato = $Campeonato->allIndex();
@@ -111,30 +121,29 @@
                             data-bs-target="#campeonatoModal<?php echo $id; ?>">
                             Ver mais
                         </button>
+                    </div>
 
-                        <div class="modal fade" id="campeonatoModal<?php echo $id; ?>" tabindex="-1"
-                            aria-labelledby="campeonatoModalLabel<?php echo $id; ?>" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="campeonatoModalLabel<?php echo $id; ?>">
-                                            <?php echo $c->nome_campeonato ?>
-                                        </h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="localCampeonato">Local: <?php echo $c->local ?></p>
-                                        <p class="paisCampeonato">País: <?php echo $c->pais ?></p>
-                                        <p class="cidadeCampeonato">Cidade: <?php echo $c->cidade ?></p>
-                                        <p class="esporteCampeonato">Esporte: <?php echo $c->esporte ?></p>
-                                        <p class="dataCampeonato">De <?php echo date('d/m/Y', strtotime($c->data_inicio)) ?>
-                                            à <?php echo date('d/m/Y', strtotime($c->data_fim)) ?></p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Fechar</button>
-                                    </div>
+                    <div class="modal fade" id="campeonatoModal<?php echo $id; ?>" tabindex="-1"
+                        aria-labelledby="campeonatoModalLabel<?php echo $id; ?>" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="campeonatoModalLabel<?php echo $id; ?>">
+                                        <?php echo $c->nome_campeonato ?>
+                                    </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="localCampeonato">Local: <?php echo $c->local ?></p>
+                                    <p class="paisCampeonato">País: <?php echo $c->pais ?></p>
+                                    <p class="cidadeCampeonato">Cidade: <?php echo $c->cidade ?></p>
+                                    <p class="esporteCampeonato">Esporte: <?php echo $c->esporte ?></p>
+                                    <p class="dataCampeonato">De <?php echo date('d/m/Y', strtotime($c->data_inicio)) ?>
+                                        à <?php echo date('d/m/Y', strtotime($c->data_fim)) ?></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                                 </div>
                             </div>
                         </div>

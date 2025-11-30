@@ -1,63 +1,93 @@
 @import url('baseSite.css');
 
-.ajuda {
+/* Topo */
+.overlay-container-topo {
+    position: relative;
     width: 100%;
-    max-width: 2000px;
-    margin: 50px auto;
-    padding: 20px;
-    box-shadow: 0 1px 10px rgb(12, 12, 12);
-    border-radius: 10px;
-    background: var(--cor-fundo-claro);
+    overflow: hidden;
 }
 
-.campeonatos {
+.overlay-container-topo img {
     width: 100%;
-    max-width: 2000px;
-    margin: 50px auto;
-    padding: 20px;
-    box-shadow: 0 1px 10px rgb(12, 12, 12);
-    border-radius: 10px;
-    background: var(--cor-fundo-claro);
+    max-height: 570px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(.25);
 }
+
+.overlay-text-topo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #dbd9d9;
+}
+
+.overlay-text-topo h1 {
+    font-family: "Chetta Vissto";
+    font-size: clamp(25px, 6vw, 75px);
+    font-weight: bold;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
+}
+
+.overlay-text-topo h2 {
+    font-family: "Merriweather";
+    font-size: clamp(14px, 3vw, 30px);
+    margin-top: 10px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Main */
 
 .box {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* centraliza os itens */
     gap: 20px;
 }
 
+/* Ajuda */
+
+.ajuda {
+    width: 100%;
+    max-width: 2000px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background: var(--cor-fundo);
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.8);
+}
+
 .ajuda h2 {
-    border-bottom: 3px solid black;
+    color: var(--cor-texto);
+    border-bottom: 3px solid var(--cor-primaria);
     padding: 5px;
+    margin-bottom: 30px;
 }
 
 .cardPedido {
     width: 300px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    background: var(--cor-card);
+    color: var(--cor-texto);
     border-radius: 12px;
-    background: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
     padding-bottom: 20px;
+    transition: 0.3s;
 }
 
 .cardPedido:hover {
     transform: translateY(-5px);
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9);
 }
 
-/* Container da imagem */
 .card-img-container-pedido {
     width: 100%;
     height: 200px;
     overflow: hidden;
 }
 
-/* Imagem */
 .card-img-container-pedido img {
     width: 100%;
     height: 100%;
@@ -65,63 +95,86 @@
     display: block;
 }
 
-/* Nome e textos */
 .cardPedido p {
-    margin: 8px 0 0 0;
+    margin: 8px 0;
     padding: 0 15px;
+    color: var(--cor-texto-secundario);
 }
 
 .nomeAtleta {
+    color: var(--cor-texto);
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .motivoAtleta {
-    font-size: 15px;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .academiaAtleta {
-    font-size: 14px;
     opacity: 0.7;
-    margin-bottom: 15px;
 }
 
-/* Botão */
-.btn-atleta {
-    background: #6c4328;
-    color: #fff;
-    padding: 8px 20px;
-    border-radius: 20px;
-    text-decoration: none;
-    transition: 0.2s;
+.descricaoPedido {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
-.btn-atleta:hover {
-    background: #4a2f1c;
+/* Campeonatos */
+
+.campeonatos {
+    background: var(--cor-fundo);
+    padding: 30px;
+    border-radius: 8px;
 }
 
 .campeonatos h2 {
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid var(--cor-borda-titulo);
+    color: var(--cor-texto);
     padding: 5px;
+    margin-bottom: 25px;
 }
 
+.box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 22px;
+}
+
+.cardCampeonato {
+    background: var(--cor-card);
+    color: var(--cor-texto);
+    padding-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.7);
+    transition: .25s;
+}
+
+.cardCampeonato:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.9);
+}
 
 .overlay-container {
     position: relative;
     width: 300px;
     height: 300px;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
 .overlay-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    border-radius: 5px;
-    filter: brightness(0.55);
+    filter: var(--cor-img-escura);
+    transition: .25s;
+}
+
+.overlay-container:hover img {
+    filter: brightness(0.35);
 }
 
 .overlay-text {
@@ -129,10 +182,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    color: var(--cor-texto);
     text-align: center;
-    color: #f2f2f2;
     z-index: 2;
-    /* garante que o texto fica acima do filtro */
 }
 
 .overlay-text p.nomeCampeonato {
@@ -140,95 +192,167 @@
     font-size: 20px;
     font-weight: bold;
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-    margin-bottom: 6px;
 }
 
 .overlay-text p.paisCampeonato,
 .overlay-text p.esporteCampeonato {
     font-family: "Merriweather";
     font-size: 16px;
-    margin-top: 6px;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    color: var(--cor-texto-secundario);
+}
+
+.btn-ajudar,
+.btn-verMais,
+.btn-campeonato {
+    background: var(--cor-primaria);
+    color: var(--cor-texto);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    transition: 0.2s;
+}
+
+.btn-ajudar:hover,
+.btn-verMais:hover,
+.btn-campeonato:hover {
+    background: var(--cor-primaria-hover);
+}
+
+.btn-campeonato {
+    margin-top: 12px;
+    padding: 8px 18px;
 }
 
 .pagCampeonato {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
-.pagCampeonato-box {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    /* centraliza os itens */
-    gap: 20px;
+.modal-content {
+    background: var(--cor-card);
+    color: var(--cor-texto);
+    border-radius: 12px;
+    border: 1px solid var(--cor-primaria);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
 }
 
-/* container do card */
+.modal-header {
+    border-bottom: 2px solid var(--cor-primaria);
+    background: var(--cor-card);
+}
+
+.modal-title {
+    color: var(--cor-texto);
+    font-weight: 700;
+}
+
+.btn-close {
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+}
+
+.btn-close:hover {
+    opacity: 1;
+}
+
+.modal-body p {
+    color: var(--cor-texto-secundario);
+    margin-bottom: 8px;
+}
+
+.modal-body .nomeAtleta {
+    color: var(--cor-texto);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.modal-body .pixAtleta {
+    color: var(--cor-primaria-hover);
+    font-weight: 600;
+}
+
+.progress {
+    background: #444;
+    height: 22px;
+    border-radius: 30px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.progress-bar {
+    background: var(--cor-primaria);
+    font-weight: bold;
+    color: #fff;
+}
+
+.progress-bar:hover {
+    background: var(--cor-primaria-hover);
+}
+
+.modal-footer {
+    border-top: 2px solid var(--cor-primaria);
+}
+
+.modal-footer .btn-secondary {
+    background: var(--cor-primaria);
+    border: none;
+}
+
+.modal-footer .btn-secondary:hover {
+    background: var(--cor-primaria-hover);
+}
+
+/* pagPedidoAjuda */
+
 .cardPedido {
-  position: relative;    /* necessário para o overlay absoluto */
-  overflow: hidden;
-  width: 240px; /* ajuste se quiser */
-  border-radius: 6px;
+    position: relative;
 }
 
-/* garante que a imagem preencha e fique por baixo do overlay */
-.card-img-container-pedido img {
-  width: 100%;
-  height: 240px; /* ajuste conforme seu card */
-  object-fit: cover;
-  display: block;
-  transition: filter .25s ease;
-}
-
-/* quando atingida, escurece a imagem */
 .cardPedido.atingida .card-img-container-pedido img {
-  filter: brightness(.25); /* mais escuro */
+    filter: brightness(.25);
 }
 
-/* overlay cobrindo todo o card */
-.cardPedido .overlay-atingida {
-  position: absolute;
-  inset: 0; /* top:0; right:0; bottom:0; left:0; */
-  background: rgba(0,0,0,0.55);
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* conteúdo centralizado verticalmente */
-  align-items: center;
-  color: #fff;
-  text-align: center;
-  z-index: 50; /* acima do conteúdo */
-  padding: 12px;
-  pointer-events: auto;
+.overlay-atingida {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    z-index: 50;
+    padding: 12px;
+    pointer-events: auto;
 }
 
-/* Esconde os textos do card normal quando estiver atingida */
 .cardPedido.atingida .nomeAtleta,
 .cardPedido.atingida .motivoAtleta,
 .cardPedido.atingida .academiaAtleta,
-.cardPedido.atingida .btn-antes {
-  display: none !important;
+.cardPedido.atingida .btn-ajudar {
+    display: none !important;
 }
 
-/* botão "Ver" fixado na parte inferior do overlay */
-.cardPedido .overlay-atingida .btn-ver-card {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 60;
-  min-width: 120px;
+.overlay-atingida .btn-ver-card {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 120px;
+    z-index: 60;
 }
 
-/* se quiser um título maior */
 .overlay-atingida h4 {
-  margin: 0 0 6px 0;
-  font-size: 1.05rem;
+    margin: 0 0 6px 0;
+    font-size: 1.1rem;
+    font-weight: bold;
 }
+
 .overlay-atingida p {
-  margin: 0 0 36px 0; /* espaço para o botão inferior */
-  font-size: .95rem;
+    margin: 0 0 36px 0;
+    font-size: .95rem;
 }
 
 .atleta-box {
@@ -238,32 +362,18 @@
     padding: 20px;
 }
 
-@media screen and (max-width: 1200px) {
-    .campeonato-box {
-        grid-template-columns: repeat(3, 300px);
-    }
+/* titulosPags */
 
-    .pagCampeonato-box {
-        grid-template-columns: repeat(3, 300px);
-    }
+.tituloh1 {
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 40px;
+    font-weight: 700;
+    color: var(--cor-primaria, #8B0A11);
 }
 
-@media screen and (max-width: 1000px) {
-    .campeonato-box {
-        grid-template-columns: repeat(2, 300px);
-    }
-
-    .pagCampeonato-box {
-        grid-template-columns: repeat(2, 300px);
-    }
-}
-
-@media screen and (max-width: 800px) {
-    .campeonato-box {
-        grid-template-columns: repeat(1, 300px);
-    }
-
-    .pagCampeonato-box {
-        grid-template-columns: repeat(1, 300px);
+@media (max-width: 600px){
+    .tituloh1 {
+        font-size: 2rem;
     }
 }

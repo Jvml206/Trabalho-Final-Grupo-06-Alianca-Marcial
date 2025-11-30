@@ -72,7 +72,7 @@ endif;
         }
         ?>
 
-        <h2 class="text-center">Cadastro de Campeonato</h2>
+        <h1 class="tituloh1">Cadastro de Campeonato</h1>
 
         <form action="campeonato.php" method="post" class="row g3 mt-3">
 

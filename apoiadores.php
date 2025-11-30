@@ -19,7 +19,7 @@
     $InstituicaoApoiadora = new InstituicaoApoiadora();
     ?>
     <main>
-        <h1 class="text-center texto-camp">Instituições que nos apoiam</h1>
+        <h1 class="tituloh1">Instituições que nos apoiam</h1>
 
         <?php
         $instituicaoApoiadora = $InstituicaoApoiadora->all();

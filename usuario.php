@@ -119,7 +119,7 @@ endif;
         }
         ?>
 
-        <h2 class="text-center">Cadastro de Usuário</h2>
+        <h1 class="tituloh1">Cadastro de Usuário</h1>
 
         <form action="usuario.php" method="post" class="row g3 mt-3" enctype="multipart/form-data"
             id="form_valida_email">

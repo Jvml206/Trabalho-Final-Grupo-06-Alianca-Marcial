@@ -1,0 +1,79 @@
+@import url('baseSite.css');
+
+main {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--body, #0A0A0A);
+    padding: 20px;
+}
+
+.form-login {
+    width: 100%;
+    max-width: 420px;
+    background: var(--cor-card, #1A1A1A);
+    padding: 35px 40px;
+    border-radius: 16px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.35);
+    color: var(--cor-texto, #fff);
+}
+
+.form-login .form-label {
+    color: var(--cor-texto-secundario, #d0d0d0);
+    font-size: 0.95rem;
+}
+
+.form-login .form-control {
+    background: #111;
+    border: 1px solid #333;
+    color: #fff;
+    padding: 12px;
+    border-radius: 10px;
+    transition: all .2s ease;
+}
+
+.form-login .form-control:focus {
+    background: #151515;
+    border-color: var(--cor-primaria, #8B0A11);
+    box-shadow: 0 0 0 2px rgba(139, 10, 17, 0.4);
+    color: #fff;
+}
+
+.form-login .btn {
+    width: 100%;
+    background: var(--cor-primaria, #8B0A11);
+    color: #fff;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: .2s ease;
+}
+
+.form-login .btn:hover {
+    background: var(--cor-primaria-hover, #C1121F);
+}
+
+.form-login a {
+    color: var(--cor-primaria-hover, #C1121F);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.form-login a:hover {
+    text-decoration: underline;
+}
+
+.redefinir_senha a {
+    text-decoration: none;
+}
+
+.redefinir_senha a:hover {
+    text-decoration: none;
+}
+
+@media (max-width: 480px) {
+    .form-login {
+        padding: 25px;
+    }
+}

@@ -25,7 +25,7 @@ $academias = $Academia->all();
 
     <main class="container mt-3">
         <div class="mt-3">
-            <h3>Instrutores</h3>
+            <h1 class="tituloh1">Instrutores</h1>
         </div>
         <div class="mt-3">
             <a href="instrutor.php" class="btn btn-outline-success mb-3">Novo Instrutor</a>
