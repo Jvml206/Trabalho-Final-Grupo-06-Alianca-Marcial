@@ -37,11 +37,12 @@
     <main class="container mt-2">
         <section class="ajuda mt-2">
             <h2 class="text-center texto">Atletas que precisam de ajuda</h2>
-            <div class="box">
-                <?php
-                $pedidoAjuda = $PedidoAjuda->allIndex();
-                foreach (array_slice($pedidoAjuda, 0, 12) as $pa):
-                    $id = intval($pa->id_pedido_ajuda);
+            <?php
+            $pedidoAjuda = $PedidoAjuda->allIndex();
+            foreach (array_slice($pedidoAjuda, 0, 12) as $pa): ?>
+                <div class="box">
+
+                    <?php $id = intval($pa->id_pedido_ajuda);
                     $idA = intval($pa->fk_id_atleta);
                     $atleta = $Atleta->search('id_atleta', $idA);
                     $academia = $Academia->search('id_academia', $atleta->fk_id_academia);
@@ -91,13 +92,13 @@
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            </div>
-            <?php if (array_search($pa, array_slice($pedidoAjuda, 0, 12)) === 11): ?>
-                <div class="pagAjuda align-items-center text-center mt-3">
-                    <a href="pedidosDeAjuda.php" class="btn btn-verMais">Ver mais pedidos de ajuda</a>
                 </div>
-            <?php endif; ?>
+                <?php if (array_search($pa, array_slice($pedidoAjuda, 0, 12)) === 11): ?>
+                    <div class="pagAjuda align-items-center text-center mt-3">
+                        <a href="pedidosDeAjuda.php" class="btn btn-verMais">Ver mais pedidos de ajuda</a>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
         </section>
 
         <section class="campeonatos mt-2">
