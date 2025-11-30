@@ -5,13 +5,12 @@
     --font-primaria: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     --cor-fundo: #0A0A0A;
     --cor-card: #1A1A1A;
-    --cor-primaria: #8B0A11;
+    --cor-primaria: #7A0F0F;
     --cor-primaria-hover: #C1121F;
     --cor-texto: #FFFFFF;
     --cor-texto-secundario: #D0D0D0;
     --cor-img-escura: brightness(0.55);
     --cor-borda-titulo: var(--cor-primaria);
-    --body: #DADADA;
 }
 
 * {

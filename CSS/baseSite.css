@@ -83,9 +83,7 @@
   color: var(--cor-texto, #fff);
 }
 
-.listaFinalidade,
-.listaAjuda,
-.listaPagamento {
+.listaFinalidade{
   margin-left: 20px;
   list-style: disc;
 }
@@ -169,6 +167,104 @@ main.criar_conta {
 
 .botoes a:hover {
     text-decoration: none;
+}
+
+/* Política de Privacidade */
+
+.politica-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 50px auto;
+    color: #FFFFFF;
+    font-family: "Poppins", Arial, sans-serif;
+}
+
+.regras-versao {
+    text-align: center;
+    color: var(--cor-primaria);
+    margin-top: -20px;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
+.politica-card {
+    background-color: #1A1A1A;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 10px #00000055;
+}
+
+.politica-card h3 {
+    color: var(--cor-primaria, #8B0A11);
+    margin-bottom: 15px;
+}
+
+.politica-card h4 {
+    color: #C1121F;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+.politica-card p {
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.politica-card ul {
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+.politica-card li {
+    margin-bottom: 6px;
+}
+
+/* Termos de uso */
+
+.termos-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background-color: #DADADA; /* fundo que você pediu */
+    border-radius: 12px;
+}
+
+.termos-bloco {
+    margin-bottom: 30px;
+}
+
+.termos-bloco h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #8B0A11; 
+}
+
+.termos-bloco p {
+    line-height: 1.6;
+    color: #000;
+}
+
+.termos-bloco ul {
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+.termos-bloco ul li {
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+
+
+@media (max-width: 600px) {
+    .politica-card {
+        padding: 20px;
+    }
+
+    .politica-container {
+        width: 95%;
+    }
 }
 
 @media (max-width: 768px) {

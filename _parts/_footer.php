@@ -8,9 +8,9 @@
         <a href="termosUso.php">Termos de Uso</a>
     </div>
     <div class="r-linha-item rede-social">
-        <a href="mailto:contato@gmail.com" class="instagram" target="_blank"><i class="bi bi-envelope"></i></a>
-        <a href="https://www.instagram.com/" class="instagram" target="_blank"><i class="bi bi-instagram"></i></a>
-        <a href="https://www.youtube.com/" class="youtube" target="_blank"><i class="bi bi-youtube"></i></a>
+        <a href="mailto:cooperativaaliancamarcial@gmail.com" class="instagram" target="_blank"><i class="bi bi-envelope"></i></a>
+        <a href="https://www.instagram.com/coopaliancamarcial" class="instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+        <a href="https://www.youtube.com/@CoopAliançaMarcial" class="youtube" target="_blank"><i class="bi bi-youtube"></i></a>
     </div>
 </div>
 

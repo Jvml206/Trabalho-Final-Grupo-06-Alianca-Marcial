@@ -51,26 +51,26 @@
         <div class="ajuda">
             <h3 class="ajudaTitulo">Como uma pessoa pode ajudar?</h3>
             <p class="ajudaSub">Existem duas formas:</p>
-            <ol class="listaAjuda">
+            <ol type="1">
                 <li class="listaAjudaNumero">Se tornando um cooperado (R$20)</li>
-                <ul class="listaAjudaItem">
-                    <p class="listaAjudaNumeroItem">O valor vai direto para o fundo de apoio aos atletas.</p>
+                <ul type="disc">
+                    <li class="listaAjudaNumeroItem">O valor vai direto para o fundo de apoio aos atletas.</li>
                 </ul>
                 <li class="listaAjudaNumero">Divulgando o projeto</li>
-                <ul class="listaAjudaItem">
-                    <p class="listaAjudaNumeroItem">Compartilhar o site, indicar atletas e trazer membros ajuda a
-                        aumentar o alcance e o número de apoiados.</p>
+                <ul type="disc">
+                    <li type="" class="listaAjudaNumeroItem">Compartilhar o site, indicar atletas e trazer membros ajuda a
+                        aumentar o alcance e o número de apoiados.</li>
                 </ul>
             </ol>
         </div>
         <div class="pagamento">
             <h3 class="pagamentoTitulo">Como funciona o pagamento?</h3>
             <p class="pagamentoSub">Pagamentos podem ser feitos via:</p>
-            <ol class="listaPagamento">
+            <ol type="1">
                 <li class="listaPagamentoNumero">Pix (rápido e sem taxas)</li>
-                <ul class="listaPagamentoItem">
-                    <p class="listaPagamentoNumeroItem">Após o pagamento, o sistema registra a assinatura e o usuário passa
-                        a contribuir automaticamente para o fundo mensal que apoia atletas.</p>
+                <ul type="disc">
+                    <li class="listaPagamentoNumeroItem">Após o pagamento, o sistema registra a assinatura e o usuário passa
+                        a contribuir automaticamente para o fundo mensal que apoia atletas.</li>
                 </ul>
             </ol>
         </div>
