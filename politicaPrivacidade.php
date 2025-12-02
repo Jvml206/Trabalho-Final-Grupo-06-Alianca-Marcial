@@ -5,18 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/baseSite.css">
+    <link rel="stylesheet" href="CSS/baseSite.css?v=<?php echo time(); ?>">
     <link rel="icon" href="Images/logo.png">
     <title>Aliança Marcial</title>
 </head>
 
 <body>
     <?php require_once "_parts/_navSite.php"; ?>
-    <main class="politica-container">
+    <main class="termos-container">
         <h1 class="tituloh1">Política de Privacidade – Aliança Marcial</h1>
         <p class="regras-versao">Versão 1.0 — 30/11/2025</p>
 
-        <div class="politica-card">
+        <section class="termos-bloco">
             <h3>1. Introdução</h3>
             <p>
                 A Plataforma Aliança Marcial valoriza a privacidade e a proteção dos dados pessoais dos usuários.
@@ -32,9 +32,9 @@
             <p>
                 Ao utilizar a plataforma, o usuário declara estar ciente e de acordo com os termos abaixo.
             </p>
-        </div>
+        </section>
 
-        <div class="politica-card">
+        <section class="termos-bloco">
             <h3>2. Dados Pessoais Coletados</h3>
 
             <h4>2.1. Dados informados pelo usuário</h4>
@@ -59,9 +59,9 @@
             </ul>
 
             <p>A plataforma não armazena senhas de banco ou dados sensíveis de meios de pagamento.</p>
-        </div>
+        </section>
 
-        <div class="politica-card">
+        <section class="termos-bloco">
             <h3>3. Finalidades do Tratamento dos Dados</h3>
             <ul>
                 <li>Cadastro e autenticação do usuário</li>
@@ -73,9 +73,9 @@
                 <li>Prevenção a fraudes</li>
                 <li>Cumprimento de obrigações legais</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="politica-card">
+        <section class="termos-bloco">
             <h3>4. Bases Legais Utilizadas (LGPD)</h3>
             <ul>
                 <li>Execução de contrato</li>
@@ -84,9 +84,9 @@
                 <li>Cumprimento de obrigação legal</li>
                 <li>Proteção do crédito</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="politica-card">
+        <section class="termos-bloco">
             <h3>5. Compartilhamento de Dados</h3>
             <p>Os dados não são vendidos nem repassados a terceiros.</p>
             <p>Podem ser compartilhados com:</p>
@@ -96,9 +96,9 @@
                 <li>Autoridades competentes</li>
                 <li>Serviços técnicos (servidor, autenticação)</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="politica-card">
+        <section class="termos-bloco">
             <h3>6. Armazenamento e Segurança da Informação</h3>
             <ul>
                 <li>Criptografia de senhas</li>
@@ -107,9 +107,9 @@
                 <li>Monitoramento de atividades suspeitas</li>
                 <li>Servidores seguros</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="politica-card">
+        <section class="termos-bloco">
             <h3>7. Retenção e Exclusão dos Dados</h3>
             <p>Os dados são mantidos enquanto a conta estiver ativa ou para fins legais.</p>
             <p>O usuário pode solicitar:</p>
@@ -117,9 +117,9 @@
                 <li>Exclusão dos dados</li>
                 <li>Correção de informações</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="politica-card">
+        <section class="termos-bloco">
             <h3>8. Direitos do Usuário (LGPD)</h3>
             <ul>
                 <li>Acessar seus dados</li>
@@ -128,9 +128,9 @@
                 <li>Revogar consentimento</li>
                 <li>Consultar compartilhamentos</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="politica-card">
+        <section class="termos-bloco">
             <h3>9. Uso de Cookies</h3>
             <p>Utilizamos apenas cookies essenciais:</p>
             <ul>
@@ -138,18 +138,18 @@
                 <li>Manutenção de sessão</li>
                 <li>Segurança</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="politica-card">
+        <section class="termos-bloco">
             <h3>10. Alterações da Política</h3>
             <p>A política poderá ser atualizada a qualquer momento. Mudanças importantes serão avisadas aos usuários.
             </p>
-        </div>
+        </section>
 
-        <div class="politica-card">
+        <section class="termos-bloco">
             <h3>11. Contato do Encarregado (DPO)</h3>
             <p>E-mail: <strong>cooperativaaliancamarcial@gmail.com</strong></p>
-        </div>
+        </section>
     </main>
     <footer>
         <?php require_once "_parts/_footer.php"; ?>

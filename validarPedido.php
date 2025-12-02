@@ -37,7 +37,7 @@ $pedido = $stmt->fetch(PDO::FETCH_OBJ);
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="CSS/baseSite.css">
+    <link rel="stylesheet" href="CSS/baseSite.css?v=<?php echo time(); ?>">
     <link rel="icon" href="Images/logo.png">
     <title>Validação do Pedido de Ajuda</title>
 </head>

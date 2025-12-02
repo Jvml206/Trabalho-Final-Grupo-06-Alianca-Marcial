@@ -8,7 +8,7 @@ require_once 'validaUser.php';?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/baseSite.css">
+    <link rel="stylesheet" href="CSS/baseSite.css?v=<?php echo time(); ?>">
     <link rel="icon" href="Images/logo.png">
     <title>Academias</title>
 </head>

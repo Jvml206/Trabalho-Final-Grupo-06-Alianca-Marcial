@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/baseSite.css">
+    <link rel="stylesheet" href="CSS/baseSite.css?v=<?php echo time(); ?>">
     <link rel="icon" href="Images/logo.png">
     <title>Aliança Marcial</title>
 </head>
@@ -121,7 +121,7 @@
         <section class="termos-bloco">
             <h3>13. Foro e Legislação Aplicável</h3>
             <p>Estes termos seguem as leis brasileiras.<br>
-                Eventuais conflitos serão resolvidos no foro de <strong>[cidade/estado]</strong>.</p>
+                Eventuais conflitos serão resolvidos no foro de Pimenta Bueno/RO.</p>
         </section>
     </main>
 
