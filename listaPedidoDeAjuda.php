@@ -48,26 +48,26 @@ if ($tipoUsuario === 'Atleta') {
     endif;
     ?>
 
-    <main class="container mt-3">
+    <main class="container">
         <div class="mt-3">
             <h1 class="tituloh1">Pedidos de Ajuda</h1>
         </div>
         <div class="mt-3">
-            <a href="pedidoDeAjuda.php" class="btn btn-outline-success mb-3">Novo Pedido de Ajuda</a>
+            <a href="pedidoDeAjuda.php" class="btn btn-novo mb-3">Novo Pedido de Ajuda</a>
         </div>
-        <table class="table">
-            <thead class="table-success">
+        <table class="table tabela text-center overflow-hidden table-hover align-middle">
+            <thead>
                 <tr>
                     <th>#</th>
                     <th>Título</th>
                     <th>Atleta</th>
                     <th>Status</th>
                     <th>Meta</th>
-                    <th class="text-center">Ações</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
 
-            <body>
+            <tbody>
                 <?php foreach ($pedidosAjuda as $pedidoAjuda): ?>
                     <tr>
                         <td><?php echo $pedidoAjuda->id_pedido_ajuda ?></td>
@@ -79,11 +79,15 @@ if ($tipoUsuario === 'Atleta') {
                             }
                         } ?></td>
                         <td>
-                            <?= ($pedidoAjuda->status_validacao === 'aprovado') ? 'Aprovado' :
-                                (($pedidoAjuda->expira_validacao != 0 && strtotime($pedidoAjuda->expira_validacao) < time()) ? 'Tempo de validação expirado'
-                                    : (($pedidoAjuda->status_validacao === 'reprovado') ? 'Reprovado' : 'Pendente')) ?>
+                            <?= ($pedidoAjuda->status_validacao === 'aprovado') ? '<span class="badge bg-success">
+                                    <i class="bi bi-check-circle"></i> Aprovado
+                                </span>' :
+                                (($pedidoAjuda->expira_validacao != 0 && strtotime($pedidoAjuda->expira_validacao) < time()) ? '<span class="badge bg-danger">
+                                        <i class="bi bi-x-circle"></i> Tempo de validação expirado </span>' : (($pedidoAjuda->status_validacao === 'reprovado') ? '<span class="badge bg-danger">
+                                        <i class="bi bi-x-circle"></i> Reprovado </span>' : '<span class="badge bg-warning">
+                                        <i class="bi bi-hourglass-split"></i> Pendente </span>')) ?>
                         </td>
-                        <td class="align-middle text-center">
+                        <td>
                             <?php if ($pedidoAjuda->meta == "atingida" || $pedidoAjuda->valor_atingido >= $pedidoAjuda->valor_necessario): ?>
                                 <?php $PedidoAjuda->metaAtingida($pedidoAjuda->id_pedido_ajuda) ?>
                                 <span class="badge bg-success">
@@ -92,7 +96,7 @@ if ($tipoUsuario === 'Atleta') {
                             <?php else: ?>
                                 <?php if ($pedidoAjuda->status_validacao !== 'reprovado'): ?>
                                     <a href="pedidoDeAjuda.php?acao=marcar_atingida&id=<?= $pedidoAjuda->id_pedido_ajuda ?>"
-                                        class="badge bg-secondary text-decoration-none" title="Marcar como atingida"
+                                        class="badge bg-warning text-decoration-none" title="Marcar como atingida"
                                         onclick="return confirm('Deseja marcar a meta como Atingida?');">
                                         <i class="bi bi-hourglass-split"></i> Pendente
                                     </a>
@@ -103,30 +107,34 @@ if ($tipoUsuario === 'Atleta') {
                                 <?php endif; ?>
                             <?php endif; ?>
                         </td>
-                        <td class="d-flex gap-1 justify-content-center">
-                            <?php if ($pedidoAjuda->meta == "atingida" || $pedidoAjuda->valor_atingido >= $pedidoAjuda->valor_necessario || $pedidoAjuda->status_validacao === 'reprovado'): ?>
-                                <button class="btn btn-primary btn-sm" disabled><i class="bi bi-pencil-square"></i></button>
-                            <?php else: ?>
-                                <form action="<?php echo htmlspecialchars("pedidoDeAjuda.php") ?>" method="post" class="d-flex">
+                        <td class="align-middle">
+                            <div class="d-flex gap-1 justify-content-center">
+                                <?php if ($pedidoAjuda->meta == "atingida" || $pedidoAjuda->valor_atingido >= $pedidoAjuda->valor_necessario || $pedidoAjuda->status_validacao === 'reprovado'): ?>
+                                    <button class="btn btn-primary btn-sm" disabled><i class="bi bi-pencil-square"></i></button>
+                                <?php else: ?>
+                                    <form action="<?php echo htmlspecialchars("pedidoDeAjuda.php") ?>" method="post"
+                                        class="d-flex">
+                                        <input type="hidden" name="id" value="<?php echo $pedidoAjuda->id_pedido_ajuda ?>">
+                                        <button name="btnEditar" class="btn btn-primary btn-sm" type="submit" title="Editar"
+                                            onclick="return confirm('Tem certeza que deseja editar o pedido de ajuda?');">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+
+                                <form action="<?php echo htmlspecialchars("pedidoDeAjuda.php") ?>" method="post"
+                                    class="d-flex">
                                     <input type="hidden" name="id" value="<?php echo $pedidoAjuda->id_pedido_ajuda ?>">
-                                    <button name="btnEditar" class="btn btn-primary btn-sm" type="submit" title="Editar"
-                                        onclick="return confirm('Tem certeza que deseja editar o pedido de ajuda?');">
-                                        <i class="bi bi-pencil-square"></i>
+                                    <button name="btnDeletar" class="btn btn-danger btn-sm" type="submit" title="Deletar"
+                                        onclick="return confirm('Tem certeza que deseja deletar o pedido de ajuda?');">
+                                        <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
-                            <?php endif; ?>
-
-                            <form action="<?php echo htmlspecialchars("pedidoDeAjuda.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $pedidoAjuda->id_pedido_ajuda ?>">
-                                <button name="btnDeletar" class="btn btn-danger btn-sm" type="submit" title="Deletar"
-                                    onclick="return confirm('Tem certeza que deseja deletar o pedido de ajuda?');">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>
-            </body>
+            </tbody>
         </table>
     </main>
 

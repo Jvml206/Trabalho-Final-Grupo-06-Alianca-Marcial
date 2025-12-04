@@ -184,7 +184,7 @@ endif;
         require_once "_parts/_navAdmin.php";
     endif; ?>
 
-    <main class="container">
+    <main class="container cadastro">
         <?php
         if (filter_has_var(INPUT_POST, "btnEditar")) {
             $id = intval(filter_input(INPUT_POST, "id"));
@@ -201,7 +201,7 @@ endif;
             <div class="row gap-4 mb-3">
                 <?php if ($tipoUsuario === 'Administrador'): ?>
                     <div class="col-md-12">
-                        <label for="fk_id_atleta" class="form-label">Nome do Atleta</label>
+                        <label for="fk_id_atleta" class="form-label tituloDado">Nome do Atleta</label>
                         <select name="fk_id_atleta" class="form-select" id="fk_id_atleta" required>
                             <option disabled <?= (!isset($dadosAtleta->id_atleta)) ? 'selected' : '' ?>>
                                 Selecione o Atleta
@@ -222,42 +222,40 @@ endif;
 
 
                 <div class="dadosPedido col-md-6 col-12">
-                    <label for="titulo" class="form-label">Motivo do pedido</label>
+                    <label for="titulo" class="form-label tituloDado">Motivo do pedido</label>
                     <input type="text" name="titulo" id="titulo" placeholder="Digite o Motivo do Pedido" required
                         class="form-control" value="<?php echo $pedidoAjuda->titulo ?? null; ?>">
 
-                    <div class="detalheDadoPedido">
-                        <label for="valor_necessario" class="form-label">Valor de ajuda necessário</label>
+                    <div class="detalheDoPedido">
+                        <label for="valor_necessario" class="form-label tituloDado">Valor de ajuda necessário</label>
                         <input type="text" name="valor_necessario" id="valor_necessario"
                             placeholder="Digite o valor necessário. Em R$" required class="form-control"
                             value="<?php echo $pedidoAjuda->valor_necessario ?? null; ?>">
                     </div>
 
-                    <div class="detalheDadoPedido">
-                        <label for="valor_atingido" class="form-label">Valor de ajuda atingido</label>
+                    <div class="detalheDoPedido">
+                        <label for="valor_atingido" class="form-label tituloDado">Valor de ajuda atingido</label>
                         <input type="text" name="valor_atingido" id="valor_atingido"
                             placeholder="Digite o valor atingido. Em R$" required class="form-control"
                             value="<?php echo $pedidoAjuda->valor_atingido ?? null; ?>">
                     </div>
 
-                    <div class="detalheDadoPedido">
-                        <label for="pix" class="form-label">Pix para realizar a ajuda</label>
+                    <div class="detalheDoPedido">
+                        <label for="pix" class="form-label tituloDado">Pix para realizar a ajuda</label>
                         <input type="text" name="pix" id="pix" placeholder="Digite o Pix" required class="form-control"
                             value="<?php echo $pedidoAjuda->pix ?? null; ?>">
                     </div>
                 </div>
 
                 <div class="fotoPedido col-md-5 col-12">
-                    <label for="imagem" class="form-label">Foto</label>
+                    <label for="imagem" class="form-label tituloDado">Foto</label>
                     <input type="file" name="imagem" id="imagem" accept="image/*" class="form-control" <?php echo empty($pedidoAjuda->imagem) ? 'required' : null ?>>
-                    <?php if (!empty($pedidoAjuda->imagem)): ?>
-                        <img src="Images/pedidoDeAjuda/<?php echo $pedidoAjuda->imagem; ?>" alt="Imagem do Pedido de Ajuda"
-                            class="mt-2 foto-pedido-cadastro">
-                    <?php endif; ?>
+                    <img src="<?= !empty($pedidoAjuda->imagem) ? 'Images/pedidoDeAjuda/' . $pedidoAjuda->imagem : 'Images\pedidoDeAjuda\SemFoto.png' ?>" 
+                    alt="Foto de pedido de ajuda" class="mt-2 foto-pedido-cadastro" id="fotoColocada">
                 </div>
 
                 <div class="col-md-12">
-                    <label for="descricao" class="form-label">Descrição</label>
+                    <label for="descricao" class="form-label tituloDado">Descrição</label>
                     <textarea name="descricao" id="descricao"
                         placeholder="Digite a Descrição do Pedido, no mínimo 200 caracteres" required minlength="200"
                         class="form-control"><?php echo $pedidoAjuda->descricao ?? null; ?></textarea>
@@ -265,8 +263,8 @@ endif;
             </div>
 
             <div class="col-12 mt-3 d-flex gap-2">
-                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-marrom">Salvar</button>
-                <a href="listaPedidoDeAjuda.php" class="btn btn-outline-danger">Voltar</a>
+                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">Salvar</button>
+                <a href="listaPedidoDeAjuda.php" class="btn btn-voltar">Voltar</a>
             </div>
         </form>
     </main>
@@ -285,6 +283,12 @@ endif;
             $('#valor_necessario').val($('#valor_necessario').val().replace(',', '.'));
             $('#valor_atingido').val($('#valor_atingido').val().replace(',', '.'));
         });
+    </script>
+    <script>
+        document.getElementById('imagem').addEventListener('change', function (event) {
+            const img = document.getElementById('fotoColocada');
+            img.src = URL.createObjectURL(event.target.files[0]);
+        })
     </script>
     <!-- Botão do VLibras -->
     <div vw class="enabled">

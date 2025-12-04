@@ -17,15 +17,15 @@ require_once 'validaUser.php';
 <body>
     <?php require_once "_parts/_navAdmin.php"; ?>
 
-    <main class="container mt-3">
+    <main class="container">
         <div class="mt-3">
             <h1 class="tituloh1">Campeonatos</h1>
         </div>
         <div class="mt-3">
-            <a href="campeonato.php" class="btn btn-outline-success mb-3">Novo Campeonato</a>
+            <a href="campeonato.php" class="btn btn-novo mb-3">Novo Campeonato</a>
         </div>
-        <table class="table">
-            <thead class="table-success">
+        <table class="table tabela text-center overflow-hidden table-hover align-middle">
+            <thead>
                 <tr>
                     <th>#</th>
                     <th>Nome do Campeonato</th>
@@ -50,7 +50,8 @@ require_once 'validaUser.php';
                         <td><?php echo $campeonato->nome_campeonato ?></td>
                         <td><?php echo $campeonato->esporte ?></td>
                         <td><?php echo date('d/m/Y', strtotime($campeonato->data_inicio)) ?></td>
-                        <td class="d-flex gap-1 justify-content-center">
+                        <td class="align-middle">
+                            <div class="d-flex gap-1 justify-content-center">
                             <form action="<?php echo htmlspecialchars("campeonato.php") ?>" method="post" class="d-flex">
                                 <input type="hidden" name="id" value="<?php echo $campeonato->id_campeonato ?>">
                                 <button name="btnEditar" class="btn btn-primary btn-sm" type="submit" title="Editar"
@@ -65,6 +66,7 @@ require_once 'validaUser.php';
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>

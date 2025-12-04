@@ -143,7 +143,7 @@ endif;
             </div>
 
             <div class="col-12 mt-3 d-flex gap-2">
-                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-marrom">Salvar</button>
+                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">Salvar</button>
                 <a href="listaCampeonato.php" class="btn btn-outline-danger">Voltar</a>
             </div>
         </form>

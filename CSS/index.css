@@ -294,12 +294,12 @@
     border-top: 2px solid var(--cor-primaria);
 }
 
-.modal-footer .btn-secondary {
+.modal-footer .btn-modal {
     background: var(--cor-primaria);
     border: none;
 }
 
-.modal-footer .btn-secondary:hover {
+.modal-footer .btn-modal:hover {
     background: var(--cor-primaria-hover);
 }
 

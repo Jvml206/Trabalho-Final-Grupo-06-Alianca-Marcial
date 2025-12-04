@@ -5,6 +5,7 @@ spl_autoload_register(function ($class) {
 });
 
 $Usuario = new Usuario();
+$usuario = $Usuario->all();
 
 if (filter_has_var(INPUT_POST, "btnCadastrar")):
 
@@ -64,9 +65,9 @@ endif;
 </head>
 
 <body>
-    <?php require_once "_parts/_navSite.php";?>
+    <?php require_once "_parts/_navSite.php"; ?>
 
-    <main class="container criar_conta">
+    <main class="container cadastro">
 
         <h1 class="tituloh1">Cadastre-se</h1>
 
@@ -95,16 +96,12 @@ endif;
 
                     <div class="usuario">
                         <label for="tipo_usuario" class="form-label tituloDado">Tipo de Usuário</label>
-                        <select id="tipo_usuario" name="tipo_usuario" class="form-select"
-                            aria-label="Default select example">
-                            <option disabled>Selecione o Tipo
-                                de Usuário</option>
-                            <option value="Atleta">Atleta
-                            </option>
-                            <option value="Instrutor">Instrutor
-                            </option>
-                            <option value="Usuário">Usuário
-                            </option>
+                        <select id="tipo_usuario" name="tipo_usuario" class="form-select" aria-label="Selecione o Tipo
+                                de Usuário" required>
+                            <option selected disabled>Selecione o Tipo de Usuário</option>
+                            <option value="Atleta">Atleta</option>
+                            <option value="Instrutor">Instrutor</option>
+                            <option value="Usuário">Usuário</option>
                         </select>
                     </div>
                 </div>
@@ -112,12 +109,14 @@ endif;
                 <div class="fotoCadUsuario">
                     <label for="foto" class="form-label tituloDado">Foto</label>
                     <input type="file" name="foto" id="foto" accept="image/*" class="form-control" required>
+                    <img src="Images/usuario/SemFoto.png" alt="Foto do Usuário" class="mt-2 foto-usuario-cadastro"
+                        id="fotoColocada">
                 </div>
             </div>
 
             <div class="col-12 mt-3 d-flex gap-2 botoes">
-                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-vermelho">Salvar</button>
-                <a href="login.php" class="btn btn-vermelho">Voltar</a>
+                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">Salvar</button>
+                <a href="login.php" class="btn-voltar">Voltar</a>
             </div>
         </form>
     </main>
@@ -127,6 +126,14 @@ endif;
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     <script src="JS/controleEmail.js"></script>
+
+    <script>
+        document.getElementById('foto').addEventListener('change', function (event) {
+            const img = document.getElementById('fotoColocada');
+            img.src = URL.createObjectURL(event.target.files[0]);
+        })
+    </script>
+
     <!-- Botão do VLibras -->
     <div vw class="enabled">
         <div vw-access-button class="active"></div>

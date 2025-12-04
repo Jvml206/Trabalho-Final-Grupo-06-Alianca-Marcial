@@ -20,7 +20,7 @@
     $Academia = new Academia();
     $PedidoAjuda = new PedidoAjuda();
     ?>
-    <main>
+    <main class="container">
         <h1 class="tituloh1">Atletas que precisam de ajuda</h1>
         <div class="box">
             <?php
@@ -84,7 +84,7 @@
                                 <p class="descricaoPedido justify"><?php echo $pa->descricao ?></p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                <button type="button" class="btn btn-modal" data-bs-dismiss="modal">Fechar</button>
                             </div>
                         </div>
                     </div>

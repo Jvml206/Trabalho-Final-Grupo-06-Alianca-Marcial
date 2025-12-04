@@ -1,5 +1,5 @@
 <?php
-$nivelPermitido = ['Administrador', 'Instrutor', 'Atleta'];
+$nivelPermitido = ['Administrador', 'Atleta'];
 require_once 'validaUser.php';
 
 spl_autoload_register(function ($class) {
@@ -49,23 +49,6 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
         $Atleta->setFkIdAcademia(filter_input(INPUT_POST, "fk_id_academia", FILTER_SANITIZE_NUMBER_INT));
         $Atleta->setFkIdInstrutor(filter_input(INPUT_POST, "fk_id_instrutor", FILTER_SANITIZE_NUMBER_INT));
         $Atleta->setNomeAtleta($nomeAtleta);
-
-    } elseif ($tipoUsuario === 'Instrutor') {
-        $nomeAtleta = trim(filter_input(INPUT_POST, "nome_atleta", FILTER_SANITIZE_STRING));
-        $usuarioEncontrado = $Usuario->searchAtleta("nome_usuario", $nomeAtleta);
-        $fkUsuario = $Usuario->search("id_usuario", $usuarioEncontrado->id_usuario);
-
-        $dadosInstrutor = $Instrutor->search("fk_id_usuario", $idUsuario);
-
-        if (!$dadosInstrutor) {
-            echo "<script>window.alert('Erro: dados do instrutor não encontrados.'); window.history.back();</script>";
-            exit;
-        }
-
-        $Atleta->setNomeAtleta($nomeAtleta);
-        $Atleta->setFkIdUsuario($fkUsuario->id_usuario);
-        $Atleta->setFkIdInstrutor($dadosInstrutor->id_instrutor);
-        $Atleta->setFkIdAcademia($dadosInstrutor->fk_id_academia);
 
     } elseif ($tipoUsuario === 'Atleta') {
         $Atleta->setNomeAtleta($nome);
@@ -117,7 +100,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
                 $Usuario->update('id_usuario', $idUsuario);
             }
 
-            if ($tipoUsuario === 'Administrador' || $tipoUsuario === 'Instrutor') {
+            if ($tipoUsuario === 'Administrador') {
                 echo "<script>window.alert('Atleta alterado com sucesso.');window.location.href='listaAtleta.php';</script>";
                 exit;
             }
@@ -184,11 +167,6 @@ endif;
             $id = intval(filter_input(INPUT_POST, "id"));
             $dadosAtleta = $Atleta->search("id_atleta", $id);
         }
-        if ($tipoUsuario === 'Instrutor') {
-            // Busca a academia do instrutor
-            $dadosInstrutor = $Instrutor->search("fk_id_usuario", $idUsuario);
-            $idAcademiaInstrutor = $dadosInstrutor->fk_id_academia ?? null;
-        }
         ?>
 
         <form action="atleta.php" method="post" class="row g3 mt-3" enctype="multipart/form-data"
@@ -241,8 +219,8 @@ endif;
                 </div>
             <?php } ?>
 
-            <!-- Nome do Atleta -->
-            <?php if ($tipoUsuario === 'Administrador' || $tipoUsuario === 'Instrutor'): ?>
+            <?php if ($tipoUsuario === 'Administrador'): ?>
+                <!-- Nome do Atleta -->
                 <div class="mb-3">
                     <label for="nome_atleta" class="form-label">Nome do Atleta</label>
                     <select name="nome_atleta" class="form-select" id="nome_atleta" required>
@@ -250,7 +228,6 @@ endif;
                         </option>
 
                         <?php
-                        // Se estamos editando, mostra o nome atual do atleta primeiro
                         if (isset($dadosAtleta->nome_atleta)):
                             ?>
                             <option value="<?= htmlspecialchars($dadosAtleta->nome_atleta) ?>" selected>
@@ -259,9 +236,7 @@ endif;
                             <?php
                         endif;
 
-                        // Exibe os demais usuários disponíveis (que ainda não são atletas)
                         foreach ($usuariosDisponiveis as $uE):
-                            // Evita repetir o nome do atleta atual na lista
                             if (isset($dadosAtleta->nome_atleta) && $uE->nome_usuario === $dadosAtleta->nome_atleta)
                                 continue;
                             ?>
@@ -271,10 +246,8 @@ endif;
                         <?php endforeach; ?>
                     </select>
                 </div>
-            <?php endif; ?>
 
-            <!-- Nome da Academia -->
-            <?php if ($tipoUsuario === 'Administrador'): ?>
+                <!-- Nome da Academia -->
                 <div class="col-md-6">
                     <label for="fk_id_academia" class="form-label">Academia</label>
                     <select name="fk_id_academia" class="form-select" id="fk_id_academia" required>
@@ -288,7 +261,6 @@ endif;
                         <?php endforeach; ?>
                     </select>
                 </div>
-
             <?php elseif ($tipoUsuario === 'Atleta'): ?>
                 <div class="col-md-6">
                     <label for="fk_id_academia" class="form-label">Academia</label>
@@ -303,30 +275,22 @@ endif;
                         <?php endforeach; ?>
                     </select>
                 </div>
-
-            <?php elseif ($tipoUsuario === 'Instrutor'): ?>
-                <input type="hidden" name="fk_id_academia" value="<?= $idAcademiaInstrutor ?>">
             <?php endif; ?>
 
             <!-- Nome do Instrutor -->
-            <?php if ($tipoUsuario === 'Administrador' || $tipoUsuario === 'Atleta'): ?>
-                <div class="col-md-6">
-                    <label for="fk_id_instrutor" class="form-label">Instrutor</label>
-                    <select name="fk_id_instrutor" class="form-select" id="fk_id_instrutor" required disabled
-                        data-selected="<?= $dadosAtleta->fk_id_instrutor ?? '' ?>">
-                        <option value="" disabled <?= (!isset($dadosAtleta->fk_id_instrutor)) ? 'selected' : '' ?>>Selecione
-                            o
-                            Instrutor</option>
-                        <?php foreach ($instrutor as $ins): ?>
-                            <option value="<?= $ins->id_instrutor ?>" data-academia="<?= $ins->fk_id_academia ?>">
-                                <?= htmlspecialchars($ins->nome_instrutor) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            <?php elseif ($tipoUsuario === 'Instrutor'): ?>
-                <input type="hidden" name="fk_id_instrutor" value="<?= $dadosInstrutor->id_instrutor ?>">
-            <?php endif; ?>
+            <div class="col-md-6">
+                <label for="fk_id_instrutor" class="form-label">Instrutor</label>
+                <select name="fk_id_instrutor" class="form-select" id="fk_id_instrutor" required disabled
+                    data-selected="<?= $dadosAtleta->fk_id_instrutor ?? '' ?>">
+                    <option value="" disabled <?= (!isset($dadosAtleta->fk_id_instrutor)) ? 'selected' : '' ?>>Selecione
+                        o Instrutor</option>
+                    <?php foreach ($instrutor as $ins): ?>
+                        <option value="<?= $ins->id_instrutor ?>" data-academia="<?= $ins->fk_id_academia ?>">
+                            <?= htmlspecialchars($ins->nome_instrutor) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
             <div class="col-md-6">
                 <label for="esporte" class="form-label">Esporte</label>
@@ -398,7 +362,7 @@ endif;
                     <button type="submit" name="btnExcluirConta" id="btnExcluirConta" class="btn btn-danger">Excluir
                         Conta</button>
                 </div>
-            <?php elseif ($tipoUsuario === 'Administrador' || $tipoUsuario === 'Instrutor'): ?>
+            <?php elseif ($tipoUsuario === 'Administrador'): ?>
                 <div class="col-12 mt-3 d-flex gap-2 mx-auto">
                     <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-marrom">Salvar</button>
                     <a href="listaAtleta.php" class="btn btn-outline-danger">Voltar</a>

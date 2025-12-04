@@ -257,8 +257,8 @@ endif;
             </div>
 
             <div class="col-12 mt-3 d-flex gap-2">
-                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-success">Salvar</button>
-                <a href="listaAcademia.php" class="btn btn-outline-danger">Voltar</a>
+                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">Salvar</button>
+                <a href="listaAcademia.php" class="btn-voltar">Voltar</a>
             </div>
         </form>
     </main>

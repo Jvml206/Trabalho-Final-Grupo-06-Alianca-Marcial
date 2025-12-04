@@ -123,8 +123,8 @@ endif;
             <?php endif; ?>
 
             <div class="col-12 mt-3 d-flex gap-2 justify-content-center">
-                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-success">Salvar</button>
-                <a href="listaInstituicoes.php" class="btn btn-outline-danger">Voltar</a>
+                <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">Salvar</button>
+                <a href="listaInstituicoes.php" class="btn btn-voltar">Voltar</a>
             </div>
         </form>
     </main>

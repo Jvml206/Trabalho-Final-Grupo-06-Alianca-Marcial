@@ -118,7 +118,7 @@ endif;
             </div>
 
             <div class="col-12 mt-3 d-flex gap-2">
-                <button type="submit" name="btnEditar" id="btnEditar" class="btn btn-marrom">Salvar</button>
+                <button type="submit" name="btnEditar" id="btnEditar" class="btn-padrao">Salvar</button>
                 <button type="submit" name="btnExcluirConta" id="btnExcluirConta" class="btn btn-danger">Excluir
                     Conta</button>
             </div>

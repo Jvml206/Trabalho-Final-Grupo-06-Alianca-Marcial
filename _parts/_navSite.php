@@ -72,9 +72,6 @@
                                 <li><a class="dropdown-item text-danger" href="dashboard.php">Dashboard</a></li>
                             <?php elseif ($tipoUsuario === 'Instrutor'): ?>
                                 <li><a class="dropdown-item text-danger" href="instrutor.php">Meus Dados</a></li>
-                                <?php if ($Instrutor->verificarPorUsuario($idUsuario) === True): ?>
-                                    <li><a class="dropdown-item text-danger" href="listaAtleta.php">Atletas</a></li>
-                                <?php endif; ?>
                             <?php elseif ($tipoUsuario === 'Usuário'): ?>
                                 <li><a class="dropdown-item text-danger" href="conta.php">Meus Dados</a></li>
                             <?php elseif ($tipoUsuario === 'Atleta'): ?>

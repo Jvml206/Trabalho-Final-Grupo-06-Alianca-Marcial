@@ -18,7 +18,7 @@
     });
     $Campeonato = new Campeonato();
     ?>
-    <main>
+    <main class="container">
         <h1 class="tituloh1">Próximos Campeonatos</h1>
 
         <div class="box">
@@ -60,7 +60,7 @@
                                     à <?php echo date('d/m/Y', strtotime($c->data_fim)) ?></p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                <button type="button" class="btn btn-modal" data-bs-dismiss="modal">Fechar</button>
                             </div>
                         </div>
                     </div>

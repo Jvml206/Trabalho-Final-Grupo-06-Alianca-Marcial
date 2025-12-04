@@ -1,5 +1,5 @@
 <?php
-$nivelPermitido = ['Administrador', 'Instrutor'];
+$nivelPermitido = ['Administrador'];
 require_once 'validaUser.php';
 
 $idUsuario = $_SESSION['user_id'];
@@ -13,22 +13,7 @@ $academias = $Academia->all();
 $Instrutor = new Instrutor();
 $instrutores = $Instrutor->all();
 $Atleta = new Atleta();
-
-
-if ($tipoUsuario === 'Instrutor') {
-    $dadosInstrutor = $Instrutor->search("fk_id_usuario", $idUsuario);
-
-    if (!$dadosInstrutor) {
-        die("Erro: Instrutor não encontrado");
-    }
-}
-
-if ($tipoUsuario === 'Instrutor') {
-    $atletas = $Atleta->searchAll("fk_id_academia", $dadosInstrutor->fk_id_academia, "fk_id_instrutor", $dadosInstrutor->id_instrutor);
-} else {
-    // Administrador vê todos
-    $atletas = $Atleta->all();
-}
+$atletas = $Atleta->all();
 ?>
 
 <!DOCTYPE html>
@@ -51,15 +36,15 @@ if ($tipoUsuario === 'Instrutor') {
     endif;
     ?>
 
-    <main class="container mt-3">
+    <main class="container">
         <div class="mt-3">
             <h1 class="tituloh1">Atleta</h1>
         </div>
         <div class="mt-3">
-            <a href="atleta.php" class="btn btn-outline-success mb-3">Novo Atleta</a>
+            <a href="atleta.php" class="btn btn-novo mb-3">Novo Atleta</a>
         </div>
-        <table class="table">
-            <thead class="table-success">
+        <table class="table tabela text-center overflow-hidden table-hover align-middle">
+            <thead>
                 <tr>
                     <th>#</th>
                     <th>Nome do Atleta</th>
@@ -88,7 +73,8 @@ if ($tipoUsuario === 'Instrutor') {
                                 break;
                             }
                         } ?></td>
-                        <td class="d-flex gap-1 justify-content-center">
+                        <td class="align-middle">
+                            <div class="d-flex gap-1 justify-content-center">
                             <form action="<?php echo htmlspecialchars("atleta.php") ?>" method="post" class="d-flex">
                                 <input type="hidden" name="id" value="<?php echo $atleta->id_atleta ?>">
                                 <button name="btnEditar" class="btn btn-primary btn-sm" type="submit" title="Editar"
@@ -103,6 +89,7 @@ if ($tipoUsuario === 'Instrutor') {
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>

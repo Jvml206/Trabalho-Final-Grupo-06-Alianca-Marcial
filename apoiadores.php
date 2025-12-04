@@ -18,7 +18,7 @@
     });
     $InstituicaoApoiadora = new InstituicaoApoiadora();
     ?>
-    <main>
+    <main class="container">
         <h1 class="tituloh1">Instituições que nos apoiam</h1>
 
         <?php

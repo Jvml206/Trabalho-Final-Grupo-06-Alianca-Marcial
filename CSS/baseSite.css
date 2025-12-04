@@ -4,28 +4,13 @@
   margin: 16px auto 0;
 }
 
-.dadosPedido {
-  flex: 1;
-}
-
-.dadosPedido .detalheDadoPedido {
-  margin: 20px auto 0;
-}
-
-.fotoPedido {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-}
-
-.foto-pedido-cadastro {
-  display: block;
-  margin: 10px auto 0;
-  width: 250px;
-  height: 250px;
-  border-radius: 10px;
-  object-fit: cover;
+main.cadastro {
+  background: var(--cor-card, #1A1A1A);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .foto-instituicao {
@@ -42,7 +27,7 @@
 .mainSobre {
   width: 90%;
   max-width: 900px;
-  margin: 60px auto;
+  margin: 30px auto;
   color: var(--cor-texto, #fff);
   font-family: "Poppins", sans-serif;
 }
@@ -110,15 +95,6 @@
 
 /* Criar conta */
 
-main.criar_conta {
-  background: var(--cor-card, #1A1A1A);
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-
 .cadUsuario {
   display: flex;
   justify-content: space-between;
@@ -146,6 +122,13 @@ main.criar_conta {
   box-shadow: 0 0 0 2px rgba(138, 28, 28, 0.25);
 }
 
+.form-select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5z'/></svg>") !important;
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px;
+}
+
 .fotoCadUsuario {
   flex: 0.8;
   display: flex;
@@ -169,6 +152,15 @@ main.criar_conta {
   text-decoration: none;
 }
 
+.foto-usuario-cadastro {
+    display: block;
+    margin: 10px auto 0;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 /* Política de Privacidade e Termos de uso */
 
 .termos-container {
@@ -176,7 +168,6 @@ main.criar_conta {
   margin: 0 auto;
   padding: 40px 20px;
   background-color: #DADADA;
-  /* fundo que você pediu */
   border-radius: 12px;
 }
 
@@ -221,6 +212,32 @@ main.criar_conta {
   line-height: 1.5;
 }
 
+/* Pedido de ajuda */
+
+.fotoPedido {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.foto-pedido-cadastro {
+    display: block;
+    margin: 10px auto 0;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.dadosPedido {
+  gap: 20px;
+  flex: 1;
+}
+
+.dadosPedido .detalheDoPedido {
+  margin: 20px auto 0;
+}
 
 @media (max-width: 600px) {
   .politica-card {

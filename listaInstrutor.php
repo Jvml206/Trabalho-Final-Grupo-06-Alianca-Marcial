@@ -23,15 +23,15 @@ $academias = $Academia->all();
 <body>
     <?php require_once "_parts/_navAdmin.php"; ?>
 
-    <main class="container mt-3">
+    <main class="container">
         <div class="mt-3">
             <h1 class="tituloh1">Instrutores</h1>
         </div>
         <div class="mt-3">
-            <a href="instrutor.php" class="btn btn-outline-success mb-3">Novo Instrutor</a>
+            <a href="instrutor.php" class="btn btn-novo mb-3">Novo Instrutor</a>
         </div>
-        <table class="table">
-            <thead class="table-success">
+        <table class="table tabela text-center overflow-hidden table-hover align-middle">
+            <thead>
                 <tr>
                     <th>#</th>
                     <th>Nome do Instrutor</th>
@@ -59,7 +59,8 @@ $academias = $Academia->all();
                                 break;
                             }
                         } ?></td>
-                        <td class="d-flex gap-1 justify-content-center">
+                        <td class="align-middle">
+                            <div class="d-flex gap-1 justify-content-center">
                             <form action="<?php echo htmlspecialchars("instrutor.php") ?>" method="post" class="d-flex">
                                 <input type="hidden" name="id" value="<?php echo $instrutor->id_instrutor ?>">
                                 <button name="btnEditar" class="btn btn-primary btn-sm" type="submit" title="Editar"
@@ -74,6 +75,7 @@ $academias = $Academia->all();
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>

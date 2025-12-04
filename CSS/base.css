@@ -34,6 +34,11 @@ body {
 
 main {
     flex: 1;
+    width: 90%;
+    max-width: 900px;
+    margin: 30px auto;
+    color: var(--cor-texto, #fff);
+    font-family: "Poppins", sans-serif;
 }
 
 .nav-custom {
@@ -137,22 +142,86 @@ footer .rede-social i {
     font-size: 2.4rem;
     margin-bottom: 40px;
     font-weight: 700;
-    color: var(--cor-primaria, #8B0A11);
+    color: var(--cor-primaria, #c4161e);
 }
 
-.btn-vermelho {
-  background: var(--cor-primaria, #8B0A11);
-  color: #fff;
-  padding: 12px;
-  border-radius: 10px;
-  font-weight: 600;
-  transition: .2s ease;
-  border: none;
+/* Botões */
+
+.btn-voltar {
+    background: var(--cor-primaria, #8B0A11);
+    color: #fff;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: .2s ease;
+    text-align: center;
+    display: inline-block;
 }
 
-.btn-vermelho:hover {
-  background: var(--cor-primaria-hover, #C1121F);
+.btn-voltar:hover {
+    background: var(--cor-primaria-hover, #C1121F);
 }
+
+.btn-padrao {
+    background: #28A745;
+    color: #FFFFFF !important;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: .2s ease;
+    border: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-padrao:hover {
+    background: #218838;
+}
+
+.btn-novo {
+    background: #A8E6A3;
+    color: #2E2E2E !important;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: .2s ease;
+    border: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-novo:hover {
+    background: #8FD88A;
+}
+
+/* Tabelas */
+
+.bg-warning {
+    background-color: #F39C12 !important;
+}
+
+.tabela {
+    border-radius: 20px !important;
+}
+
+.table td,
+.table th {
+    padding: 0.9rem 0.5rem;
+}
+
+.table> :not(caption)>*>* {
+    border-color: #e7e7e7;
+}
+
+td:last-child,
+th:last-child {
+    width: 120px;
+}
+
+table.tabela thead tr th {
+    background-color: #f7d9d9 !important;
+}
+
 
 @media (min-width: 1400px) {
     footer .r-linha {

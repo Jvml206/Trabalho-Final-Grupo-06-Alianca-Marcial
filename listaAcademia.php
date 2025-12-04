@@ -1,5 +1,5 @@
 <?php $nivelPermitido = ['Administrador'];
-require_once 'validaUser.php';?>
+require_once 'validaUser.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -16,15 +16,15 @@ require_once 'validaUser.php';?>
 <body>
     <?php require_once "_parts/_navAdmin.php"; ?>
 
-    <main class="container mt-3">
+    <main class="container">
         <div class="mt-3">
             <h1 class="tituloh1">Academias</h1>
         </div>
         <div class="mt-3">
-            <a href="academia.php" class="btn btn-outline-success mb-3">Nova Academia</a>
+            <a href="academia.php" class="btn btn-novo mb-3">Nova Academia</a>
         </div>
-        <table class="table">
-            <thead class="table-success">
+        <table class="table tabela text-center overflow-hidden table-hover align-middle">
+            <thead>
                 <tr>
                     <th>#</th>
                     <th>Nome da Academia</th>
@@ -45,21 +45,23 @@ require_once 'validaUser.php';?>
                     <tr>
                         <td><?php echo $academia->id_academia ?></td>
                         <td><?php echo $academia->nome_fantasia ?></td>
-                        <td class="d-flex gap-1 justify-content-center">
-                            <form action="<?php echo htmlspecialchars("academia.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $academia->id_academia ?>">
-                                <button name="btnEditar" class="btn btn-primary btn-sm" type="submit" title="Editar"
-                                    onclick="return confirm('Tem certeza que deseja editar a academia?');">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                            </form>
-                            <form action="<?php echo htmlspecialchars("academia.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $academia->id_academia ?>">
-                                <button name="btnDeletar" class="btn btn-danger btn-sm" type="submit" title="Deletar"
-                                    onclick="return confirm('Tem certeza que deseja deletar a academia?');">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+                        <td class="align-middle">
+                            <div class="d-flex gap-1 justify-content-center">
+                                <form action="<?php echo htmlspecialchars("academia.php") ?>" method="post" class="d-flex">
+                                    <input type="hidden" name="id" value="<?php echo $academia->id_academia ?>">
+                                    <button name="btnEditar" class="btn btn-primary btn-sm" type="submit" title="Editar"
+                                        onclick="return confirm('Tem certeza que deseja editar a academia?');">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </form>
+                                <form action="<?php echo htmlspecialchars("academia.php") ?>" method="post" class="d-flex">
+                                    <input type="hidden" name="id" value="<?php echo $academia->id_academia ?>">
+                                    <button name="btnDeletar" class="btn btn-danger btn-sm" type="submit" title="Deletar"
+                                        onclick="return confirm('Tem certeza que deseja deletar a academia?');">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>

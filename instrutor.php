@@ -269,7 +269,7 @@ endif;
 
             <?php if ($tipoUsuario === 'Instrutor'): ?>
                 <div class="mt-3 d-flex gap-2 mx-auto w-auto">
-                    <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-marrom">
+                    <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">
                         <?= isset($instrutor->id_instrutor) ? 'Atualizar' : 'Cadastrar' ?>
                     </button>
                     <button type="submit" name="btnExcluirConta" id="btnExcluirConta" class="btn btn-danger">Excluir
@@ -277,7 +277,7 @@ endif;
                 </div>
             <?php elseif ($tipoUsuario === 'Administrador'): ?>
                 <div class="col-12 mt-3 d-flex gap-2 mx-auto">
-                    <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-marrom">Salvar</button>
+                    <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">Salvar</button>
                     <a href="listaInstrutor.php" class="btn btn-outline-danger">Voltar</a>
                 </div>
             <?php endif; ?>

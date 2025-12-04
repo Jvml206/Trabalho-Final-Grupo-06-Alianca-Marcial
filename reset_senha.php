@@ -35,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
 
+    <?php require_once "_parts/_navSite.php"; ?>
+
     <main class="flex-grow-1 d-flex justify-content-center align-items-center">
         <div class="form-login">
             <p class="tituloh1">Redefinir Senha</p>
@@ -43,32 +45,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="mb-3 col-12">
                     <label for="nova_senha" class="form-label">Nova Senha</label>
-                    <input type="password" class="form-control" id="nova_senha" placeholder="Nova Senha"
-                        name="nova_senha" required>
-                    <button type="button" id="toggleSenha" class="btn-marrom">
-                        👁️
-                    </button>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="nova_senha" placeholder="Nova Senha"
+                            name="nova_senha" required>
+                        <button type="button" id="toggleSenha" class="btn-ver">
+                            👁️
+                        </button>
+                    </div>
+                    <p id="forcaSenha" class="fw-bold"></p>
+                    <ol id="requisitos" class="mb-3 mt-3">
+                        <li id="minChar" class="invalido">Mínimo 10 caracteres</li>
+                        <li id="maiuscula" class="invalido">Pelo menos uma letra maiúscula</li>
+                        <li id="minuscula" class="invalido">Pelo menos uma letra minúscula</li>
+                        <li id="numero" class="invalido">Pelo menos um número</li>
+                        <li id="especial" class="invalido">Pelo menos um caractere especial (!@#$%^&*...)</li>
+                    </ol>
                 </div>
-                <p id="forcaSenha" class="fw-bold"></p>
-                <ol id="requisitos" class="mb-3 mt-3">
-                    <li id="minChar" class="invalido">Mínimo 10 caracteres</li>
-                    <li id="maiuscula" class="invalido">Pelo menos uma letra maiúscula</li>
-                    <li id="minuscula" class="invalido">Pelo menos uma letra minúscula</li>
-                    <li id="numero" class="invalido">Pelo menos um número</li>
-                    <li id="especial" class="invalido">Pelo menos um caractere especial (!@#$%^&*...)</li>
-                </ol>
 
                 <div class="mb-3 col-12">
                     <label for="confirmar_senha" class="form-label">Confirmar Nova Senha</label>
-                    <input type="password" class="form-control" id="confirmar_senha" placeholder="Confirmar Senha"
-                        name="confirmar_senha" required>
-                    <button type="button" id="toggleConfirmar" class="btn-marrom">
-                        👁️
-                    </button>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="confirmar_senha" placeholder="Confirmar Senha"
+                            name="confirmar_senha" required>
+                        <button type="button" id="toggleConfirmar" class="btn-ver">
+                            👁️
+                        </button>
+                    </div>
                     <small id="msgConfirmacao"></small>
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-success" name="btnSalvar" id="btnSalvar">Redefinir
+                    <button type="submit" class="btn-salvar" name="btnSalvar" id="btnSalvar">Redefinir
                         Senha</button>
                 </div>
             </form>

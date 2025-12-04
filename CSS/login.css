@@ -5,7 +5,6 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--body, #0A0A0A);
     padding: 20px;
 }
 
@@ -70,6 +69,27 @@ main {
 
 .redefinir_senha a:hover {
     text-decoration: none;
+}
+
+.btn-ver {
+    border-radius: 10px;
+}
+
+.btn-salvar {
+    background: var(--cor-primaria, #C1121F);
+    color: #fff !important;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: .2s ease;
+    border: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-salvar:disabled {
+    background-color:#420306;
+    border-color: #C1121F;
 }
 
 @media (max-width: 480px) {

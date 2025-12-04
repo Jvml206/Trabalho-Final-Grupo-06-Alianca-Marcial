@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <main class="container mt-2">
+    <main class="container">
         <section class="ajuda mt-2">
             <h2 class="text-center texto">Atletas que precisam de ajuda</h2>
             <div class="box">
@@ -85,7 +85,7 @@
                                     <p class="descricaoPedido justify"><?php echo $pa->descricao ?></p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                    <button type="button" class="btn btn-modal" data-bs-dismiss="modal">Fechar</button>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
                                         à <?php echo date('d/m/Y', strtotime($c->data_fim)) ?></p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                    <button type="button" class="btn btn-modal" data-bs-dismiss="modal">Fechar</button>
                                 </div>
                             </div>
                         </div>

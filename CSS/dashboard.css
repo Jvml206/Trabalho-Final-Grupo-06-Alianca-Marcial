@@ -1,0 +1,30 @@
+@import url('baseAdmin.css');
+
+.card-modern {
+    border-radius: 18px;
+    backdrop-filter: blur(6px);
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform .2s ease, box-shadow .2s ease;
+    color: black;
+}
+
+.card-modern:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
+}
+
+.card-modern h2 {
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.icon {
+    font-size: 35px;
+    color: #0d6efd;
+}
+
+.cards a {
+    text-decoration: none;
+}

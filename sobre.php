@@ -12,7 +12,7 @@
 
 <body>
     <?php require_once "_parts/_navSite.php"; ?>
-    <main class="mainSobre">
+    <main class="container">
         <h1 class="tituloh1">Sobre Nós</h1>
 
         <div class="porque">

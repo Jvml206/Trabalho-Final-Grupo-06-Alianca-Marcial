@@ -3,11 +3,8 @@
 .mainBemVindo {
   display: flex;
   justify-content: center;
-  /* Centraliza horizontalmente */
   align-items: center;
-  /* Centraliza verticalmente */
   height: calc(100vh - 150px);
-  /* Ajuste se quiser descontar o tamanho do header/footer */
 }
 
 .bemVindo {

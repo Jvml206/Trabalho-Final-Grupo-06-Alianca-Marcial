@@ -16,15 +16,15 @@ require_once 'validaUser.php';?>
 <body>
     <?php require_once "_parts/_navAdmin.php"; ?>
 
-    <main class="container mt-3">
+    <main class="container">
         <div class="mt-3">
             <h1 class="tituloh1">Usuários</h1>
         </div>
         <div class="mt-3">
-            <a href="usuario.php" class="btn btn-outline-success mb-3">Novo Usuário</a>
+            <a href="usuario.php" class="btn btn-novo mb-3">Novo Usuário</a>
         </div>
-        <table class="table">
-            <thead class="table-success">
+        <table class="table tabela text-center overflow-hidden table-hover align-middle">
+            <thead>
                 <tr>
                     <th>#</th>
                     <th>Email</th>
@@ -47,7 +47,8 @@ require_once 'validaUser.php';?>
                         <td><?php echo $usuario->id_usuario ?></td>
                         <td><?php echo $usuario->email ?></td>
                         <td><?php echo $usuario->tipo_usuario ?></td>
-                        <td class="d-flex gap-1 justify-content-center">
+                        <td class="align-middle">
+                            <div class="d-flex gap-1 justify-content-center">
                             <form action="<?php echo htmlspecialchars("usuario.php") ?>" method="post" class="d-flex">
                                 <input type="hidden" name="id" value="<?php echo $usuario->id_usuario ?>">
                                 <button name="btnEditar" class="btn btn-primary btn-sm" type="submit" title="Editar"
@@ -62,6 +63,7 @@ require_once 'validaUser.php';?>
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>

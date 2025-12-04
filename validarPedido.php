@@ -43,9 +43,9 @@ $pedido = $stmt->fetch(PDO::FETCH_OBJ);
 </head>
 
 <body class="bg-light">
+    <?php require_once "_parts/_navSite.php"; ?>
 
-    <div class="container mt-5">
-
+    <main class="container">
         <div class="card shadow p-4">
 
             <h1 class="tituloh1">Validação do Pedido de Ajuda</h1>
@@ -59,32 +59,26 @@ $pedido = $stmt->fetch(PDO::FETCH_OBJ);
                 <p><b>Imagem enviada:</b></p>
                 <img src="Images/pedidoDeAjuda/<?= $pedido->imagem ?>" style="max-width: 300px;" class="img-thumbnail">
             <?php endif; ?>
-
             <hr>
-
             <form action="processaValidacaoPedido.php" method="POST">
-
                 <input type="hidden" name="token" value="<?= $token ?>">
-
-                <button type="submit" name="acao" value="aprovar" class="btn btn-success">Aprovar Pedido</button>
-
-                <button type="button" class="btn btn-danger" data-bs-toggle="collapse"
+                <button type="submit" name="acao" value="aprovar" class="btn-padrao">Aprovar Pedido</button>
+                <button type="button" class="btn-voltar" data-bs-toggle="collapse"
                     data-bs-target="#motivoReprovacao">Reprovar Pedido</button>
-
                 <div id="motivoReprovacao" class="collapse mt-3">
                     <label><b>Motivo da Reprovação:</b></label>
                     <textarea name="motivo" class="form-control" minlength="5"></textarea>
-                    <button type="submit" name="acao" value="reprovar" class="btn btn-danger mt-3">Enviar
+                    <button type="submit" name="acao" value="reprovar" class="btn-padrao mt-3">Enviar
                         Reprovação</button>
                 </div>
-
             </form>
-
         </div>
+    </main>
 
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <footer class="footer">
+        <?php require_once "_parts/_footer.php"; ?>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
