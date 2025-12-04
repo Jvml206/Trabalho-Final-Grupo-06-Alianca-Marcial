@@ -52,7 +52,7 @@
                 <li>Cookies essenciais ao funcionamento</li>
             </ul>
 
-            <h4>2.3. Dados de pagamento (apoiadores)</h4>
+            <h4>2.3. Dados de pagamento (cooperados)</h4>
             <ul>
                 <li>Identificação da transação</li>
                 <li>Comprovantes de pagamento (via PIX)</li>

@@ -71,6 +71,7 @@ main.cadastro {
 .listaFinalidade {
   margin-left: 20px;
   list-style: disc;
+  color: var(--cor-texto, #fff);
 }
 
 .listaFinalidadeItem,
@@ -78,6 +79,7 @@ main.cadastro {
 .listaPagamentoNumero {
   margin-bottom: 8px;
   font-size: 1rem;
+  color: var(--cor-texto, #fff);
 }
 
 .listaAjudaItem,
