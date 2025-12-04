@@ -92,7 +92,7 @@ endif;
 
 <body>
     <?php require_once "_parts/_navAdmin.php"; ?>
-    <main class="container">
+    <main class="container cadastro">
         <?php
         spl_autoload_register(function ($class) {
             require_once "Classes/{$class}.class.php";
@@ -112,79 +112,77 @@ endif;
 
             <input type="hidden" value="<?php echo $Academia->id_academia ?? null; ?>" name="id_academia">
 
-            <div class="row gap-4 mb-3">
+            <div class="cadAcademia">
                 <div class="dadosAcademia col-md-6">
-                    <label for="nome_fantasia" class="form-label">Nome Fantasia</label>
+                    <label for="nome_fantasia" class="form-label tituloDado">Nome Fantasia</label>
                     <input type="text" name="nome_fantasia" id="nome_fantasia"
                         placeholder="Digite o Nome Fantasia da Academia" required class="form-control"
                         value="<?php echo $Academia->nome_fantasia ?? null; ?>">
 
-                    <div class="academia">
-                        <label for="razao_social" class="form-label">Razão Social</label>
+                    <div>
+                        <label for="razao_social" class="form-label tituloDado">Razão Social</label>
                         <input type="text" name="razao_social" id="razao_social"
                             placeholder="Digite a Razão Social da Academia" required class="form-control"
                             value="<?php echo $Academia->razao_social ?? null; ?>">
                     </div>
 
-                    <div class="academia">
-                        <label for="cnpj" class="form-label">CNPJ</label>
+                    <div>
+                        <label for="cnpj" class="form-label tituloDado">CNPJ</label>
                         <input type="text" name="cnpj" id="cnpj" placeholder="Digite o CNPJ da Academia"
                             required class="form-control" value="<?php echo $Academia->cnpj ?? null; ?>">
                     </div>
 
-                    <div class="academia">
-                        <label for="telefone" class="form-label">Telefone</label>
+                    <div>
+                        <label for="telefone" class="form-label tituloDado">Telefone</label>
                         <input type="text" name="telefone" id="telefone"
                             placeholder="Digite o Telefone da Academia" required class="form-control"
                             value="<?php echo $Academia->telefone ?? null; ?>">
                     </div>
 
-                    <div class="academia">
-                        <label for="instagram" class="form-label">Instagram</label>
+                    <div>
+                        <label for="instagram" class="form-label tituloDado">Instagram</label>
                         <input type="text" name="instagram" id="instagram"
                             placeholder="Digite o Instagram da Academia" required class="form-control"
                             value="<?php echo $Academia->instagram ?? null; ?>">
                     </div>
                 </div>
 
-                <div class="logo">
-                    <label for="logo" class="form-label">Logo da Academia</label>
+                <div class="fotoCadAcademia">
+                    <label for="logo" class="form-label tituloDado">Logo da Academia</label>
                     <input type="file" name="logo" id="logo" accept="image/*" class="form-control" <?php echo empty($Academia->logo) ? 'required' : null ?>>
-                    <?php if (!empty($Academia->logo)): ?>
-                        <img src="Images/academia/<?php echo $Academia->logo; ?>"
-                            alt="Logo da Academia" class="mt-2 foto-academia-cadastro">
-                    <?php endif; ?>
+                    <img src="<?= !empty($Academia->logo) ? 'Images/academia/' . $Academia->logo : 'Images\academia\SemFoto.png' ?>"
+                        alt="Logo da Academia" class="mt-5 foto-academia-cadastro" id="fotoColocada">
                 </div>
             </div>
 
 
             <div class="col-md-7">
-                <label for="endereco" class="form-label">Endereço</label>
+                <label for="endereco" class="form-label tituloDado">Endereço</label>
                 <input type="text" name="endereco" id="endereco"
                     placeholder="Digite o Endereço da Academia. Ex.: Rua São Paulo n°1532" required class="form-control"
                     value="<?php echo $Academia->endereco ?? null; ?>">
             </div>
 
             <div class="col-md-5">
-                <label for="bairro" class="form-label">Bairro</label>
+                <label for="bairro" class="form-label tituloDado">Bairro</label>
                 <input type="text" name="bairro" id="bairro" placeholder="Digite o Bairro da Academia" required
                     class="form-control" value="<?php echo $Academia->bairro ?? null; ?>">
             </div>
 
             <div class="col-md-7">
-                <label for="cidade" class="form-label">Cidade</label>
+                <label for="cidade" class="form-label tituloDado">Cidade</label>
                 <input type="text" name="cidade" id="cidade" placeholder="Digite a Cidade da Academia" required
                     class="form-control" value="<?php echo $Academia->cidade ?? null; ?>">
             </div>
 
             <div class="col-md-3">
-                <label for="cep" class="form-label">CEP</label>
+                <label for="cep" class="form-label tituloDado">CEP</label>
                 <input type="text" name="cep" id="cep" placeholder="Digite o CEP da Academia" required
                     class="form-control" value="<?php echo $Academia->cep ?? null; ?>">
             </div>
 
             <div class="col-md-2">
-                <label for="estado" class="form-label">Estado</label>
+                <label for="estado" class="form-label tituloDado">Estado</label>
                 <select id="estado" name="estado" class="form-select" aria-label="Default select example">
                     <option disabled <?= (!isset($Academia->estado)) ? 'selected' : '' ?>>UF</option>
                     <option value="AC" <?= (isset($Academia->estado) && $Academia->estado == 'AC') ? 'selected' : '' ?>>AC
@@ -245,20 +243,20 @@ endif;
             </div>
 
             <div class="col-md-12">
-                <label for="email" class="form-label">Email</label>
+                <label for="email" class="form-label tituloDado">Email</label>
                 <input type="email" name="email" id="email" placeholder="Digite o Email da Academia" required
                     class="form-control" value="<?php echo $Academia->email ?? null; ?>">
             </div>
             <div class="col-md-12">
-                <label for="confirmaEmail" class="form-label">Confirme o Email</label>
+                <label for="confirmaEmail" class="form-label tituloDado">Confirme o Email</label>
                 <input type="email" name="confirmaEmail" id="confirmaEmail" placeholder="Digite a confirmação do E-mail"
                     required class="form-control">
                 <div id="mensagem" class="alert alert-danger mt-2 mb-3"></div>
             </div>
 
-            <div class="col-12 mt-3 d-flex gap-2">
+            <div class="col-12 mt-3 d-flex gap-2 justify-content-center">
                 <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">Salvar</button>
-                <a href="listaAcademia.php" class="btn-voltar">Voltar</a>
+                <a href="listaAcademia.php" class="btn btn-voltar">Voltar</a>
             </div>
         </form>
     </main>
@@ -269,11 +267,106 @@ endif;
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <script src="JS/controleEmail.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function enviarFormulario(url, codigo) {
+                const formTemp = document.createElement('form');
+                formTemp.method = 'POST';
+                formTemp.action = url;
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'id';
+                input.value = codigo;
+                formTemp.appendChild(input);
+                document.body.appendChild(formTemp);
+                formTemp.submit();
+            }
+
+            const email = document.querySelector('#email');
+            const confirma = document.querySelector('#confirmaEmail');
+            const mensagem = document.querySelector('#mensagem');
+            const form = document.querySelector('#form_valida_email');
+
+            if (!email || !confirma || !mensagem || !form) return;
+
+            mensagem.style.display = "none";
+
+            function emailValido(valor) {
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(valor);
+            }
+
+            function validarEmails() {
+                const valEmail = email.value.trim();
+                const valConf = confirma.value.trim();
+
+                if (valEmail.length === 0 && valConf.length === 0) {
+                    mensagem.textContent = "";
+                    mensagem.style.display = "none";
+                    return false;
+                }
+
+                if (valEmail.length > 0 && !emailValido(valEmail)) {
+                    mensagem.textContent = "❌ Formato de e-mail inválido";
+                    mensagem.className = "alert alert-danger mt-2 mb-3";
+                    mensagem.style.display = "block";
+                    return false;
+                }
+
+                if (valConf.length > 0 && !emailValido(valConf)) {
+                    mensagem.textContent = "❌ Formato de e-mail inválido na confirmação";
+                    mensagem.className = "alert alert-danger mt-2 mb-3";
+                    mensagem.style.display = "block";
+                    return false;
+                }
+                
+                if (valEmail.length > 0 && valConf.length > 0) {
+                    if (valEmail !== valConf) {
+                        mensagem.textContent = "❌ E-mails não conferem";
+                        mensagem.className = "alert alert-danger mt-2 mb-3";
+                        mensagem.style.display = "block";
+                        return false;
+                    } else {
+                        mensagem.textContent = "✅ E-mails iguais";
+                        mensagem.className = "alert alert-success mt-2 mb-3";
+                        mensagem.style.display = "block";
+                        return true;
+                    }
+                }
+
+                mensagem.textContent = "";
+                mensagem.style.display = "none";
+                return false;
+            }
+
+            email.addEventListener('input', validarEmails);
+            confirma.addEventListener('input', validarEmails);
+
+            form.addEventListener('submit', function (e) {
+                const ok = validarEmails();
+                if (!ok) {
+                    e.preventDefault();
+                    alert("Corrija o email antes de enviar.");
+                    if (!emailValido(email.value.trim())) {
+                        email.focus();
+                    } else {
+                        confirma.focus();
+                    }
+                }
+            });
+        });
+    </script>
     <script>
         $('#telefone').mask('(00) 00000-0000');
         $('#cep').mask('00000-000');
         $('#cnpj').mask('00.000.000/0000-00');
+    </script>
+    <!-- Foto -->
+    <script>
+        document.getElementById('logo').addEventListener('change', function (event) {
+            const img = document.getElementById('fotoColocada');
+            img.src = URL.createObjectURL(event.target.files[0]);
+        })
     </script>
     <!-- Botão do VLibras -->
     <div vw class="enabled">
@@ -282,7 +375,6 @@ endif;
             <div class="vw-plugin-top-wrapper"></div>
         </div>
     </div>
-
     <!-- Script do VLibras -->
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>

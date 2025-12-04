@@ -59,7 +59,7 @@ endif;
 <body>
     <?php require_once "_parts/_navAdmin.php"; ?>
     
-    <main class="container">
+    <main class="container cadastro">
         <?php
         spl_autoload_register(function ($class) {
             require_once "Classes/{$class}.class.php";
@@ -79,44 +79,44 @@ endif;
             <input type="hidden" value="<?php echo $Campeonato->id_campeonato ?? null; ?>" name="id_campeonato">
 
             <div class="col-md-6">
-                <label for="nome_campeonato" class="form-label">Nome do Campeonato</label>
+                <label for="nome_campeonato" class="form-label tituloDado">Nome do Campeonato</label>
                 <input type="text" name="nome_campeonato" id="nome_campeonato"
                     placeholder="Digite o nome campeonato" required class="form-control"
                     value="<?php echo $Campeonato->nome_campeonato ?? null; ?>">
             </div>
 
             <div class="col-md-3">
-                <label for="data_inicio" class="form-label">Data de Início</label>
+                <label for="data_inicio" class="form-label tituloDado">Data de Início</label>
                 <input type="date" name="data_inicio" id="data_inicio"
                     required class="form-control" value="<?php echo $Campeonato->data_inicio ?? null; ?>">
             </div>
 
             <div class="col-md-3">
-                <label for="data_fim" class="form-label">Data de Fim</label>
+                <label for="data_fim" class="form-label tituloDado">Data de Fim</label>
                 <input type="date" name="data_fim" id="data_fim" required
                     class="form-control" value="<?php echo $Campeonato->data_fim ?? null; ?>">
             </div>
 
             <div class="col-md-6">
-                <label for="local" class="form-label">Local</label>
+                <label for="local" class="form-label tituloDado">Local</label>
                 <input type="text" name="local" id="local" placeholder="Digite o local do campeonato" required
                 class="form-control" value="<?php echo $Campeonato->local ?? null; ?>">
             </div>
             
             <div class="col-md-6">
-                <label for="pais" class="form-label">País</label>
+                <label for="pais" class="form-label tituloDado">País</label>
                 <input type="text" name="pais" id="pais" placeholder="Digite o país do campeonato" required
                     class="form-control" value="<?php echo $Campeonato->pais ?? null; ?>">
             </div>
             
             <div class="col-md-6">
-                <label for="cidade" class="form-label">Cidade</label>
+                <label for="cidade" class="form-label tituloDado">Cidade</label>
                 <input type="text" name="cidade" id="cidade" placeholder="Digite a cidade do campeonato" required
                     class="form-control" value="<?php echo $Campeonato->cidade ?? null; ?>">
             </div>
 
             <div class="col-md-6">
-                <label for="esporte" class="form-label">Esporte</label>
+                <label for="esporte" class="form-label tituloDado">Esporte</label>
                 <select id="esporte" name="esporte" class="form-select" aria-label="Default select example">
                     <option disabled <?= (!isset($Campeonato->esporte)) ? 'selected' : '' ?>>Selecione o Esporte</option>
                     <option value="Aikidô" <?= (isset($Campeonato->esporte) && $Campeonato->esporte == 'Aikidô') ? 'selected' : '' ?>>Aikidô
@@ -142,9 +142,9 @@ endif;
                 </select>
             </div>
 
-            <div class="col-12 mt-3 d-flex gap-2">
+            <div class="col-12 mt-3 d-flex gap-2 justify-content-center">
                 <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">Salvar</button>
-                <a href="listaCampeonato.php" class="btn btn-outline-danger">Voltar</a>
+                <a href="listaCampeonato.php" class="btn btn-voltar">Voltar</a>
             </div>
         </form>
     </main>

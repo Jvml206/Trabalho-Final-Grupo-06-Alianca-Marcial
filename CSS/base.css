@@ -63,7 +63,19 @@ main {
 }
 
 .nav-custom .nav-link:hover {
-    color: #a0522d !important;
+    color: #a76328 !important;
+}
+
+.nav-custom .sair {
+    font-weight: 700;
+    color: #c10909 !important;
+    margin: 0 12px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+.nav-custom .sair:hover {
+    color: #7b0806 !important;
 }
 
 .navbar-toggler i {
@@ -81,6 +93,10 @@ main {
 
 .navbarNav {
     margin-left: auto !important;
+}
+
+.dropdown-menu{
+    background-color: var(--cor-fundo);
 }
 
 footer {
@@ -148,7 +164,7 @@ footer .rede-social i {
 
 .btn-voltar {
     background: var(--cor-primaria, #8B0A11);
-    color: #fff;
+    color: #FFFFFF !important;
     padding: 12px;
     border-radius: 10px;
     font-weight: 600;
@@ -158,7 +174,7 @@ footer .rede-social i {
 }
 
 .btn-voltar:hover {
-    background: var(--cor-primaria-hover, #C1121F);
+    background: #C1121F;
 }
 
 .btn-padrao {
@@ -221,8 +237,20 @@ table.tabela thead tr th {
     background-color: #f7d9d9 !important;
 }
 
+form input,
+form select,
+form textarea {
+    margin-bottom: 20px !important;
+}
 
-@media (min-width: 1400px) {
+
+@media (min-width: 480px) {
+  .align-middle {
+    flex-direction: row !important;
+  }
+}
+
+@media (min-width: 1000px) {
     footer .r-linha {
         flex-direction: row;
         justify-content: space-between;

@@ -82,7 +82,7 @@ endif;
 
 <body>
     <?php require_once "_parts/_navAdmin.php"; ?>
-    <main class="container">
+    <main class="container cadastro">
         <?php
         spl_autoload_register(function ($class) {
             require_once "Classes/{$class}.class.php";
@@ -104,24 +104,22 @@ endif;
                 name="id_instituicao_apoiadora">
             <input type="hidden" name="logoAntiga" value="<?php echo $InstituicaoApoiadora->logo ?? ''; ?>">
             <div class="col-6">
-                <label for="nome_fantasia" class="form-label">Nome Fantasia</label>
+                <label for="nome_fantasia" class="form-label tituloDado">Nome Fantasia</label>
                 <input type="text" name="nome_fantasia" id="nome_fantasia"
                     placeholder="Digite o Nome Fantasia da Instituição Apoiadora" required class="form-control"
                     value="<?php echo $InstituicaoApoiadora->nome_fantasia ?? null; ?>">
             </div>
             <div class="col-6">
-                <label for="link" class="form-label">Link</label>
+                <label for="link" class="form-label tituloDado">Link</label>
                 <input type="url" name="link" id="link" placeholder="Digite o Link da Instituição Apoiadora" required
                     class="form-control" value="<?php echo $InstituicaoApoiadora->link ?? null; ?>">
             </div>
-            
-            <label for="logo" class="form-label">Logo da Instituição</label>
-            <input type="file" name="logo" id="logo" accept="image/*" class="form-control" <?php echo empty($InstituicaoApoiadora->logo) ? 'required' : null ?>>
-            <?php if (!empty($InstituicaoApoiadora->logo)): ?>
-                <img src="Images/instituicao_apoiadora/<?php echo $InstituicaoApoiadora->logo; ?>"
-                    alt="Logo da Instituição Apoiadora" class="mt-2 foto-instituicao-cadastro">
-            <?php endif; ?>
-
+            <div class="col-12">
+                <label for="logo" class="form-label tituloDado">Logo da Instituição</label>
+                <input type="file" name="logo" id="logo" accept="image/*" class="form-control" <?php echo empty($InstituicaoApoiadora->logo) ? 'required' : null ?>>
+                <img src="<?= !empty($InstituicaoApoiadora->logo) ? 'Images/instituicao_apoiadora/' . $InstituicaoApoiadora->logo : 'Images\instituicao_apoiadora\SemFoto.png' ?>"
+                    alt="Logo da Instituição Apoiadora" class="mt-2 foto-instituicao-cadastro" id="fotoColocada">
+            </div>
             <div class="col-12 mt-3 d-flex gap-2 justify-content-center">
                 <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">Salvar</button>
                 <a href="listaInstituicoes.php" class="btn btn-voltar">Voltar</a>
@@ -135,7 +133,13 @@ endif;
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <script src="JS/controleEmail.js"></script>
+    <!-- Foto -->
+    <script>
+        document.getElementById('logo').addEventListener('change', function (event) {
+            const img = document.getElementById('fotoColocada');
+            img.src = URL.createObjectURL(event.target.files[0]);
+        })
+    </script>
     <!-- Botão do VLibras -->
     <div vw class="enabled">
         <div vw-access-button class="active"></div>

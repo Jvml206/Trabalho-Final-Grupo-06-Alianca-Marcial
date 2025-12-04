@@ -75,7 +75,7 @@ if ($acao === "aprovar") {
         $mensagem
     );
 
-    echo "<script>window.alert('Pedido reprovado.<b>Motivo:</b> $motivo');window.location.href='index.php';</script>";
+    echo "<script>window.alert('Pedido reprovado. Motivo: $motivo');window.location.href='index.php';</script>";
     exit;
 }
 

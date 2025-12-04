@@ -1,4 +1,4 @@
-@import url('baseSite.css');
+@import url('base.css');
 
 main {
     min-height: 100vh;
@@ -73,6 +73,7 @@ main {
 
 .btn-ver {
     border-radius: 10px;
+    margin-bottom: 20px !important;
 }
 
 .btn-salvar {

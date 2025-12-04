@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg nav-custom" data-bs-theme="dark">
+<nav class="navbar navbar-expand-xl nav-custom" data-bs-theme="dark">
     <div class="container-fluid">
 
         <img src="Images/logo.png" alt="Logo Aliança Marcial" class="logoNav">
@@ -20,22 +20,21 @@
                     <a class="nav-link" href="listaAcademia.php">Academias</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="listaInstrutor.php">Instrutores</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="listaAtleta.php">Atletas</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="listaCampeonato.php">Campeonatos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="listaUsuario.php">Usuários</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="listaPedidoDeAjuda.php">Ajuda</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false"> Gerenciar dados
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li class="nav-item"><a class="nav-link" href="listaPedidoDeAjuda.php">Ajuda</a></li>
+                        <li class="nav-item"><a class="nav-link" href="listaAtleta.php">Atletas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="listaInstrutor.php">Instrutores</a></li>
+                        <li class="nav-item"><a class="nav-link" href="listaUsuario.php">Usuários</a></li>
+                    </ul>
                 </li>
             </ul>
-
             <ul class="navbar-nav">
                 <?php
 
@@ -50,9 +49,9 @@
                             <?php echo htmlspecialchars($_SESSION['user_name']); ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-
-                            <li><a class="dropdown-item" href="dashboard.php">Dashboard</a></li>
-                            <li><a class="dropdown-item text-danger" href="logout.php">Sair</a></li>
+                            <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="nav-item"><a class="nav-link sair" href="logout.php">Sair</a></li>
                         </ul>
                     </li>
                 <?php else: ?>

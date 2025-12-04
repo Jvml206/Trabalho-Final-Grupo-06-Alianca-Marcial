@@ -144,14 +144,6 @@ main.cadastro {
   font-size: 1.1rem;
 }
 
-.botoes a {
-  text-decoration: none;
-}
-
-.botoes a:hover {
-  text-decoration: none;
-}
-
 .foto-usuario-cadastro {
     display: block;
     margin: 10px auto 0;

@@ -150,7 +150,7 @@ endif;
         require_once "_parts/_navAdmin.php";
     endif; ?>
 
-    <main class="container">
+    <main class="container cadastro">
         <?php
         if (filter_has_var(INPUT_POST, "btnEditar")) {
             $edtInstrutor = new Instrutor();
@@ -180,19 +180,19 @@ endif;
                 <div class="row gap-4 mb-3">
                     <div class="dadosUsuario col-md-6">
                         <div>
-                            <label for="nome_usuario" class="form-label">Nome de Usuário</label>
+                            <label for="nome_usuario" class="form-label tituloDado">Nome de Usuário</label>
                             <input type="text" name="nome_usuario" id="nome_usuario" placeholder="Digite o Nome do Usuário"
                                 required class="form-control" value="<?php echo $usuario->nome_usuario ?? null; ?>">
                         </div>
 
                         <div class="usuarioAtleta">
-                            <label for="email" class="form-label">Email</label>
+                            <label for="email" class="form-label tituloDado">Email</label>
                             <input type="email" name="email" id="email" placeholder="Digite o Email do Usuário" required
                                 class="form-control" value="<?php echo $usuario->email ?? null; ?>">
                         </div>
 
                         <div class="usuarioAtleta">
-                            <label for="confirmaEmail" class="form-label">Confirme o Email</label>
+                            <label for="confirmaEmail" class="form-label tituloDado">Confirme o Email</label>
                             <input type="email" name="confirmaEmail" id="confirmaEmail"
                                 placeholder="Digite a confirmação do E-mail" required class="form-control">
                             <div id="mensagem" class="alert alert-danger mt-2 mb-3"></div>
@@ -200,12 +200,10 @@ endif;
 
                     </div>
                     <div class="fotoCadUsuario col-md-6">
-                        <label for="foto" class="form-label">Foto</label>
+                        <label for="foto" class="form-label tituloDado">Foto</label>
                         <input type="file" name="foto" id="foto" accept="image/*" class="form-control" <?php echo empty($usuario->foto) ? 'required' : null ?>>
-                        <?php if (!empty($usuario->foto)): ?>
-                            <img src="Images/usuario/<?php echo $usuario->foto; ?>" alt="Foto do Usuário"
-                                class="mt-2 foto-usuario-cadastro">
-                        <?php endif; ?>
+                        <img src="<?= !empty($usuario->foto) ? 'Images/usuario/' . $usuario->foto : 'Images\usuario\SemFoto.png' ?>"
+                        alt="Foto de pedido de ajuda" class="mt-3 foto-usuario-cadastro" id="fotoColocada">
                     </div>
                 </div>
             <?php } ?>
@@ -213,7 +211,7 @@ endif;
             <!-- Nome do Instrutor -->
             <?php if ($tipoUsuario === 'Administrador'): ?>
                 <div class="mb-3">
-                    <label for="nome_instrutor" class="form-label">Nome do Instrutor</label>
+                    <label for="nome_instrutor" class="form-label tituloDado">Nome do Instrutor</label>
                     <select name="nome_instrutor" class="form-select" id="nome_instrutor" required>
                         <option disabled <?= (!isset($instrutor->nome_instrutor)) ? 'selected' : '' ?>>Selecione o Instrutor
                         </option>
@@ -243,19 +241,19 @@ endif;
             <?php endif; ?>
 
             <div class="col-4">
-                <label for="data_nascimento" class="form-label">Data de Nascimento</label>
+                <label for="data_nascimento" class="form-label tituloDado">Data de Nascimento</label>
                 <input type="date" name="data_nascimento" id="data_nascimento" required class="form-control"
                     value="<?php echo $instrutor->data_nascimento ?? null; ?>">
             </div>
 
             <div class="col-4">
-                <label for="telefone" class="form-label">Telefone</label>
+                <label for="telefone" class="form-label tituloDado">Telefone</label>
                 <input type="text" name="telefone" id="telefone" placeholder="Digite o Telefone do Instrutor" required
                     class="form-control" value="<?php echo $instrutor->telefone ?? null; ?>">
             </div>
 
             <div class="col-4">
-                <label for="fk_id_academia" class="form-label">Academia</label>
+                <label for="fk_id_academia" class="form-label tituloDado">Academia</label>
                 <select name="fk_id_academia" class="form-select" id="fk_id_academia" required>
                     <option disabled <?= (!isset($instrutor->fk_id_academia)) ? 'selected' : '' ?>>Selecione a Academia
                     </option>
@@ -268,17 +266,17 @@ endif;
             </div>
 
             <?php if ($tipoUsuario === 'Instrutor'): ?>
-                <div class="mt-3 d-flex gap-2 mx-auto w-auto">
+                <div class="col-12 mt-3 d-flex gap-2 justify-content-center">
                     <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">
                         <?= isset($instrutor->id_instrutor) ? 'Atualizar' : 'Cadastrar' ?>
                     </button>
-                    <button type="submit" name="btnExcluirConta" id="btnExcluirConta" class="btn btn-danger">Excluir
+                    <button type="submit" name="btnExcluirConta" id="btnExcluirConta" class="btn btn-voltar">Excluir
                         Conta</button>
                 </div>
             <?php elseif ($tipoUsuario === 'Administrador'): ?>
-                <div class="col-12 mt-3 d-flex gap-2 mx-auto">
+                <div class="col-12 mt-3 d-flex gap-2 justify-content-center">
                     <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">Salvar</button>
-                    <a href="listaInstrutor.php" class="btn btn-outline-danger">Voltar</a>
+                    <a href="listaInstrutor.php" class="btn btn-voltar">Voltar</a>
                 </div>
             <?php endif; ?>
         </form>
@@ -290,9 +288,104 @@ endif;
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <script src="JS/controleEmail.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function enviarFormulario(url, codigo) {
+                const formTemp = document.createElement('form');
+                formTemp.method = 'POST';
+                formTemp.action = url;
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'id';
+                input.value = codigo;
+                formTemp.appendChild(input);
+                document.body.appendChild(formTemp);
+                formTemp.submit();
+            }
+
+            const email = document.querySelector('#email');
+            const confirma = document.querySelector('#confirmaEmail');
+            const mensagem = document.querySelector('#mensagem');
+            const form = document.querySelector('#form_valida_email');
+
+            if (!email || !confirma || !mensagem || !form) return;
+
+            mensagem.style.display = "none";
+
+            function emailValido(valor) {
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(valor);
+            }
+
+            function validarEmails() {
+                const valEmail = email.value.trim();
+                const valConf = confirma.value.trim();
+
+                if (valEmail.length === 0 && valConf.length === 0) {
+                    mensagem.textContent = "";
+                    mensagem.style.display = "none";
+                    return false;
+                }
+
+                if (valEmail.length > 0 && !emailValido(valEmail)) {
+                    mensagem.textContent = "❌ Formato de e-mail inválido";
+                    mensagem.className = "alert alert-danger mt-2 mb-3";
+                    mensagem.style.display = "block";
+                    return false;
+                }
+
+                if (valConf.length > 0 && !emailValido(valConf)) {
+                    mensagem.textContent = "❌ Formato de e-mail inválido na confirmação";
+                    mensagem.className = "alert alert-danger mt-2 mb-3";
+                    mensagem.style.display = "block";
+                    return false;
+                }
+                
+                if (valEmail.length > 0 && valConf.length > 0) {
+                    if (valEmail !== valConf) {
+                        mensagem.textContent = "❌ E-mails não conferem";
+                        mensagem.className = "alert alert-danger mt-2 mb-3";
+                        mensagem.style.display = "block";
+                        return false;
+                    } else {
+                        mensagem.textContent = "✅ E-mails iguais";
+                        mensagem.className = "alert alert-success mt-2 mb-3";
+                        mensagem.style.display = "block";
+                        return true;
+                    }
+                }
+
+                mensagem.textContent = "";
+                mensagem.style.display = "none";
+                return false;
+            }
+
+            email.addEventListener('input', validarEmails);
+            confirma.addEventListener('input', validarEmails);
+
+            form.addEventListener('submit', function (e) {
+                const ok = validarEmails();
+                if (!ok) {
+                    e.preventDefault();
+                    alert("Corrija o email antes de enviar.");
+                    if (!emailValido(email.value.trim())) {
+                        email.focus();
+                    } else {
+                        confirma.focus();
+                    }
+                }
+            });
+        });
+    </script>
     <script>
         $('#telefone').mask('(00) 00000-0000');
+    </script>
+    <!-- Foto -->
+    <script>
+        document.getElementById('foto').addEventListener('change', function (event) {
+            const img = document.getElementById('fotoColocada');
+            img.src = URL.createObjectURL(event.target.files[0]);
+        })
     </script>
     <!-- Botão do VLibras -->
     <div vw class="enabled">

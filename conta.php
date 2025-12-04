@@ -117,7 +117,7 @@ endif;
                 </div>
             </div>
 
-            <div class="col-12 mt-3 d-flex gap-2">
+            <div class="col-12 mt-3 d-flex gap-2 justify-content-center">
                 <button type="submit" name="btnEditar" id="btnEditar" class="btn-padrao">Salvar</button>
                 <button type="submit" name="btnExcluirConta" id="btnExcluirConta" class="btn btn-danger">Excluir
                     Conta</button>
@@ -129,7 +129,95 @@ endif;
         <?php require_once "_parts/_footer.php"; ?>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="JS/controleEmail.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function enviarFormulario(url, codigo) {
+                const formTemp = document.createElement('form');
+                formTemp.method = 'POST';
+                formTemp.action = url;
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'id';
+                input.value = codigo;
+                formTemp.appendChild(input);
+                document.body.appendChild(formTemp);
+                formTemp.submit();
+            }
+
+            const email = document.querySelector('#email');
+            const confirma = document.querySelector('#confirmaEmail');
+            const mensagem = document.querySelector('#mensagem');
+            const form = document.querySelector('#form_valida_email');
+
+            if (!email || !confirma || !mensagem || !form) return;
+
+            mensagem.style.display = "none";
+
+            function emailValido(valor) {
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(valor);
+            }
+
+            function validarEmails() {
+                const valEmail = email.value.trim();
+                const valConf = confirma.value.trim();
+
+                if (valEmail.length === 0 && valConf.length === 0) {
+                    mensagem.textContent = "";
+                    mensagem.style.display = "none";
+                    return false;
+                }
+
+                if (valEmail.length > 0 && !emailValido(valEmail)) {
+                    mensagem.textContent = "❌ Formato de e-mail inválido";
+                    mensagem.className = "alert alert-danger mt-2 mb-3";
+                    mensagem.style.display = "block";
+                    return false;
+                }
+
+                if (valConf.length > 0 && !emailValido(valConf)) {
+                    mensagem.textContent = "❌ Formato de e-mail inválido na confirmação";
+                    mensagem.className = "alert alert-danger mt-2 mb-3";
+                    mensagem.style.display = "block";
+                    return false;
+                }
+                
+                if (valEmail.length > 0 && valConf.length > 0) {
+                    if (valEmail !== valConf) {
+                        mensagem.textContent = "❌ E-mails não conferem";
+                        mensagem.className = "alert alert-danger mt-2 mb-3";
+                        mensagem.style.display = "block";
+                        return false;
+                    } else {
+                        mensagem.textContent = "✅ E-mails iguais";
+                        mensagem.className = "alert alert-success mt-2 mb-3";
+                        mensagem.style.display = "block";
+                        return true;
+                    }
+                }
+
+                mensagem.textContent = "";
+                mensagem.style.display = "none";
+                return false;
+            }
+
+            email.addEventListener('input', validarEmails);
+            confirma.addEventListener('input', validarEmails);
+
+            form.addEventListener('submit', function (e) {
+                const ok = validarEmails();
+                if (!ok) {
+                    e.preventDefault();
+                    alert("Corrija o email antes de enviar.");
+                    if (!emailValido(email.value.trim())) {
+                        email.focus();
+                    } else {
+                        confirma.focus();
+                    }
+                }
+            });
+        });
+    </script>
     <!-- Botão do VLibras -->
     <div vw class="enabled">
         <div vw-access-button class="active"></div>

@@ -42,35 +42,41 @@ $pedido = $stmt->fetch(PDO::FETCH_OBJ);
     <title>Validação do Pedido de Ajuda</title>
 </head>
 
-<body class="bg-light">
+<body>
     <?php require_once "_parts/_navSite.php"; ?>
 
     <main class="container">
         <div class="card shadow p-4">
 
             <h1 class="tituloh1">Validação do Pedido de Ajuda</h1>
+            <div class="row gap-4 mb-3">
+                <div class="dadosPedido">
+                    <p><b>Aluno:</b> <?= $pedido->nome_atleta ?></p>
+                    <p><b>Título:</b> <?= $pedido->titulo ?></p>
+                    <p><b>Descrição:</b> <?= nl2br($pedido->descricao) ?></p>
+                    <p><b>Valor Necessário:</b> R$ <?= number_format($pedido->valor_necessario, 2, ',', '.') ?></p>
 
-            <p><b>Aluno:</b> <?= $pedido->nome_atleta ?></p>
-            <p><b>Título:</b> <?= $pedido->titulo ?></p>
-            <p><b>Descrição:</b> <?= nl2br($pedido->descricao) ?></p>
-            <p><b>Valor Necessário:</b> R$ <?= number_format($pedido->valor_necessario, 2, ',', '.') ?></p>
-
-            <?php if (!empty($pedido->imagem)): ?>
-                <p><b>Imagem enviada:</b></p>
-                <img src="Images/pedidoDeAjuda/<?= $pedido->imagem ?>" style="max-width: 300px;" class="img-thumbnail">
-            <?php endif; ?>
-            <hr>
-            <form action="processaValidacaoPedido.php" method="POST">
-                <input type="hidden" name="token" value="<?= $token ?>">
-                <button type="submit" name="acao" value="aprovar" class="btn-padrao">Aprovar Pedido</button>
-                <button type="button" class="btn-voltar" data-bs-toggle="collapse"
-                    data-bs-target="#motivoReprovacao">Reprovar Pedido</button>
-                <div id="motivoReprovacao" class="collapse mt-3">
-                    <label><b>Motivo da Reprovação:</b></label>
-                    <textarea name="motivo" class="form-control" minlength="5"></textarea>
-                    <button type="submit" name="acao" value="reprovar" class="btn-padrao mt-3">Enviar
-                        Reprovação</button>
+                    <?php if (!empty($pedido->imagem)): ?>
+                        <div class="fotoPedido">
+                            <p><b>Imagem enviada:</b></p>
+                            <img src="Images/pedidoDeAjuda/<?= $pedido->imagem ?>" style="max-width: 300px;"
+                                class="img-thumbnail">
+                        </div>
+                    <?php endif; ?>
+                    <hr>
+                    <form action="processaValidacaoPedido.php" method="POST">
+                        <input type="hidden" name="token" value="<?= $token ?>">
+                        <button type="submit" name="acao" value="aprovar" class="btn-padrao">Aprovar Pedido</button>
+                        <button type="button" class="btn-voltar" data-bs-toggle="collapse"
+                            data-bs-target="#motivoReprovacao">Reprovar Pedido</button>
+                        <div id="motivoReprovacao" class="collapse mt-3">
+                            <label><b>Motivo da Reprovação:</b></label>
+                            <textarea name="motivo" class="form-control" minlength="5"></textarea>
+                            <button type="submit" name="acao" value="reprovar" class="btn-voltar mt-3">Enviar
+                                Reprovação</button>
+                        </div>
                 </div>
+            </div>
             </form>
         </div>
     </main>

@@ -251,7 +251,7 @@ endif;
                     <label for="imagem" class="form-label tituloDado">Foto</label>
                     <input type="file" name="imagem" id="imagem" accept="image/*" class="form-control" <?php echo empty($pedidoAjuda->imagem) ? 'required' : null ?>>
                     <img src="<?= !empty($pedidoAjuda->imagem) ? 'Images/pedidoDeAjuda/' . $pedidoAjuda->imagem : 'Images\pedidoDeAjuda\SemFoto.png' ?>" 
-                    alt="Foto de pedido de ajuda" class="mt-2 foto-pedido-cadastro" id="fotoColocada">
+                    alt="Foto de pedido de ajuda" class="mt-5 foto-pedido-cadastro" id="fotoColocada">
                 </div>
 
                 <div class="col-md-12">
@@ -262,7 +262,7 @@ endif;
                 </div>
             </div>
 
-            <div class="col-12 mt-3 d-flex gap-2">
+            <div class="col-12 mt-3 d-flex gap-2 justify-content-center">
                 <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">Salvar</button>
                 <a href="listaPedidoDeAjuda.php" class="btn btn-voltar">Voltar</a>
             </div>
@@ -284,6 +284,7 @@ endif;
             $('#valor_atingido').val($('#valor_atingido').val().replace(',', '.'));
         });
     </script>
+    <!-- Foto -->
     <script>
         document.getElementById('imagem').addEventListener('change', function (event) {
             const img = document.getElementById('fotoColocada');

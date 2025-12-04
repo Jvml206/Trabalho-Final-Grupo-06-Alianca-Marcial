@@ -26,6 +26,104 @@
   object-fit: cover;
 }
 
+/* Cadastros */
+
+main.cadastro {
+  background: var(--cor-card, #1A1A1A);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.cadUsuario {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.dadosUsuario {
+  gap: 20px;
+  flex: 1;
+}
+
+.form-control,
+.form-select {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #f8f8f8;
+  transition: all .2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #8A1C1C;
+  box-shadow: 0 0 0 2px rgba(138, 28, 28, 0.25);
+}
+
+.form-select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5z'/></svg>") !important;
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px;
+}
+
+.fotoCadUsuario {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+}
+
+#mensagem {
+  display: none;
+}
+
+.tituloDado {
+  color: var(--cor-texto-secundario, #d0d0d0);
+  font-size: 1.1rem;
+}
+
+.foto-usuario-cadastro {
+    display: block;
+    margin: 10px auto 0;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Academia */
+
+.cadAcademia {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.dadosAcademia {
+  gap: 20px;
+  flex: 1;
+}
+
+.fotoCadAcademia {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+}
+
+.foto-academia-cadastro {
+    display: block;
+    margin: 10px auto 0;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 @media (max-width: 800px) {
   .row.mb-3,
   .row.gap-4{
@@ -43,5 +141,15 @@
   .foto-academia-cadastro {
     width: 220px;
     height: 220px;
+  }
+}
+@media (max-width: 768px) {
+  .cadUsuario {
+    flex-direction: column;
+  }
+}
+@media (max-width: 768px) {
+  .cadAcademia {
+    flex-direction: column;
   }
 }

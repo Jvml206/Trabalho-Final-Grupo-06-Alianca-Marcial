@@ -341,7 +341,7 @@ class Usuario extends CRUD
 
                     // Conteúdo
                     $mail->isHTML(true);
-                    $mail->Subject = 'Recuperar de Senha';
+                    $mail->Subject = 'Recuperação de Senha';
                     $mail->Body = "
                     <p>Olá$mensagem</p>
                     <p>Clique no link abaixo para criar uma nova senha:</p>

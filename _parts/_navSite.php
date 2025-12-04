@@ -69,18 +69,16 @@
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
 
                             <?php if ($tipoUsuario === 'Administrador'): ?>
-                                <li><a class="dropdown-item text-danger" href="dashboard.php">Dashboard</a></li>
+                                <li><a class="nav-link" href="dashboard.php">Dashboard</a></li>
                             <?php elseif ($tipoUsuario === 'Instrutor'): ?>
-                                <li><a class="dropdown-item text-danger" href="instrutor.php">Meus Dados</a></li>
+                                <li><a class="nav-link" href="instrutor.php">Meus Dados</a></li>
                             <?php elseif ($tipoUsuario === 'Usuário'): ?>
-                                <li><a class="dropdown-item text-danger" href="conta.php">Meus Dados</a></li>
+                                <li><a class="nav-link" href="conta.php">Meus Dados</a></li>
                             <?php elseif ($tipoUsuario === 'Atleta'): ?>
-                                <li><a class="dropdown-item text-danger" href="atleta.php">Meus Dados</a></li>
+                                <li><a class="nav-link" href="atleta.php">Meus Dados</a></li>
                             <?php endif; ?>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item text-danger" href="logout.php">Sair</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="nav-link sair" href="logout.php">Sair</a></li>
                         </ul>
                     </li>
 

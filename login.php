@@ -59,7 +59,10 @@ if (filter_has_var(INPUT_POST, "logar")) {
                 </div>
                 <div class="mb-3">
                     <label for="senha" class="form-label">Senha</label>
-                    <input type="password" class="form-control" id="senha" placeholder="Senha" name="senha">
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="senha" placeholder="Senha" name="senha">
+                        <button type="button" id="toggleConfirmar" class="btn-ver">👁️</button>
+                    </div>
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn" name="logar">Entrar</button>
@@ -78,6 +81,7 @@ if (filter_has_var(INPUT_POST, "logar")) {
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JS/senhaLogin.js"></script>
     <!-- Botão do VLibras -->
     <div vw class="enabled">
         <div vw-access-button class="active"></div>

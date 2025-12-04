@@ -161,7 +161,7 @@ endif;
     endif;
     ?>
 
-    <main class="container">
+    <main class="container cadastro">
         <?php
         if (filter_has_var(INPUT_POST, "btnEditar")) {
             $id = intval(filter_input(INPUT_POST, "id"));
@@ -189,19 +189,19 @@ endif;
                 <div class="row gap-4 mb-3">
                     <div class="dadosUsuario col-md-6">
                         <div>
-                            <label for="nome_usuario" class="form-label">Nome de Usuário</label>
+                            <label for="nome_usuario" class="form-label tituloDado">Nome de Usuário</label>
                             <input type="text" name="nome_usuario" id="nome_usuario" placeholder="Digite o Nome do Usuário"
                                 required class="form-control" value="<?php echo $usuario->nome_usuario ?? null; ?>">
                         </div>
 
                         <div class="usuarioAtleta">
-                            <label for="email" class="form-label">Email</label>
+                            <label for="email" class="form-label tituloDado">Email</label>
                             <input type="email" name="email" id="email" placeholder="Digite o Email do Usuário" required
                                 class="form-control" value="<?php echo $usuario->email ?? null; ?>">
                         </div>
 
                         <div class="usuarioAtleta">
-                            <label for="confirmaEmail" class="form-label">Confirme o Email</label>
+                            <label for="confirmaEmail" class="form-label tituloDado">Confirme o Email</label>
                             <input type="email" name="confirmaEmail" id="confirmaEmail"
                                 placeholder="Digite a confirmação do E-mail" required class="form-control">
                             <div id="mensagem" class="alert alert-danger mt-2 mb-3"></div>
@@ -209,11 +209,11 @@ endif;
 
                     </div>
                     <div class="fotoCadUsuario col-md-6">
-                        <label for="foto" class="form-label">Foto</label>
+                        <label for="foto" class="form-label tituloDado">Foto</label>
                         <input type="file" name="foto" id="foto" accept="image/*" class="form-control" <?php echo empty($usuario->foto) ? 'required' : null ?>>
                         <?php if (!empty($usuario->foto)): ?>
                             <img src="Images/usuario/<?php echo $usuario->foto; ?>" alt="Foto do Usuário"
-                                class="mt-2 foto-usuario-cadastro">
+                                class="mt-3 foto-usuario-cadastro">
                         <?php endif; ?>
                     </div>
                 </div>
@@ -222,7 +222,7 @@ endif;
             <?php if ($tipoUsuario === 'Administrador'): ?>
                 <!-- Nome do Atleta -->
                 <div class="mb-3">
-                    <label for="nome_atleta" class="form-label">Nome do Atleta</label>
+                    <label for="nome_atleta" class="form-label tituloDado">Nome do Atleta</label>
                     <select name="nome_atleta" class="form-select" id="nome_atleta" required>
                         <option disabled <?= (!isset($dadosAtleta->nome_atleta)) ? 'selected' : '' ?>>Selecione o Atleta
                         </option>
@@ -249,7 +249,7 @@ endif;
 
                 <!-- Nome da Academia -->
                 <div class="col-md-6">
-                    <label for="fk_id_academia" class="form-label">Academia</label>
+                    <label for="fk_id_academia" class="form-label tituloDado">Academia</label>
                     <select name="fk_id_academia" class="form-select" id="fk_id_academia" required>
                         <option value="" disabled <?= (!isset($dadosAtleta->fk_id_academia)) ? 'selected' : '' ?>>Selecione a
                             Academia
@@ -263,7 +263,7 @@ endif;
                 </div>
             <?php elseif ($tipoUsuario === 'Atleta'): ?>
                 <div class="col-md-6">
-                    <label for="fk_id_academia" class="form-label">Academia</label>
+                    <label for="fk_id_academia" class="form-label tituloDado">Academia</label>
                     <select name="fk_id_academia" class="form-select" id="fk_id_academia" required>
                         <option value="" disabled <?= (!isset($dadosAtleta->fk_id_academia)) ? 'selected' : '' ?>>Selecione a
                             Academia
@@ -279,7 +279,7 @@ endif;
 
             <!-- Nome do Instrutor -->
             <div class="col-md-6">
-                <label for="fk_id_instrutor" class="form-label">Instrutor</label>
+                <label for="fk_id_instrutor" class="form-label tituloDado">Instrutor</label>
                 <select name="fk_id_instrutor" class="form-select" id="fk_id_instrutor" required disabled
                     data-selected="<?= $dadosAtleta->fk_id_instrutor ?? '' ?>">
                     <option value="" disabled <?= (!isset($dadosAtleta->fk_id_instrutor)) ? 'selected' : '' ?>>Selecione
@@ -293,7 +293,7 @@ endif;
             </div>
 
             <div class="col-md-6">
-                <label for="esporte" class="form-label">Esporte</label>
+                <label for="esporte" class="form-label tituloDado">Esporte</label>
                 <select id="esporte" name="esporte" class="form-select" aria-label="Default select example">
                     <option disabled <?= (!isset($dadosAtleta->esporte)) ? 'selected' : '' ?>>Selecione o Esporte
                     </option>
@@ -315,19 +315,19 @@ endif;
             </div>
 
             <div class="col-md-6">
-                <label for="categoria" class="form-label">Categoria</label>
+                <label for="categoria" class="form-label tituloDado">Categoria</label>
                 <input type="text" name="categoria" id="categoria" placeholder="Digite a categoria do Atleta" required
                     class="form-control" value="<?php echo $dadosAtleta->categoria ?? null; ?>">
             </div>
 
             <div class="col-md-4">
-                <label for="data_nascimento" class="form-label">Data de Nascimento</label>
+                <label for="data_nascimento" class="form-label tituloDado">Data de Nascimento</label>
                 <input type="date" name="data_nascimento" id="data_nascimento" required class="form-control"
                     value="<?php echo $dadosAtleta->data_nascimento ?? null; ?>">
             </div>
 
             <div class="col-md-3">
-                <label for="sexo" class="form-label">Sexo</label>
+                <label for="sexo" class="form-label tituloDado">Sexo</label>
                 <select id="sexo" name="sexo" class="form-select" aria-label="Default select example">
                     <option disabled <?= (!isset($dadosAtleta->sexo)) ? 'selected' : '' ?>>Selecione o sexo</option>
                     <option value="F" <?= (isset($dadosAtleta->sexo) && $dadosAtleta->sexo == 'F') ? 'selected' : '' ?>>
@@ -340,7 +340,7 @@ endif;
             </div>
 
             <div class="col-md-5">
-                <label for="peso" class="form-label">Peso</label>
+                <label for="peso" class="form-label tituloDado">Peso</label>
                 <input type="text" name="peso" id="peso"
                     placeholder="Digite o peso. Ex.:102.65 (Coloque as casas depois do ponto)" required
                     class="form-control" value="<?php echo $dadosAtleta->peso ?? null; ?>">
@@ -348,24 +348,24 @@ endif;
 
 
             <div class="col-12">
-                <label for="biografia" class="form-label">Biografia</label>
+                <label for="biografia" class="form-label tituloDado">Biografia</label>
                 <textarea type="text" name="biografia" id="biografia"
                     placeholder="Digite uma biografia, no mínimo 200 caracteres" required minlength="200"
                     class="form-control"><?php echo $dadosAtleta->biografia ?? null; ?></textarea>
             </div>
 
             <?php if ($tipoUsuario === 'Atleta'): ?>
-                <div class="mt-3 d-flex gap-2 mx-auto w-auto">
-                    <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-marrom">
+                <div class="col-12 mt-3 d-flex gap-2 justify-content-center">
+                    <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-padrao">
                         <?= isset($dadosAtleta->id_atleta) ? 'Atualizar' : 'Cadastrar' ?>
                     </button>
                     <button type="submit" name="btnExcluirConta" id="btnExcluirConta" class="btn btn-danger">Excluir
                         Conta</button>
                 </div>
             <?php elseif ($tipoUsuario === 'Administrador'): ?>
-                <div class="col-12 mt-3 d-flex gap-2 mx-auto">
-                    <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-marrom">Salvar</button>
-                    <a href="listaAtleta.php" class="btn btn-outline-danger">Voltar</a>
+                <div class="col-12 mt-3 d-flex gap-2 justify-content-center">
+                    <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn btn-padrao">Salvar</button>
+                    <a href="listaAtleta.php" class="btn btn-voltar">Voltar</a>
                 </div>
             <?php endif; ?>
         </form>
@@ -377,7 +377,95 @@ endif;
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <script src="JS/controleEmail.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function enviarFormulario(url, codigo) {
+                const formTemp = document.createElement('form');
+                formTemp.method = 'POST';
+                formTemp.action = url;
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'id';
+                input.value = codigo;
+                formTemp.appendChild(input);
+                document.body.appendChild(formTemp);
+                formTemp.submit();
+            }
+
+            const email = document.querySelector('#email');
+            const confirma = document.querySelector('#confirmaEmail');
+            const mensagem = document.querySelector('#mensagem');
+            const form = document.querySelector('#form_valida_email');
+
+            if (!email || !confirma || !mensagem || !form) return;
+
+            mensagem.style.display = "none";
+
+            function emailValido(valor) {
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(valor);
+            }
+
+            function validarEmails() {
+                const valEmail = email.value.trim();
+                const valConf = confirma.value.trim();
+
+                if (valEmail.length === 0 && valConf.length === 0) {
+                    mensagem.textContent = "";
+                    mensagem.style.display = "none";
+                    return false;
+                }
+
+                if (valEmail.length > 0 && !emailValido(valEmail)) {
+                    mensagem.textContent = "❌ Formato de e-mail inválido";
+                    mensagem.className = "alert alert-danger mt-2 mb-3";
+                    mensagem.style.display = "block";
+                    return false;
+                }
+
+                if (valConf.length > 0 && !emailValido(valConf)) {
+                    mensagem.textContent = "❌ Formato de e-mail inválido na confirmação";
+                    mensagem.className = "alert alert-danger mt-2 mb-3";
+                    mensagem.style.display = "block";
+                    return false;
+                }
+                
+                if (valEmail.length > 0 && valConf.length > 0) {
+                    if (valEmail !== valConf) {
+                        mensagem.textContent = "❌ E-mails não conferem";
+                        mensagem.className = "alert alert-danger mt-2 mb-3";
+                        mensagem.style.display = "block";
+                        return false;
+                    } else {
+                        mensagem.textContent = "✅ E-mails iguais";
+                        mensagem.className = "alert alert-success mt-2 mb-3";
+                        mensagem.style.display = "block";
+                        return true;
+                    }
+                }
+
+                mensagem.textContent = "";
+                mensagem.style.display = "none";
+                return false;
+            }
+
+            email.addEventListener('input', validarEmails);
+            confirma.addEventListener('input', validarEmails);
+
+            form.addEventListener('submit', function (e) {
+                const ok = validarEmails();
+                if (!ok) {
+                    e.preventDefault();
+                    alert("Corrija o email antes de enviar.");
+                    if (!emailValido(email.value.trim())) {
+                        email.focus();
+                    } else {
+                        confirma.focus();
+                    }
+                }
+            });
+        });
+    </script>
     <script src="JS/instrutorDoAtleta.js"></script>
     <script>
         $('#peso').mask('000.00', { reverse: true });
