@@ -37,7 +37,6 @@ main {
     width: 90%;
     max-width: 900px;
     margin: 30px auto;
-    color: var(--cor-texto, #fff);
     font-family: "Poppins", sans-serif;
 }
 

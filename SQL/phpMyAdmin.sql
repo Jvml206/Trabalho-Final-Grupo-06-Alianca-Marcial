@@ -136,3 +136,33 @@ CREATE TABLE campeonato (
     cidade VARCHAR(85) NOT NULL,
     esporte ENUM ('Aikidô', 'Boxe', 'Capoeira', 'Jiu-Jitsu Brasileiro', 'Judô', 'Karatê', 'Kung Fu', 'MMA', 'Muay Thai', 'Taekwondo') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ===============================
+-- PROCEDURE DASHBOARD
+-- ===============================
+DELIMITER $$
+CREATE PROCEDURE `dashboard_totais`()
+BEGIN
+    SELECT 
+        -- Usuários
+        (SELECT COUNT(*) FROM usuario WHERE tipo_usuario = "Usuário") AS totalUsuarios,
+
+        -- Atletas
+        (SELECT COUNT(*) FROM atleta) AS totalAtletas,
+
+        -- Instrutores
+        (SELECT COUNT(*) FROM instrutor) AS totalInstrutores,
+
+        -- Academias
+        (SELECT COUNT(*) FROM academia) AS totalAcademias,
+
+        -- Instituições
+        (SELECT COUNT(*) FROM instituicao_apoiadora) AS totalInstituicao,
+
+        -- Campeonatos
+        (SELECT COUNT(*) FROM campeonato) AS totalCampeonatos,
+
+        -- Pedidos de Ajuda
+        (SELECT COUNT(*) FROM pedido_ajuda WHERE meta = "pendente" AND status_validacao = "aprovado") AS totalPedidosAjuda;
+END$$
+DELIMITER ;
