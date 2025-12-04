@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <input type="password" class="form-control" id="nova_senha" placeholder="Nova Senha"
                             name="nova_senha" required>
                         <button type="button" id="toggleSenha" class="btn-ver">
-                            👁️
+                            <i id="iconNovaSenha" class="bi bi-eye"></i>
                         </button>
                     </div>
                     <p id="forcaSenha" class="fw-bold"></p>
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <input type="password" class="form-control" id="confirmar_senha" placeholder="Confirmar Senha"
                             name="confirmar_senha" required>
                         <button type="button" id="toggleConfirmar" class="btn-ver">
-                            👁️
+                            <i id="iconConfirmarSenha" class="bi bi-eye"></i>
                         </button>
                     </div>
                     <small id="msgConfirmacao"></small>

@@ -10,7 +10,7 @@ main {
 
 .form-login {
     width: 100%;
-    max-width: 420px;
+    max-width: 600px;
     background: var(--cor-card, #1A1A1A);
     padding: 35px 40px;
     border-radius: 16px;
@@ -55,25 +55,22 @@ main {
 
 .form-login a {
     color: var(--cor-primaria-hover, #C1121F);
-    text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 .form-login a:hover {
     text-decoration: underline;
 }
 
-.redefinir_senha a {
-    text-decoration: none;
-}
-
-.redefinir_senha a:hover {
-    text-decoration: none;
-}
-
 .btn-ver {
     border-radius: 10px;
     margin-bottom: 20px !important;
+    background-color: #111;
+    color: #FFFFFF;
+}
+
+.btn-ver i {
+    font-size: 1.6rem;
 }
 
 .btn-salvar {

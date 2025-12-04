@@ -61,7 +61,9 @@ if (filter_has_var(INPUT_POST, "logar")) {
                     <label for="senha" class="form-label">Senha</label>
                     <div class="input-group">
                         <input type="password" class="form-control" id="senha" placeholder="Senha" name="senha">
-                        <button type="button" id="toggleConfirmar" class="btn-ver">👁️</button>
+                        <button type="button" id="toggleConfirmar" class="btn-ver">
+                            <i id="iconSenha" class="bi bi-eye"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="text-center">
@@ -69,11 +71,14 @@ if (filter_has_var(INPUT_POST, "logar")) {
                 </div>
                 <div class="mt-3">
                     <a href="redefinir_senha.php">Esqueceu a senha?</a>
-                </div>
-                <div class="mt-3">
+                    <br>
                     <a href="criar_conta.php">Criar conta</a>
                 </div>
             </form>
+            <div class="divisor"></div>
+            <p class="p-concorda">Ao continuar, você concorda com nossos <a href="termosUso.php"
+                    class="a-concorda">Termos</a> e <a href="politicaPrivacidade.php" class="a-concorda">Política de
+                    Privacidade</a>.</p>
         </div>
     </main>
     <footer class="footer mt-auto">

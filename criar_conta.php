@@ -132,6 +132,11 @@ endif;
                 </div>
             </div>
 
+            <div class="divisor"></div>
+            <p class="p-concorda">Ao continuar, você concorda com nossos <a href="termosUso.php" class="a-concorda">Termos</a> e <a
+                    href="politicaPrivacidade.php" class="a-concorda">Política de Privacidade</a>.</p>
+            <div class="divisor"></div>
+
             <div class="col-12 mt-3 d-flex gap-2 justify-content-center">
                 <button type="submit" name="btnCadastrar" id="btnCadastrar" class="btn-padrao">Salvar</button>
                 <a href="login.php" class="btn btn-voltar">Voltar</a>
@@ -195,7 +200,7 @@ endif;
                     mensagem.style.display = "block";
                     return false;
                 }
-                
+
                 if (valEmail.length > 0 && valConf.length > 0) {
                     if (valEmail !== valConf) {
                         mensagem.textContent = "❌ E-mails não conferem";

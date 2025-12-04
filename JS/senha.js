@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const salvarBtn = document.getElementById("btnSalvar");
   const toggleSenhaBtn = document.getElementById("toggleSenha");
   const toggleConfirmarBtn = document.getElementById("toggleConfirmar");
+  const iconSenha = document.getElementById("iconNovaSenha");
+  const iconConfirmar = document.getElementById("iconConfirmarSenha");
 
   const requisitos = {
     tamanho: document.getElementById("minChar"),
@@ -16,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const forcaSenha = document.getElementById("forcaSenha");
   const msgConfirmacao = document.getElementById("msgConfirmacao");
 
-  // Função para verificar os critérios da senha
+  // Verifica os critérios da senha
   function verificarSenha() {
     const senha = senhaInput.value;
 
@@ -32,8 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
     atualizarRequisito(requisitos.numero, temNumero);
     atualizarRequisito(requisitos.especial, temEspecial);
 
-    // Calcula a força
-    const nivel = [temTamanho, temMaiuscula, temMinuscula, temNumero, temEspecial].filter(Boolean).length;
+    const nivel = [temTamanho, temMaiuscula, temMinuscula, temNumero, temEspecial]
+      .filter(Boolean).length;
 
     if (nivel <= 2) {
       forcaSenha.textContent = "Força: Fraca 🔴";
@@ -46,18 +48,17 @@ document.addEventListener("DOMContentLoaded", () => {
       forcaSenha.style.color = "green";
     }
 
-    // só verifica confirmação se o campo confirmar já tiver algo digitado
     if (confirmarInput.value.trim() !== "") {
       verificarConfirmacao();
     }
   }
 
-  // Atualiza o requisito visualmente
+  // Atualiza visualmente os requisitos
   function atualizarRequisito(elemento, condicao) {
     elemento.style.color = condicao ? "green" : "red";
   }
 
-  // Verifica se confirmação e senha são iguais e se os requisitos estão válidos
+  // Verifica se a confirmação está correta
   function verificarConfirmacao() {
     const senha = senhaInput.value;
     const confirmar = confirmarInput.value;
@@ -82,16 +83,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Alterna visibilidade da senha
-  function alternarVisibilidade(input, botao) {
+  function alternarVisibilidade(input, iconElement) {
     const tipo = input.type === "password" ? "text" : "password";
     input.type = tipo;
-    botao.textContent = tipo === "password" ? "👁️" : "🙈";
+
+    if (tipo === "password") {
+      iconElement.classList.remove("bi-eye-slash");
+      iconElement.classList.add("bi-eye");
+    } else {
+      iconElement.classList.remove("bi-eye");
+      iconElement.classList.add("bi-eye-slash");
+    }
   }
 
-  // Eventos
   senhaInput.addEventListener("input", verificarSenha);
   confirmarInput.addEventListener("input", verificarConfirmacao);
-  toggleSenhaBtn.addEventListener("click", () => alternarVisibilidade(senhaInput, toggleSenhaBtn));
-  toggleConfirmarBtn.addEventListener("click", () => alternarVisibilidade(confirmarInput, toggleConfirmarBtn));
+
+  toggleSenhaBtn.addEventListener("click", () =>
+    alternarVisibilidade(senhaInput, iconSenha)
+  );
+
+  toggleConfirmarBtn.addEventListener("click", () =>
+    alternarVisibilidade(confirmarInput, iconConfirmar)
+  );
 });
