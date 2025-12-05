@@ -1,5 +1,10 @@
 <?php
-$nivelPermitido = ['Administrador', 'Atleta'];
+if (filter_has_var(INPUT_POST, "btnEditar")) {
+    $nivelPermitido = ['Administrador', 'Atleta'];
+}
+else{
+    $nivelPermitido = ['Atleta'];
+}
 require_once 'validaUser.php';
 
 spl_autoload_register(function ($class) {

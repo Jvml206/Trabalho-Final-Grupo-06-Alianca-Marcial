@@ -40,9 +40,6 @@ $atletas = $Atleta->all();
         <div class="mt-3">
             <h1 class="tituloh1">Atleta</h1>
         </div>
-        <div class="mt-3">
-            <a href="atleta.php" class="btn btn-novo mb-3">Novo Atleta</a>
-        </div>
         <table class="table tabela text-center overflow-hidden table-hover align-middle">
             <thead>
                 <tr>

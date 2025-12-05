@@ -158,7 +158,7 @@ class Usuario extends CRUD
 
     public function statusConta(int $id, string $status)
     {
-        $sql = "UPDATE $this->table SET status_conta = :status WHERE id_usuario = :id";
+        $sql = "UPDATE $this->table SET status_validacao = :status WHERE id_usuario = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(":status", $status, PDO::PARAM_STR);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);

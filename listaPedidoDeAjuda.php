@@ -70,9 +70,13 @@ if ($tipoUsuario === 'Atleta') {
         <div class="mt-3">
             <h1 class="tituloh1">Pedidos de Ajuda</h1>
         </div>
-        <div class="mt-3">
-            <a href="pedidoDeAjuda.php" class="btn btn-novo mb-3">Novo Pedido de Ajuda</a>
-        </div>
+
+        <?php if ($tipoUsuario != 'Administrador'): ?>
+            <div class="mt-3">
+                <a href="pedidoDeAjuda.php" class="btn btn-novo mb-3">Novo Pedido de Ajuda</a>
+            </div>
+        <?php endif; ?>
+
         <table class="table tabela text-center overflow-hidden table-hover align-middle">
             <thead>
                 <tr>

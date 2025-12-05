@@ -28,7 +28,7 @@
                         data-bs-toggle="dropdown" aria-expanded="false"> Gerenciar dados
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                        <li class="nav-item"><a class="nav-link" href="listaPedidoDeAjuda.php">Ajuda</a></li>
+                        <li class="nav-item"><a class="nav-link" href="listaPedidoDeAjuda.php">Pedido de Ajuda</a></li>
                         <li class="nav-item"><a class="nav-link" href="listaAtleta.php">Atletas</a></li>
                         <li class="nav-item"><a class="nav-link" href="listaInstrutor.php">Instrutores</a></li>
                         <li class="nav-item"><a class="nav-link" href="listaUsuario.php">Usuários</a></li>

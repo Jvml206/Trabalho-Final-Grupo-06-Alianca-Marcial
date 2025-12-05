@@ -1,5 +1,10 @@
 <?php
-$nivelPermitido = ['Administrador', 'Instrutor'];
+if (filter_has_var(INPUT_POST, "btnEditar")) {
+    $nivelPermitido = ['Administrador', 'Instrutor'];
+}
+else{
+    $nivelPermitido = ['Instrutor'];
+}
 require_once 'validaUser.php';
 
 $idUsuario = $_SESSION['user_id'];

@@ -48,12 +48,12 @@ require_once 'validaUser.php'; ?>
                         <td><?php echo $usuario->id_usuario ?></td>
                         <td><?php echo $usuario->email ?></td>
                         <td><?php echo $usuario->tipo_usuario ?></td>
-                        <td><?php if ($usuario->status_conta == "valido"): ?>
+                        <td><?php if ($usuario->status_validacao == "valido"): ?>
                                 <span class="badge bg-success">
                                     <i class="bi bi-check-circle"></i> Válida
                                 </span>
                             <?php else: ?>
-                                <?php if ($usuario->status_conta !== 'invalido'): ?>
+                                <?php if ($usuario->status_validacao !== 'invalido'): ?>
                                     <a href="usuario.php?acao=marcar_valida&id=<?= $usuario->id_usuario ?>"
                                         class="badge bg-success text-decoration-none" title="Marcar como válida"
                                         onclick="return confirm('Deseja marcar a conta como válida?');">

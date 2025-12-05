@@ -54,7 +54,6 @@ CREATE TABLE academia (
 CREATE TABLE instrutor (
     id_instrutor INT AUTO_INCREMENT PRIMARY KEY,
     nome_instrutor VARCHAR(150) NOT NULL,
-    data_nascimento DATE NOT NULL,
     telefone VARCHAR(20) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
     status_validacao ENUM('valido', 'nao_validado', 'invalido') DEFAULT 'nao_validado',
@@ -149,13 +148,13 @@ CREATE PROCEDURE `dashboard_totais`()
 BEGIN
     SELECT 
         -- Usuários
-        (SELECT COUNT(*) FROM usuario WHERE tipo_usuario = "Usuário") AS totalUsuarios,
+        (SELECT COUNT(*) FROM usuario WHERE tipo_usuario = "Usuário" AND status_validacao = "valido") AS totalUsuarios,
 
         -- Atletas
-        (SELECT COUNT(*) FROM atleta) AS totalAtletas,
+        (SELECT COUNT(*) FROM atleta WHERE status_validacao = "valido") AS totalAtletas,
 
         -- Instrutores
-        (SELECT COUNT(*) FROM instrutor) AS totalInstrutores,
+        (SELECT COUNT(*) FROM instrutor WHERE status_validacao = "valido") AS totalInstrutores,
 
         -- Academias
         (SELECT COUNT(*) FROM academia) AS totalAcademias,
@@ -164,7 +163,7 @@ BEGIN
         (SELECT COUNT(*) FROM instituicao_apoiadora) AS totalInstituicao,
 
         -- Campeonatos
-        (SELECT COUNT(*) FROM campeonato) AS totalCampeonatos,
+        (SELECT COUNT(*) FROM campeonato WHERE data_fim >= DATE(NOW())) AS totalCampeonatos,
 
         -- Pedidos de Ajuda
         (SELECT COUNT(*) FROM pedido_ajuda WHERE meta = "pendente" AND status_validacao = "aprovado") AS totalPedidosAjuda;
