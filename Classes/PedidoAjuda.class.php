@@ -267,7 +267,7 @@ class PedidoAjuda extends CRUD
                 $mail->Subject = $assunto;
                 $mail->Body = "
                 <p>Olá, Instrutor(a).</p>
-                <p>O atleta $nomeAtleta enviou um pedido de ajuda que precisa ser validado.</p>
+                <p>O(A) atleta $nomeAtleta enviou um pedido de ajuda que precisa ser validado.</p>
                 <p>$mensagem</p>
                 <p><a href='$linkValidacao'>Clique aqui para validar ou reprovar</a></p>
             ";
@@ -286,11 +286,6 @@ class PedidoAjuda extends CRUD
             error_log("Erro em validacaoPedido: " . $e->getMessage());
             return false;
         }
-    }
-
-    public function getDb()
-    {
-        return $this->db;
     }
 
     public function enviarEmailAtletaPedido($idAtleta, $assunto, $mensagem)

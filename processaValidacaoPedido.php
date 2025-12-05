@@ -56,10 +56,11 @@ if ($acao === "aprovar") {
     $motivo = $_POST['motivo'];
 
     $sql = "UPDATE pedido_ajuda 
-            SET status_validacao = 'reprovado', token_validacao = NULL, expira_validacao = NULL
+            SET status_validacao = 'reprovado', motivo_reprovacao = :motivo, token_validacao = NULL, expira_validacao = NULL
             WHERE id_pedido_ajuda = :id";
 
     $stmt = $PedidoAjuda->getDb()->prepare($sql);
+    $stmt->bindParam(":motivo", $motivo);
     $stmt->bindParam(":id", $pedido->id_pedido_ajuda, PDO::PARAM_INT);
     $stmt->execute();
 

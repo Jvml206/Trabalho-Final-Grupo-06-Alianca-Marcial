@@ -9,7 +9,7 @@ spl_autoload_register(function ($class) {
 $Academia = new Academia();
 $academia = $Academia->all();
 $Instrutor = new Instrutor();
-$instrutor = $Instrutor->all();
+$instrutor = $Instrutor->instrutoresValidos();
 $Atleta = new Atleta();
 $Usuario = new Usuario();
 $usuario = $Usuario->all();
@@ -58,9 +58,20 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     }
 
     if (empty($id)):
-        //Tenta adicionar e exibe a mensagem ao usuário
         if ($Atleta->add()) {
-            echo "<script>window.alert('Cadastro de atleta realizado com sucesso.');window.location.href='index.php';window.location.href='atleta.php';</script>";
+
+            // pega o id do atleta recém inserido
+            $idAtleta = $Atleta->lastId();
+
+            // envia o email ao instrutor
+            $mensagem = "Por favor, valide o cadastro clicando no link abaixo:";
+            $assunto = "Validação de novo atleta";
+            $Atleta->enviarValidacaoInstrutor($idAtleta, $mensagem, $assunto);
+
+            echo "<script>
+            window.alert('Cadastro realizado! Aguarde o instrutor validar a conta.');
+            window.location.href='atleta.php';
+          </script>";
         } else {
             echo "<script>window.alert('Erro ao cadastrar o atleta.');window.open(document.referrer,'_self');</script>";
         }
@@ -70,6 +81,12 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
             if ($tipoUsuario === 'Atleta') {
 
                 $usuarioAtual = $Usuario->search("id_usuario", $idUsuario);
+                if ($tipoUsuario === 'Administrador') {
+                    $atletaAtual = $Atleta->search("id_atleta", (filter_input(INPUT_POST, "id_atleta", FILTER_SANITIZE_NUMBER_INT)));
+                } else {
+                    $dadosAtleta = $Atleta->search("fk_id_usuario", $idUsuario);
+                    $atletaAtual = $dadosAtleta->id_atleta;
+                }
 
                 $fotoAntiga = filter_input(INPUT_POST, 'fotoAntiga');
                 $Usuario->setFoto($fotoAntiga);
@@ -98,13 +115,19 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
                 }
 
                 $Usuario->update('id_usuario', $idUsuario);
+                // Envia e-mail avisando o instrutor sobre a alteração
+                $Atleta->setStatusValidacao('nao_validado');
+                $Atleta->update('id_atleta', $atletaAtual);
+                $mensagem = "Há um novo pedido de validação dado de atleta pendente.";
+                $assunto = "Validação de Alteração de Dado de Atleta";
+                $enviado = $Atleta->enviarValidacaoInstrutor($atletaAtual, $mensagem, $assunto);
             }
 
             if ($tipoUsuario === 'Administrador') {
                 echo "<script>window.alert('Atleta alterado com sucesso.');window.location.href='listaAtleta.php';</script>";
                 exit;
             }
-            echo "<script>window.alert('Atleta alterado com sucesso.');window.location.href='atleta.php';</script>";
+            echo "<script>window.alert('Cadastro alterado com sucesso, o instrutor tem 72 horas para validar os novos dados.');window.location.href='atleta.php';</script>";
             exit;
         } else {
             echo "<script> window.alert('Erro ao alterar o atleta.');
@@ -243,51 +266,39 @@ endif;
                             <option value="<?= $uE->nome_usuario ?>">
                                 <?= htmlspecialchars($uE->nome_usuario) ?>
                             </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                        <?php endforeach; endif; ?>
+                </select>
+            </div>
 
-                <!-- Nome da Academia -->
-                <div class="col-md-6">
-                    <label for="fk_id_academia" class="form-label tituloDado">Academia</label>
-                    <select name="fk_id_academia" class="form-select" id="fk_id_academia" required>
-                        <option value="" disabled <?= (!isset($dadosAtleta->fk_id_academia)) ? 'selected' : '' ?>>Selecione a
-                            Academia
+            <!-- Nome da Academia -->
+            <div class="col-md-6">
+                <label for="fk_id_academia" class="form-label tituloDado">Academia</label>
+                <select name="fk_id_academia" class="form-select" id="fk_id_academia" required>
+                    <option value="" disabled <?= (!isset($dadosAtleta->fk_id_academia)) ? 'selected' : '' ?>>Selecione a
+                        Academia
+                    </option>
+                    <?php foreach ($academia as $ac): ?>
+                        <option value="<?= $ac->id_academia ?>" <?= (($dadosAtleta->fk_id_academia ?? null) == $ac->id_academia) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($ac->nome_fantasia) ?>
                         </option>
-                        <?php foreach ($academia as $ac): ?>
-                            <option value="<?= $ac->id_academia ?>">
-                                <?= htmlspecialchars($ac->nome_fantasia) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            <?php elseif ($tipoUsuario === 'Atleta'): ?>
-                <div class="col-md-6">
-                    <label for="fk_id_academia" class="form-label tituloDado">Academia</label>
-                    <select name="fk_id_academia" class="form-select" id="fk_id_academia" required>
-                        <option value="" disabled <?= (!isset($dadosAtleta->fk_id_academia)) ? 'selected' : '' ?>>Selecione a
-                            Academia
-                        </option>
-                        <?php foreach ($academia as $ac): ?>
-                            <option value="<?= $ac->id_academia ?>" <?= (($dadosAtleta->fk_id_academia ?? null) == $ac->id_academia) ? 'selected' : '' ?>>
-                                <?= htmlspecialchars($ac->nome_fantasia) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            <?php endif; ?>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
             <!-- Nome do Instrutor -->
             <div class="col-md-6">
                 <label for="fk_id_instrutor" class="form-label tituloDado">Instrutor</label>
-                <select name="fk_id_instrutor" class="form-select" id="fk_id_instrutor" required disabled
-                    data-selected="<?= $dadosAtleta->fk_id_instrutor ?? '' ?>">
-                    <option value="" disabled <?= (!isset($dadosAtleta->fk_id_instrutor)) ? 'selected' : '' ?>>Selecione
-                        o Instrutor</option>
+                <select name="fk_id_instrutor" class="form-select" id="fk_id_instrutor" required disabled>
+                    <option value="" disabled <?= (!isset($dadosAtleta->fk_id_instrutor)) ? 'selected' : '' ?>>
+                        Selecione o Instrutor
+                    </option>
                     <?php foreach ($instrutor as $ins): ?>
-                        <option value="<?= $ins->id_instrutor ?>" data-academia="<?= $ins->fk_id_academia ?>">
-                            <?= htmlspecialchars($ins->nome_instrutor) ?>
-                        </option>
+                        <?php if ($ins->status_validacao === 'valido'): ?>
+                            <option value="<?= $ins->id_instrutor ?>" data-academia="<?= $ins->fk_id_academia ?>"
+                                <?= (($dadosAtleta->fk_id_instrutor ?? null) == $ins->id_instrutor) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($ins->nome_instrutor) ?>
+                            </option>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -429,7 +440,7 @@ endif;
                     mensagem.style.display = "block";
                     return false;
                 }
-                
+
                 if (valEmail.length > 0 && valConf.length > 0) {
                     if (valEmail !== valConf) {
                         mensagem.textContent = "❌ E-mails não conferem";

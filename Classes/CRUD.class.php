@@ -54,14 +54,24 @@ abstract class CRUD
             return false;
         }
     }
+    public function lastId()
+    {
+        return $this->db->lastInsertId();
+    }
 
-    public function sp_exibir(string $procedure){
+    public function getDb()
+    {
+        return $this->db;
+    }
+
+    public function sp_exibir(string $procedure)
+    {
         $sql = "CALL {$procedure}";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
-    
+
     public function iniciaTrans()
     {
         $this->db->beginTransaction();

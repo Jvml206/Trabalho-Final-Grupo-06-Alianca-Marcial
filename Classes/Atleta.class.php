@@ -1,5 +1,11 @@
 <?php
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class Atleta extends CRUD
 {
     protected $table = "atleta";
@@ -11,6 +17,7 @@ class Atleta extends CRUD
     private $esporte;
     private $peso;
     private $categoria;
+    private $status_validacao;
     private $fk_id_usuario;
     private $fk_id_academia;
     private $fk_id_instrutor;
@@ -86,6 +93,14 @@ class Atleta extends CRUD
     {
         $this->categoria = $categoria;
     }
+    public function getStatusValidacao()
+    {
+        return $this->status_validacao;
+    }
+    public function setStatusValidacao($status_validacao)
+    {
+        $this->status_validacao = $status_validacao;
+    }
 
     public function getFkIdUsuario()
     {
@@ -143,6 +158,7 @@ class Atleta extends CRUD
                     peso = :peso, 
                     esporte = :esporte, 
                     categoria = :categoria, 
+                    status_validacao = :status_validacao, 
                     fk_id_academia = :fk_id_academia,
                     fk_id_usuario = :fk_id_usuario,
                     fk_id_instrutor = :fk_id_instrutor
@@ -156,6 +172,7 @@ class Atleta extends CRUD
         $stmt->bindParam(':peso', $this->peso);
         $stmt->bindParam(':esporte', $this->esporte);
         $stmt->bindParam(':categoria', $this->categoria);
+        $stmt->bindParam(':status_validacao', $this->status_validacao);
         $stmt->bindParam(':fk_id_academia', $this->fk_id_academia);
         $stmt->bindParam(':fk_id_usuario', $this->fk_id_usuario);
         $stmt->bindParam(':fk_id_instrutor', $this->fk_id_instrutor);
@@ -173,13 +190,157 @@ class Atleta extends CRUD
 
         return $resultado['total'] > 0;
     }
-    public function searchAll($academia, $id_academia, $instrutor, $id)
+
+    public function enviarValidacaoInstrutor($idAtleta, $mensagem, $assunto)
     {
-        $sql = "SELECT * FROM $this->table WHERE $academia = :id_academia AND $instrutor = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(":id_academia", $id_academia);
-        $stmt->bindParam(":id", $id);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+        require __DIR__ . '/../PHPMailer/src/Exception.php';
+        require __DIR__ . '/../PHPMailer/src/PHPMailer.php';
+        require __DIR__ . '/../PHPMailer/src/SMTP.php';
+
+        try {
+
+            // Buscar o e-mail do instrutor
+            $sql = "SELECT 
+                    i.email AS emailInstrutor,
+                    i.nome_instrutor,
+                    a.nome_atleta
+                FROM atleta a
+                INNER JOIN instrutor i ON i.id_instrutor = a.fk_id_instrutor
+                WHERE a.id_atleta = :idAtleta";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':idAtleta', $idAtleta, PDO::PARAM_INT);
+            $stmt->execute();
+
+            if ($stmt->rowCount() === 0) {
+                return false;
+            }
+
+            $dados = $stmt->fetch(PDO::FETCH_OBJ);
+            $emailInstrutor = $dados->emailInstrutor;
+            $nomeInstrutor = $dados->nome_instrutor;
+            $nomeAtleta = $dados->nome_atleta;
+
+            // Criar token único
+            $token = bin2hex(random_bytes(32));
+            $expira = date('Y-m-d H:i:s', strtotime('+72 hours'));
+
+            // Salvar token no atleta
+            $sqlToken = "UPDATE atleta 
+                     SET token_validacao = :token, expira_validacao = :expira
+                     WHERE id_atleta = :idAtleta";
+
+            $stmtToken = $this->db->prepare($sqlToken);
+            $stmtToken->bindParam(':token', $token, PDO::PARAM_STR);
+            $stmtToken->bindParam(':expira', $expira, PDO::PARAM_STR);
+            $stmtToken->bindParam(':idAtleta', $idAtleta, PDO::PARAM_INT);
+            $stmtToken->execute();
+
+
+            // Criar link
+            $protocolo = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
+            $dominio = $_SERVER['HTTP_HOST'];
+            $caminho = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+
+            $linkValidacao = "$protocolo://$dominio$caminho/validarAtleta.php?token=$token";
+
+
+            /* ENVIAR E-MAIL */
+            $mail = new PHPMailer(true);
+            $mail->CharSet = 'UTF-8';
+
+            $config = parse_ini_file(__DIR__ . '/../config.ini', true)['email'];
+
+            $mail->isSMTP();
+            $mail->Host = $config['Host'];
+            $mail->SMTPAuth = $config['SMTPAuth'];
+            $mail->Username = $config['Username'];
+            $mail->Password = $config['Password'];
+            $mail->SMTPSecure = $config['SMTPSecure'];
+            $mail->Port = $config['Port'];
+
+            $mail->setFrom($config['Username'], 'Aliança Marcial');
+            $mail->addAddress($emailInstrutor, $nomeInstrutor);
+
+            $mail->isHTML(true);
+            $mail->Subject = $assunto;
+
+            $mail->Body = "
+            <p>Olá, Instrutor(a) <strong>$nomeInstrutor</strong>.</p>
+            <p>O(A) atleta <strong>$nomeAtleta</strong> se cadastrou em sua academia.</p>
+            <p>$mensagem</p>
+            <p><a href='$linkValidacao'>Clique aqui para validar ou invalidar o atleta</a></p>";
+
+            $mail->AltBody = "Valide o cadastro do atleta acessando: $linkValidacao";
+
+            $mail->send();
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Erro ao enviar email de validação: {$e->getMessage()}");
+            return false;
+        }
     }
+
+    public function enviarEmailAtletaConta($idAtleta, $assunto, $mensagem)
+    {
+        require __DIR__ . '/../PHPMailer/src/Exception.php';
+        require __DIR__ . '/../PHPMailer/src/PHPMailer.php';
+        require __DIR__ . '/../PHPMailer/src/SMTP.php';
+
+        try {
+            $sql = "SELECT a.nome_atleta AS nome_atleta, u.email AS email
+                FROM atleta a
+                INNER JOIN usuario u ON u.id_usuario = a.fk_id_usuario
+                WHERE a.id_atleta = :idAtleta";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':idAtleta', $idAtleta, PDO::PARAM_INT);
+            $stmt->execute();
+
+            if ($stmt->rowCount() === 0) {
+                return false; // atleta não encontrado
+            }
+
+            $dados = $stmt->fetch(PDO::FETCH_OBJ);
+            $nome_atleta = $dados->nome_atleta;
+            $email = $dados->email;
+
+            $mail = new PHPMailer(true);
+            $mail->CharSet = 'UTF-8';
+            $mail->Encoding = 'base64';
+
+            $config = parse_ini_file(__DIR__ . '/../config.ini', true)['email'];
+
+            $mail->isSMTP();
+            $mail->Host = $config['Host'];
+            $mail->SMTPAuth = $config['SMTPAuth'];
+            $mail->Username = $config['Username'];
+            $mail->Password = $config['Password'];
+            $mail->SMTPSecure = $config['SMTPSecure'];
+            $mail->Port = $config['Port'];
+
+            $mail->setFrom($config['Username'], 'Aliança Marcial');
+            $mail->addAddress($email);
+
+            // Corpo do email
+            $mail->isHTML(true);
+            $mail->Subject = $assunto;
+            $mail->Body = "
+            <p>Olá, <b>$nome_atleta</b>.</p>
+            <p>$mensagem</p>
+            <p>Atenciosamente,<br>Equipe Aliança Marcial</p>
+        ";
+
+            $mail->AltBody = strip_tags($mensagem);
+
+            $mail->send();
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Erro ao enviar e-mail para atleta: {$mail->ErrorInfo}");
+            return false;
+        }
+    }
+
 }

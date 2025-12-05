@@ -265,7 +265,7 @@ endif;
     </script>
     <!-- Foto -->
     <script>
-        document.getElementById('imagem').addEventListener('change', function (event) {
+        document.getElementById('foto').addEventListener('change', function (event) {
             const img = document.getElementById('fotoColocada');
             img.src = URL.createObjectURL(event.target.files[0]);
         })

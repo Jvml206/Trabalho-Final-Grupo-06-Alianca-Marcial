@@ -1,4 +1,7 @@
-<?php require_once 'validaUser.php'; ?>
+<?php require_once 'validaUser.php';
+$idUsuario = $_SESSION['user_id'];
+$tipoUsuario = $_SESSION['tipo_usuario'];
+?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -26,10 +29,16 @@
 
     <main class="mainBemVindo">
         <div class="bemVindo">
-            <h1>Bem Vindo!</h1>
-            <br>
-            <h1>Você está logado</h1>
+            <h1 class="tituloh1">Bem Vindo!</h1>
+            <h1 class="tituloh1">Você está logado</h1>
         </div>
+        <?php if ($tipoUsuario == 'Atleta' && empty($Atleta->search('fk_id_usuario', $idUsuario))):?>
+                <p class="p-conta">Termine de criar sua conta para ter acesso aos serviços</p>
+                <a href="atleta.php" class="btn btn-voltar">Clique aqui</a>
+        <?php elseif ($tipoUsuario == 'Instrutor' && empty($Instrutor->search('fk_id_usuario', $idUsuario))): ?>
+            <p class="p-conta">Termine de criar sua conta para ter acesso aos serviços</p>
+            <a href="instrutor.php" class="btn btn-voltar">Clique aqui</a>
+        <?php endif ?>
     </main>
     <footer>
         <?php require_once "_parts/_footer.php"; ?>

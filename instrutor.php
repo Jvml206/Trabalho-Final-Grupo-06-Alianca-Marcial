@@ -49,9 +49,16 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     }
 
     if (empty($id)):
-        //Tenta adicionar e exibe a mensagem ao usuário
         if ($Instrutor->add()) {
-            echo "<script>window.alert('Cadastro de instrutor realizado com sucesso.');window.location.href='index.php';window.location.href='instrutor.php';</script>";
+            $idInstrutor = $Instrutor->lastId();
+            $mensagem = "Por favor, valide o cadastro clicando no link abaixo:";
+            $assunto = "Validação de novo instrutor";
+            $Instrutor->enviarValidacaoAcademia($idInstrutor, $mensagem, $assunto);
+
+            echo "<script>
+            window.alert('Cadastro realizado! Aguarde a academia validar a conta.');
+            window.location.href='instrutor.php';
+          </script>";
         } else {
             echo "<script>window.alert('Erro ao cadastrar o instrutor.');window.open(document.referrer,'_self');</script>";
         }
@@ -61,6 +68,12 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
             if ($tipoUsuario === 'Instrutor') {
 
                 $usuarioAtual = $Usuario->search("id_usuario", $idUsuario);
+                if ($tipoUsuario === 'Administrador') {
+                    $instrutorAtual = $Instrutor->search("id_instrutor", (filter_input(INPUT_POST, "id_instrutor", FILTER_SANITIZE_NUMBER_INT)));
+                } else {
+                    $dadosInstrutor = $Instrutor->search("fk_id_usuario", $idUsuario);
+                    $instrutorAtual = $dadosInstrutor->id_instrutor;
+                }
 
                 $fotoAntiga = filter_input(INPUT_POST, 'fotoAntiga');
                 $Usuario->setFoto($fotoAntiga);
@@ -88,13 +101,19 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
                 }
 
                 $Usuario->update('id_usuario', $idUsuario);
+                // Envia e-mail avisando a academia sobre a alteração
+                $Instrutor->setStatusValidacao('nao_validado');
+                $Instrutor->update('id_instrutor', $instrutorAtual);
+                $mensagem = "Há um novo pedido de validação dado de instrutor pendente.";
+                $assunto = "Validação de Alteração de Dado de Instrutor";
+                $enviado = $Instrutor->enviarValidacaoAcademia($instrutorAtual, $mensagem, $assunto);
             }
 
             if ($tipoUsuario === 'Administrador') {
                 echo "<script>window.alert('Instrutor alterado com sucesso.');window.location.href='listaInstrutor.php';</script>";
                 exit;
             }
-            echo "<script>window.alert('Instrutor alterado com sucesso.');window.location.href='instrutor.php';</script>";
+            echo "<script>window.alert('Cadastro alterado com sucesso, a academia tem 72 horas para validar os novos dados.');window.location.href='instrutor.php';</script>";
             exit;
         } else {
             echo "<script> window.alert('Erro ao alterar o instrutor.');

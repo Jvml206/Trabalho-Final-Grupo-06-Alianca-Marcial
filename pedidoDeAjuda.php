@@ -12,6 +12,26 @@ $Atleta = new Atleta();
 $idUsuario = $_SESSION['user_id'];
 $tipoUsuario = $_SESSION['tipo_usuario'];
 
+if ($tipoUsuario === 'Atleta') {
+    $dadosAtleta = $Atleta->search("fk_id_usuario", $idUsuario);
+
+    if (!$dadosAtleta) {
+        echo "<script>alert('Você ainda não finalizou seu cadastro como atleta.'); window.location.href='atleta.php';</script>";
+        exit;
+    }
+
+    if ($dadosAtleta->status_validacao === 'nao_validado') {
+        echo "<script>alert('Seu cadastro de atleta ainda está pendente de aprovação.'); window.location.href='index.php';</script>";
+        exit;
+    }
+
+    if ($dadosAtleta->status_validacao === 'invalido') {
+        $motivo = $dadosAtleta->motivo_reprovacao ?? 'Sem motivo informado.';
+        echo "<script>alert('Seu cadastro foi invalidado. Motivo: $motivo'); window.location.href='index.php';</script>";
+        exit;
+    }
+}
+
 if (filter_has_var(INPUT_POST, "btnCadastrar")):
 
     $fotoAntiga = filter_input(INPUT_POST, 'imagemAntiga');

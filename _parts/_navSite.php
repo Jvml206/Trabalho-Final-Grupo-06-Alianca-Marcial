@@ -37,7 +37,7 @@
                     });
                     $Atleta = new Atleta();
                     ?>
-                    <?php if ($tipoUsuario === 'Atleta' && $Atleta->verificarPorUsuario($idUsuario) === True): ?>
+                    <?php if ($tipoUsuario === 'Atleta' && $Atleta->verificarPorUsuario($idUsuario) === True  && $Atleta->searchStr('status_validacao', 'valido')): ?>
                         <li class="nav-item">
                             <a class="nav-link" href="listaPedidoDeAjuda.php">Ajuda</a>
                         </li>

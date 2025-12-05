@@ -74,7 +74,7 @@ $pedido = $stmt->fetch(PDO::FETCH_OBJ);
                             <textarea name="motivo" class="form-control" minlength="5"></textarea>
                             <button type="submit" name="acao" value="reprovar" class="btn-voltar mt-3">Enviar
                                 Reprovação</button>
-                        </div>
+                      </div>
                 </div>
             </div>
             </form>

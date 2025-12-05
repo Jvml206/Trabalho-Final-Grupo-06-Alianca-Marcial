@@ -5,6 +5,7 @@
   justify-content: center;
   align-items: center;
   height: calc(100vh - 150px);
+  flex-direction: column;
 }
 
 .bemVindo {
@@ -14,4 +15,9 @@
 .bemVindo h1 {
   font-size: 4rem;
   color: #3c2f2f;
+}
+
+.p-conta {
+  font-size: 2rem;
+  text-align: center;
 }

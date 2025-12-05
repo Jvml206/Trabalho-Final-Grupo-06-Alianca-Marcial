@@ -14,9 +14,27 @@ $Atleta = new Atleta();
 $atletas = $Atleta->all();
 
 if ($tipoUsuario === 'Atleta') {
+
+    // Busca o atleta pelo usuário logado
     $dadosAtleta = $Atleta->search("fk_id_usuario", $idUsuario);
+
+    // 1. Se não existir → cadastro não finalizado
     if (!$dadosAtleta) {
-        die("Erro: Atleta não encontrado");
+        echo "<script>alert('Você ainda não finalizou seu cadastro como atleta.'); window.location.href='atleta.php';</script>";
+        exit;
+    }
+
+    // 2. Se estiver aguardando validação
+    if ($dadosAtleta->status_validacao === 'nao_validado') {
+        echo "<script>alert('Seu cadastro de atleta ainda está pendente de aprovação.'); window.location.href='index.php';</script>";
+        exit;
+    }
+
+    // 3. Se foi reprovado → informar motivo
+    if ($dadosAtleta->status_validacao === 'invalido') {
+        $motivo = $dadosAtleta->motivo_reprovacao ?? 'Sem motivo informado.';
+        echo "<script>alert('Seu cadastro foi invalidado. Motivo: $motivo'); window.location.href='index.php';</script>";
+        exit;
     }
 }
 
