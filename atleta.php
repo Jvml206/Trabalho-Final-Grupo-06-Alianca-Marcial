@@ -189,8 +189,30 @@ endif;
         if (filter_has_var(INPUT_POST, "btnEditar")) {
             $id = intval(filter_input(INPUT_POST, "id"));
             $dadosAtleta = $Atleta->search("id_atleta", $id);
+            $statusConta = $dadosAtleta->status_validacao;
+        } else {
+            $dadosAtleta = $Atleta->search('fk_id_usuario', $idUsuario);
+            $statusConta = $dadosAtleta->status_validacao ?? null;
+        }
+        switch ($statusConta) {
+            case "valido":
+                $statusText = "Conta: Validada";
+                $statusClass = "status-validada";
+                break;
+            case "invalido":
+                $statusText = "Conta: Invalidada";
+                $statusClass = "status-invalidada";
+                break;
+            default:
+                $statusText = "Conta: Não validada";
+                $statusClass = "status-pendente";
+                break;
         }
         ?>
+
+        <div class="status-badge <?= $statusClass ?>">
+            <?= $statusText ?>
+        </div>
 
         <form action="atleta.php" method="post" class="row g3 mt-3" enctype="multipart/form-data"
             id="form_valida_email">
@@ -234,10 +256,8 @@ endif;
                     <div class="fotoCadUsuario col-md-6">
                         <label for="foto" class="form-label tituloDado">Foto</label>
                         <input type="file" name="foto" id="foto" accept="image/*" class="form-control" <?php echo empty($usuario->foto) ? 'required' : null ?>>
-                        <?php if (!empty($usuario->foto)): ?>
-                            <img src="Images/usuario/<?php echo $usuario->foto; ?>" alt="Foto do Usuário"
-                                class="mt-3 foto-usuario-cadastro">
-                        <?php endif; ?>
+                        <img src="<?= !empty($usuario->foto) ? 'Images/usuario/' . $usuario->foto : 'Images\usuario\SemFoto.png' ?>"
+                        alt="Foto da Usuario" class="mt-2 foto-usuario-cadastro" id="fotoColocada">
                     </div>
                 </div>
             <?php } ?>
@@ -480,6 +500,13 @@ endif;
     <script src="JS/instrutorDoAtleta.js"></script>
     <script>
         $('#peso').mask('000.00', { reverse: true });
+    </script>
+    <!-- Foto -->
+    <script>
+        document.getElementById('foto').addEventListener('change', function (event) {
+            const img = document.getElementById('fotoColocada');
+            img.src = URL.createObjectURL(event.target.files[0]);
+        })
     </script>
     <!-- Botão do VLibras -->
     <div vw class="enabled">

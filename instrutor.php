@@ -28,7 +28,6 @@ if ($tipoUsuario === 'Instrutor') {
 }
 
 if (filter_has_var(INPUT_POST, "btnCadastrar")):
-    $Instrutor->setDataNascimento(filter_input(INPUT_POST, "data_nascimento", FILTER_SANITIZE_STRING));
     $Instrutor->setTelefone(filter_input(INPUT_POST, "telefone", FILTER_SANITIZE_STRING));
     $Instrutor->setFkIdAcademia(filter_input(INPUT_POST, "fk_id_academia", FILTER_SANITIZE_NUMBER_INT));
     $id = filter_input(INPUT_POST, 'id_instrutor');
@@ -175,20 +174,39 @@ endif;
             $edtInstrutor = new Instrutor();
             $id = intval(filter_input(INPUT_POST, "id"));
             $instrutor = $edtInstrutor->search("id_instrutor", $id);
+            $statusConta = $instrutor->status_validacao;
+        } else {
+            $instrutor = $Instrutor->search('fk_id_usuario', $idUsuario);
+            $statusConta = $instrutor->status_validacao ?? null;
+        }
+        switch ($statusConta) {
+            case "valido":
+                $statusText = "Conta: Validada";
+                $statusClass = "status-validada";
+                break;
+            case "invalido":
+                $statusText = "Conta: Invalidada";
+                $statusClass = "status-invalidada";
+                break;
+            default:
+                $statusText = "Conta: Não validada";
+                $statusClass = "status-pendente";
+                break;
         }
         ?>
 
-        <?php if ($tipoUsuario === 'Instrutor'):
-                ?>
-                <h1 class="tituloh1">Conta</h1><?php
-            else:
-                ?>
-                <h1 class="tituloh1">Cadastro de Instrutor</h1><?php
-            endif;
-            ?>
+        <div class="status-badge <?= $statusClass ?>">
+            <?= $statusText ?>
+        </div>
 
         <form action="instrutor.php" method="post" class="row g3 mt-3" enctype="multipart/form-data"
             id="form_valida_email">
+
+            <?php if ($tipoUsuario === 'Instrutor'): ?>
+                <h1 class="tituloh1">Conta</h1><?php
+            else: ?>
+                <h1 class="tituloh1">Cadastro de Instrutor</h1><?php
+            endif; ?>
 
             <input type="hidden" value="<?php echo $instrutor->id_instrutor ?? null; ?>" name="id_instrutor">
 
@@ -222,7 +240,7 @@ endif;
                         <label for="foto" class="form-label tituloDado">Foto</label>
                         <input type="file" name="foto" id="foto" accept="image/*" class="form-control" <?php echo empty($usuario->foto) ? 'required' : null ?>>
                         <img src="<?= !empty($usuario->foto) ? 'Images/usuario/' . $usuario->foto : 'Images\usuario\SemFoto.png' ?>"
-                        alt="Foto de pedido de ajuda" class="mt-3 foto-usuario-cadastro" id="fotoColocada">
+                            alt="Foto de pedido de ajuda" class="mt-3 foto-usuario-cadastro" id="fotoColocada">
                     </div>
                 </div>
             <?php } ?>
@@ -259,19 +277,13 @@ endif;
                 </div>
             <?php endif; ?>
 
-            <div class="col-4">
-                <label for="data_nascimento" class="form-label tituloDado">Data de Nascimento</label>
-                <input type="date" name="data_nascimento" id="data_nascimento" required class="form-control"
-                    value="<?php echo $instrutor->data_nascimento ?? null; ?>">
-            </div>
-
-            <div class="col-4">
+            <div class="col-6">
                 <label for="telefone" class="form-label tituloDado">Telefone</label>
                 <input type="text" name="telefone" id="telefone" placeholder="Digite o Telefone do Instrutor" required
                     class="form-control" value="<?php echo $instrutor->telefone ?? null; ?>">
             </div>
 
-            <div class="col-4">
+            <div class="col-6">
                 <label for="fk_id_academia" class="form-label tituloDado">Academia</label>
                 <select name="fk_id_academia" class="form-select" id="fk_id_academia" required>
                     <option disabled <?= (!isset($instrutor->fk_id_academia)) ? 'selected' : '' ?>>Selecione a Academia
@@ -359,7 +371,7 @@ endif;
                     mensagem.style.display = "block";
                     return false;
                 }
-                
+
                 if (valEmail.length > 0 && valConf.length > 0) {
                     if (valEmail !== valConf) {
                         mensagem.textContent = "❌ E-mails não conferem";

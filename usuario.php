@@ -41,19 +41,7 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
 
     if (empty($id_usuario)):
         if ($Usuario->add()) {
-            // Monta mensagem personalizada
-            $mensagem = "<p>{$Usuario->getNomeUsuario()},</p>
-            <p>Seu cadastro foi realizado com sucesso! 🎉</p>
-            <p>Antes de acessar sua conta, é necessário criar uma senha de acesso.</p>";
-
-            // Envia o e-mail de recuperação/criação de senha
-            $Usuario->solicitarRecuperacaoSenha(
-                $Usuario->getEmail(),
-                $mensagem,
-                'Bem-vindo ao Sistema da Cooperativa Aliança Marcial'
-            );
-
-            echo "<script>alert('Cadastro de usuário realizado com sucesso! Um e-mail para definição de senha foi enviado para o endereço cadastrado.');window.location.href='usuario.php';</script>";
+            echo "<script>alert('Cadastro de usuário realizado com sucesso! Sua conta será analisada e validada ou invalidada, aguarde a validação');window.location.href='usuario.php';</script>";
         } else {
             echo "<script>alert('Erro ao cadastrar o usuário.');window.open(document.referrer,'_self');</script>";
         }
@@ -80,6 +68,34 @@ elseif (filter_has_var(INPUT_POST, "btnDeletar")):
     } else {
         echo "<script>alert('Erro ao excluir o usuário.'); window.open(document.referrer, '_self');</script>";
     }
+elseif (filter_has_var(INPUT_GET, "acao")):
+    $id = intval(filter_input(INPUT_GET, "id"));
+    $acao = filter_input(INPUT_GET, "acao", FILTER_SANITIZE_STRING);
+    $usuario = $Usuario->search('id_usuario',$id);
+    if ($acao === 'marcar_valida') {
+        $mensagem = "{$usuario->nome_usuario},
+        <p>Sua conta foi validada com sucesso! 🎉</p>
+        <p>Antes de acessar sua conta, é necessário criar uma senha de acesso.</p>";
+        
+        $Usuario->solicitarRecuperacaoSenha(
+            $usuario->email,
+            $mensagem,
+            'Bem-vindo ao Sistema da Cooperativa Aliança Marcial'
+        );
+        $Usuario->statusConta($id, 'valido');
+        header("location:listaUsuario.php");
+    } elseif ($acao === 'marcar_invalida') {
+        $mensagem = "{$usuario->nome_usuario},
+            <p>Sua conta foi infelizmente foi invalidada!</p>";
+
+        $Usuario->contaInvalida(
+            $usuario->email,
+            $mensagem,
+            'Conta inválida'
+        );
+        $Usuario->delete("id_usuario", $id);
+        header("location:listaUsuario.php");
+    }
 endif;
 ?>
 
@@ -96,7 +112,7 @@ endif;
 </head>
 
 <body>
-    <?php require_once "_parts/_navAdmin.php";?>
+    <?php require_once "_parts/_navAdmin.php"; ?>
 
     <main class="container cadastro">
         <?php

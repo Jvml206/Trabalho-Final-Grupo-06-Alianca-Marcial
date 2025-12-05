@@ -252,7 +252,7 @@ class PedidoAjuda extends CRUD
                 $mail->Port = $config['Port'];
 
                 // remetente e destinatário
-                $mail->setFrom($config['Username'], 'Aliança Marcial');
+                $mail->setFrom($config['Username'], 'Cooperativa Aliança Marcial');
                 $mail->addAddress($emailInstrutor);
 
                 $sqlNome = "SELECT nome_atleta FROM atleta WHERE id_atleta = :idAtleta";
@@ -326,7 +326,7 @@ class PedidoAjuda extends CRUD
             $mail->SMTPSecure = $config['SMTPSecure'];
             $mail->Port = $config['Port'];
 
-            $mail->setFrom($config['Username'], 'Aliança Marcial');
+            $mail->setFrom($config['Username'], 'Cooperativa Aliança Marcial');
             $mail->addAddress($email);
 
             // Corpo do email

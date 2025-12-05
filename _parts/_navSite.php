@@ -22,7 +22,7 @@
                     <a class="nav-link" href="sobre.php">Sobre</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="apoiadores.php">Apoiadores</a>
+                    <a class="nav-link" href="academias.php">Academias</a>
                 </li>
                 <?php
                 if (session_status() === PHP_SESSION_NONE) {
@@ -39,7 +39,7 @@
                     ?>
                     <?php if ($tipoUsuario === 'Atleta' && $Atleta->verificarPorUsuario($idUsuario) === True  && $Atleta->searchStr('status_validacao', 'valido')): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="listaPedidoDeAjuda.php">Ajuda</a>
+                            <a class="nav-link" href="listaPedidoDeAjuda.php">Pedir Ajuda</a>
                         </li>
                     <?php endif; ?>
                 <?php endif; ?>

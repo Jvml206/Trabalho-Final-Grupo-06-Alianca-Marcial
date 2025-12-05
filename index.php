@@ -21,6 +21,7 @@
     $Academia = new Academia();
     $Campeonato = new Campeonato();
     $PedidoAjuda = new PedidoAjuda();
+    $InstituicaoApoiadora = new InstituicaoApoiadora();
     ?>
 
     <div class="topo">
@@ -46,14 +47,14 @@
                     $academia = $Academia->search('id_academia', $atleta->fk_id_academia);
                     ?>
                     <div class="cardPedido d-flex align-items-center flex-column">
-                        <div class="card-img-container-pedido">
+                        <div class="card-img-container-academia">
                             <img src="Images/pedidoDeAjuda/<?php echo $pa->imagem; ?>">
                         </div>
                         <p class="nomeAtleta text-center"><?php echo $atleta->nome_atleta; ?></p>
                         <p class="motivoAtleta text-center"><?php echo $pa->titulo; ?></p>
                         <p class="academiaAtleta text-center">Academia: <?php echo $academia->nome_fantasia; ?></p>
-                        <button type="button" class="btn btn-success btn-ajudar" data-bs-toggle="modal"
-                            data-bs-target="#pedidoModal<?php echo $id; ?>">
+                        <button type="button" class="btn btn-ajudar" data-bs-toggle="modal"
+                            data-bs-target="#pedidoModal<?php echo $id; ?>" onclick="this.blur()">
                             Ajudar
                         </button>
                     </div>
@@ -115,7 +116,7 @@
                             </div>
                         </div>
                         <button type="button" class="btn btn-campeonato" data-bs-toggle="modal"
-                            data-bs-target="#campeonatoModal<?php echo $id; ?>">
+                            data-bs-target="#campeonatoModal<?php echo $id; ?>" onclick="this.blur()">
                             Ver mais
                         </button>
                     </div>
@@ -151,6 +152,18 @@
                 <a href="campeonatos.php" class="btn btn-verMais">Ver campeonatos</a>
             </div>
         </section>
+        <h1 class="tituloh1">Instituições que nos apoiam</h1>
+
+        <?php
+        $instituicaoApoiadora = $InstituicaoApoiadora->all();
+        foreach ($instituicaoApoiadora as $ia):
+            $id = intval($ia->id_instituicao_apoiadora);
+            ?>
+            <div class="cardinstituicao d-flex align-items-center flex-column">
+                <a href="<?php echo $ia->link; ?>" target="_blank"> <img src="Images/instituicao_apoiadora/<?php echo $ia->logo; ?>" title="<?php echo $ia->nome_fantasia; ?>" 
+                alt="<?php echo $ia->nome_fantasia; ?>" class="foto-instituicao"></a>
+            </div>
+        <?php endforeach; ?>
     </main>
 
     <footer>

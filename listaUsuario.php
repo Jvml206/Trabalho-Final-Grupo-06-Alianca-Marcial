@@ -1,5 +1,5 @@
 <?php $nivelPermitido = ['Administrador'];
-require_once 'validaUser.php';?>
+require_once 'validaUser.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -29,6 +29,7 @@ require_once 'validaUser.php';?>
                     <th>#</th>
                     <th>Email</th>
                     <th>Função</th>
+                    <th>Validação</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
@@ -47,22 +48,41 @@ require_once 'validaUser.php';?>
                         <td><?php echo $usuario->id_usuario ?></td>
                         <td><?php echo $usuario->email ?></td>
                         <td><?php echo $usuario->tipo_usuario ?></td>
+                        <td><?php if ($usuario->status_conta == "valido"): ?>
+                                <span class="badge bg-success">
+                                    <i class="bi bi-check-circle"></i> Válida
+                                </span>
+                            <?php else: ?>
+                                <?php if ($usuario->status_conta !== 'invalido'): ?>
+                                    <a href="usuario.php?acao=marcar_valida&id=<?= $usuario->id_usuario ?>"
+                                        class="badge bg-success text-decoration-none" title="Marcar como válida"
+                                        onclick="return confirm('Deseja marcar a conta como válida?');">
+                                        <i class="bi bi-check-circle"></i> Validar
+                                    </a>
+                                    <a href="usuario.php?acao=marcar_invalida&id=<?= $usuario->id_usuario ?>"
+                                        class="badge bg-danger text-decoration-none" title="Marcar como inválida"
+                                        onclick="return confirm('Deseja marcar a conta como inválida?');">
+                                        <i class="bi bi-x-circle"></i> Invalidar
+                                    </a>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </td>
                         <td class="align-middle">
                             <div class="d-flex gap-1 justify-content-center">
-                            <form action="<?php echo htmlspecialchars("usuario.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id" value="<?php echo $usuario->id_usuario ?>">
-                                <button name="btnEditar" class="btn btn-primary btn-sm" type="submit" title="Editar"
-                                    onclick="return confirm('Tem certeza que deseja editar o usuário?');">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                            </form>
-                            <form action="<?php echo htmlspecialchars("usuario.php") ?>" method="post" class="d-flex">
-                                <input type="hidden" name="id_usuario" value="<?php echo $usuario->id_usuario ?>">
-                                <button name="btnDeletar" class="btn btn-danger btn-sm" type="submit" title="Deletar"
-                                    onclick="return confirm('Tem certeza que deseja deletar o usuário?');">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+                                <form action="<?php echo htmlspecialchars("usuario.php") ?>" method="post" class="d-flex">
+                                    <input type="hidden" name="id" value="<?php echo $usuario->id_usuario ?>">
+                                    <button name="btnEditar" class="btn btn-primary btn-sm" type="submit" title="Editar"
+                                        onclick="return confirm('Tem certeza que deseja editar o usuário?');">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </form>
+                                <form action="<?php echo htmlspecialchars("usuario.php") ?>" method="post" class="d-flex">
+                                    <input type="hidden" name="id_usuario" value="<?php echo $usuario->id_usuario ?>">
+                                    <button name="btnDeletar" class="btn btn-danger btn-sm" type="submit" title="Deletar"
+                                        onclick="return confirm('Tem certeza que deseja deletar o usuário?');">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

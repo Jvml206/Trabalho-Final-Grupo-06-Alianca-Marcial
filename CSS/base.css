@@ -273,3 +273,9 @@ form textarea {
         gap: 10px;
     }
 }
+
+@media (max-width: 600px){
+    .tituloh1 {
+        font-size: 2rem;
+    }
+}

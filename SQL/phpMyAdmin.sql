@@ -15,7 +15,8 @@ CREATE TABLE usuario (
     nome_usuario VARCHAR(150) NOT NULL,
     senha VARCHAR(100),
     tipo_usuario ENUM('Administrador', 'Atleta', 'Instrutor', 'Usuário') NOT NULL,
-    foto TEXT NOT NULL
+    foto TEXT NOT NULL,
+    status_validacao ENUM('valido', 'nao_validado') DEFAULT 'nao_validado'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ===============================
@@ -38,18 +39,12 @@ CREATE TABLE RecuperacaoSenha (
 -- TABELA ACADEMIA
 -- ===============================
 CREATE TABLE academia (
-    id_academia INT AUTO_INCREMENT PRIMARY KEY,
+    id_academia INTEGER PRIMARY KEY AUTO_INCREMENT,
     nome_fantasia VARCHAR(200) NOT NULL,
     razao_social VARCHAR(200) NOT NULL,
     cnpj VARCHAR(20) UNIQUE NOT NULL,
-    telefone VARCHAR(20) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
-    endereco VARCHAR(100),
-    bairro VARCHAR(50),
-    cidade VARCHAR(50),
-    cep VARCHAR(9),
-    estado VARCHAR(2),
-    instagram VARCHAR(100),
+    link TEXT,
     logo TEXT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

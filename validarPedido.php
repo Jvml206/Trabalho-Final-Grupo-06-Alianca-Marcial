@@ -17,7 +17,7 @@ $token = $_GET['token'];
 $sql = "SELECT pa.*, a.nome_atleta AS nome_atleta
         FROM pedido_ajuda pa
         INNER JOIN atleta a ON a.id_atleta = pa.fk_id_atleta
-        WHERE token_validacao = :token LIMIT 1";
+        WHERE pa.token_validacao = :token LIMIT 1";
 
 $stmt = $PedidoAjuda->getDb()->prepare($sql);
 $stmt->bindParam(":token", $token);

@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $usuario = new Usuario(); // ou a classe que implementa o método
-    $sucesso = $usuario->solicitarRecuperacaoSenha($email, ', recebemos sua solicitação para recuperação de senha.','Recuperação de Senha');
+    $sucesso = $usuario->solicitarRecuperacaoSenha($email, '<p>Recebemos sua solicitação para recuperação de senha.</p>','Recuperação de Senha');
 
     if ($sucesso) {
         echo "<script>window.alert('Enviamos um link para redefinir sua senha no e-mail informado.'); window.location.href='index.php';</script>";

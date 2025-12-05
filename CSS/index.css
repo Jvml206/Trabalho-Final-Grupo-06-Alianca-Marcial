@@ -66,22 +66,6 @@
     margin-bottom: 30px;
 }
 
-.cardPedido {
-    width: 300px;
-    background: var(--cor-card);
-    color: var(--cor-texto);
-    border-radius: 12px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
-    overflow: hidden;
-    padding-bottom: 20px;
-    transition: 0.3s;
-}
-
-.cardPedido:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9);
-}
-
 .card-img-container-pedido {
     width: 100%;
     height: 200px;
@@ -296,6 +280,7 @@
 
 .modal-footer .btn-modal {
     background: var(--cor-primaria);
+    color: var(--cor-texto);
     border: none;
 }
 
@@ -306,6 +291,14 @@
 /* pagPedidoAjuda */
 
 .cardPedido {
+    width: 300px;
+    background: var(--cor-card);
+    color: var(--cor-texto);
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    padding-bottom: 20px;
+    transition: 0.3s;
     position: relative;
 }
 
@@ -362,18 +355,50 @@
     padding: 20px;
 }
 
-/* titulosPags */
+/* Academias */
 
-.tituloh1 {
-    text-align: center;
-    font-size: 2.4rem;
-    margin-bottom: 40px;
-    font-weight: 700;
-    color: var(--cor-primaria, #8B0A11);
+.cardAcademia {
+    width: 300px;
+    background: var(--cor-card);
+    color: var(--cor-texto);
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    padding-bottom: 20px;
+    transition: 0.3s;
+    position: relative;
 }
 
-@media (max-width: 600px){
-    .tituloh1 {
-        font-size: 2rem;
-    }
+.cardAcademia:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9);
+}
+
+.card-img-container-academia {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.card-img-container-academia img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.cardAcademia p {
+    margin: 8px 0;
+    padding: 0 15px;
+    color: var(--cor-texto-secundario);
+}
+
+.nomeAcademia {
+    color: var(--cor-texto);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.cnpjAcademia, .linkAcademia {
+    opacity: 0.9;
 }

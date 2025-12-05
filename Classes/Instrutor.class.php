@@ -11,7 +11,6 @@ class Instrutor extends CRUD
     protected $table = "instrutor";
     private $id_instrutor;
     private $nome_instrutor;
-    private $data_nascimento;
     private $telefone;
     private $email;
     private $status_validacao;
@@ -34,15 +33,6 @@ class Instrutor extends CRUD
     public function setNomeInstrutor($nome_instrutor)
     {
         $this->nome_instrutor = $nome_instrutor;
-    }
-
-    public function getDataNascimento()
-    {
-        return $this->data_nascimento;
-    }
-    public function setDataNascimento($data_nascimento)
-    {
-        $this->data_nascimento = $data_nascimento;
     }
 
     public function getTelefone()
@@ -93,12 +83,11 @@ class Instrutor extends CRUD
     public function add()
     {
         $sql = "INSERT INTO $this->table 
-                (nome_instrutor, data_nascimento, telefone, email, fk_id_academia, fk_id_usuario) 
-                VALUES (:nome_instrutor, :data_nascimento, :telefone, :email, :fk_id_academia, :fk_id_usuario)";
+                (nome_instrutor, telefone, email, fk_id_academia, fk_id_usuario) 
+                VALUES (:nome_instrutor, :telefone, :email, :fk_id_academia, :fk_id_usuario)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':nome_instrutor', $this->nome_instrutor);
-        $stmt->bindParam(':data_nascimento', $this->data_nascimento);
         $stmt->bindParam(':telefone', $this->telefone);
         $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':fk_id_academia', $this->fk_id_academia);
@@ -109,8 +98,7 @@ class Instrutor extends CRUD
     public function update(string $campo, int $id)
     {
         $sql = "UPDATE $this->table 
-                SET nome_instrutor = :nome_instrutor, 
-                    data_nascimento = :data_nascimento,
+                SET nome_instrutor = :nome_instrutor,
                     telefone = :telefone, 
                     email = :email, 
                     status_validacao = :status_validacao,
@@ -120,7 +108,6 @@ class Instrutor extends CRUD
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':nome_instrutor', $this->nome_instrutor);
-        $stmt->bindParam(':data_nascimento', $this->data_nascimento);
         $stmt->bindParam(':telefone', $this->telefone);
         $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':status_validacao', $this->status_validacao);
@@ -208,7 +195,7 @@ class Instrutor extends CRUD
             $mail->SMTPSecure = $config['SMTPSecure'];
             $mail->Port = $config['Port'];
 
-            $mail->setFrom($config['Username'], 'Aliança Marcial');
+            $mail->setFrom($config['Username'], 'Cooperativa Aliança Marcial');
             $mail->addAddress($emailAcademia, $nomeAcademia);
 
             $mail->isHTML(true);
@@ -268,7 +255,7 @@ class Instrutor extends CRUD
             $mail->SMTPSecure = $config['SMTPSecure'];
             $mail->Port = $config['Port'];
 
-            $mail->setFrom($config['Username'], 'Aliança Marcial');
+            $mail->setFrom($config['Username'], 'Cooperativa Aliança Marcial');
             $mail->addAddress($email);
 
             $mail->isHTML(true);
@@ -296,5 +283,14 @@ class Instrutor extends CRUD
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function instrutoresValidosAcademia(string $campo, int $id)
+    {
+        $sql = "SELECT * FROM instrutor WHERE status_validacao = 'valido' AND $campo = :id ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->rowCount() > 0 ? $stmt->fetch(PDO::FETCH_OBJ) : null;
     }
 }

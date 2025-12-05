@@ -156,6 +156,15 @@ class Usuario extends CRUD
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function statusConta(int $id, string $status)
+    {
+        $sql = "UPDATE $this->table SET status_conta = :status WHERE id_usuario = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":status", $status, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        return $stmt->execute();;
+    }
+
     #Efetuar Login
     public function login()
     {
@@ -229,61 +238,6 @@ class Usuario extends CRUD
 
     }
 
-    public function atualizarEmail($nomeUsuario, $email, $senhaAtual)
-    {
-
-        try {
-            // Verifica se a senha atual está correta
-            $sql = "SELECT senha FROM $this->table WHERE nome_usuario = :nome_usuario";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':nome_usuario', $nomeUsuario);
-            $stmt->execute();
-            $usuario = $stmt->fetch(PDO::FETCH_OBJ);
-            if (password_verify($senhaAtual, $usuario->senha)) {
-                // Atualiza o e-mail
-                $sql = "UPDATE $this->table SET email = :email WHERE nome_usuario = :nome_usuario";
-                $stmt = $this->db->prepare($sql);
-                $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-                $stmt->bindParam(':nome_usuario', $nomeUsuario);
-
-                return $stmt->execute();
-            } else {
-
-                return false; // Senha inválida
-            }
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
-    public function alterarSenha($nomeUsuario, $senhaAtual, $novaSenha)
-    {
-        try {
-            // Verifica se a senha atual está correta
-            $query = "SELECT senha FROM $this->table WHERE nome_usuario = :nome_usuario";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':nome_usuario', $nomeUsuario, PDO::PARAM_STR);
-            $stmt->execute();
-
-            $usuario = $stmt->fetch(PDO::FETCH_OBJ);
-
-            if ($usuario && password_verify($senhaAtual, $usuario->senhaUsuario)) {
-                // Atualiza com a nova senha (hash)
-                $novaSenhaHash = password_hash($novaSenha, PASSWORD_DEFAULT);
-                $query = "UPDATE $this->table SET senha = :novaSenha WHERE nome_usuario = :nome_usuario";
-                $stmt = $this->db->prepare($query);
-                $stmt->bindParam(':novaSenha', $novaSenhaHash, PDO::PARAM_STR);
-                $stmt->bindParam(':nome_usuario', $nomeUsuario, PDO::PARAM_STR);
-
-                return $stmt->execute();
-            } else {
-                return false; // Senha atual incorreta
-            }
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
     public function solicitarRecuperacaoSenha($email, $mensagem, $assunto)
     {
         require __DIR__ . '/../PHPMailer/src/Exception.php';
@@ -333,17 +287,17 @@ class Usuario extends CRUD
                     $mail->Username = $config['Username'];
                     $mail->Password = $config['Password'];
                     $mail->SMTPSecure = $config['SMTPSecure'];
-                    $mail->Port = $config['Port'];                            // ou 465 para 'ssl'
+                    $mail->Port = $config['Port'];                           
 
                     // Remetente e destinatário
-                    $mail->setFrom($config['Username'], 'Aliança Marcial');
+                    $mail->setFrom($config['Username'], 'Cooperativa Aliança Marcial');
                     $mail->addAddress($email);
 
                     // Conteúdo
                     $mail->isHTML(true);
-                    $mail->Subject = 'Recuperação de Senha';
+                    $mail->Subject = $assunto;
                     $mail->Body = "
-                    <p>Olá$mensagem</p>
+                    <p>Olá $mensagem</p>
                     <p>Clique no link abaixo para criar uma nova senha:</p>
                     <p><a href='$link'>$link</a></p>
                     <p>Este link expira em 1 hora.</p>
@@ -403,6 +357,66 @@ class Usuario extends CRUD
                 return false; // Token inválido
             }
         } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function contaInvalida($email, $mensagem, $assunto)
+    {
+        require __DIR__ . '/../PHPMailer/src/Exception.php';
+        require __DIR__ . '/../PHPMailer/src/PHPMailer.php';
+        require __DIR__ . '/../PHPMailer/src/SMTP.php';
+        try {
+            // Verifica se o e-mail está cadastrado
+            $sql = "SELECT id_usuario FROM $this->table WHERE email = :email";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                $usuario = $stmt->fetch(PDO::FETCH_OBJ);
+
+                // Configura PHPMailer
+                $mail = new PHPMailer(true);
+                $mail->CharSet = 'UTF-8';
+                $mail->Encoding = 'base64';
+
+                try {
+                    $config = parse_ini_file(__DIR__ . '/../config.ini', true)['email'];
+                    // Configurações do servidor
+                    $mail->isSMTP();
+                    $mail->Host = $config['Host'];
+                    $mail->SMTPAuth = $config['SMTPAuth'];
+                    $mail->Username = $config['Username'];
+                    $mail->Password = $config['Password'];
+                    $mail->SMTPSecure = $config['SMTPSecure'];
+                    $mail->Port = $config['Port'];                            
+
+                    // Remetente e destinatário
+                    $mail->setFrom($config['Username'], 'Cooperativa Aliança Marcial');
+                    $mail->addAddress($email);
+
+                    // Conteúdo
+                    $mail->isHTML(true);
+                    $mail->Subject = $assunto;
+                    $mail->Body = "
+                    <p>Olá $mensagem</p>
+                    <p>Se você não solicitou isso, ignore este e-mail.</p>";
+
+                    $mail->send();
+                    return true;
+
+                } catch (Exception $e) {
+                    error_log("Erro ao enviar e-mail: {$mail->ErrorInfo}");
+                    return false;
+                }
+
+            } else {
+                return false; // E-mail não encontrado
+            }
+
+        } catch (PDOException $e) {
+            error_log('Erro em contaInvalida: ' . $e->getMessage());
             return false;
         }
     }

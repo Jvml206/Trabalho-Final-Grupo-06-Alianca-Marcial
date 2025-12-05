@@ -12,14 +12,8 @@ if (filter_has_var(INPUT_POST, "btnCadastrar")):
     $Academia->setNomeFantasia(filter_input(INPUT_POST, "nome_fantasia", FILTER_SANITIZE_STRING));
     $Academia->setRazaoSocial(filter_input(INPUT_POST, "razao_social", FILTER_SANITIZE_STRING));
     $Academia->setCnpj(filter_input(INPUT_POST, "cnpj", FILTER_SANITIZE_STRING));
-    $Academia->setTelefone(filter_input(INPUT_POST, "telefone", FILTER_SANITIZE_STRING));
     $Academia->setEmail(filter_input(INPUT_POST, "email", FILTER_SANITIZE_STRING));
-    $Academia->setEndereco(filter_input(INPUT_POST, "endereco", FILTER_SANITIZE_STRING));
-    $Academia->setBairro(filter_input(INPUT_POST, "bairro", FILTER_SANITIZE_STRING));
-    $Academia->setCidade(filter_input(INPUT_POST, "cidade", FILTER_SANITIZE_STRING));
-    $Academia->setCep(filter_input(INPUT_POST, "cep", FILTER_SANITIZE_STRING));
-    $Academia->setEstado(filter_input(INPUT_POST, "estado", FILTER_SANITIZE_STRING));
-    $Academia->setInstagram(filter_input(INPUT_POST, "instagram", FILTER_SANITIZE_STRING));
+    $Academia->setLink(filter_input(INPUT_POST, "link", FILTER_SANITIZE_STRING));
     $id = filter_input(INPUT_POST, 'id_academia');
 
     $logoAntiga = filter_input(INPUT_POST, 'logoAntiga');
@@ -133,17 +127,10 @@ endif;
                     </div>
 
                     <div>
-                        <label for="telefone" class="form-label tituloDado">Telefone</label>
-                        <input type="text" name="telefone" id="telefone"
-                            placeholder="Digite o Telefone da Academia" required class="form-control"
-                            value="<?php echo $Academia->telefone ?? null; ?>">
-                    </div>
-
-                    <div>
-                        <label for="instagram" class="form-label tituloDado">Instagram</label>
-                        <input type="text" name="instagram" id="instagram"
-                            placeholder="Digite o Instagram da Academia" required class="form-control"
-                            value="<?php echo $Academia->instagram ?? null; ?>">
+                        <label for="link" class="form-label tituloDado">Link</label>
+                        <input type="text" name="link" id="link"
+                            placeholder="Digite um link da Academia" required class="form-control"
+                            value="<?php echo $Academia->link ?? null; ?>">
                     </div>
                 </div>
 
@@ -153,93 +140,6 @@ endif;
                     <img src="<?= !empty($Academia->logo) ? 'Images/academia/' . $Academia->logo : 'Images\academia\SemFoto.png' ?>"
                         alt="Logo da Academia" class="mt-5 foto-academia-cadastro" id="fotoColocada">
                 </div>
-            </div>
-
-
-            <div class="col-md-7">
-                <label for="endereco" class="form-label tituloDado">Endereço</label>
-                <input type="text" name="endereco" id="endereco"
-                    placeholder="Digite o Endereço da Academia. Ex.: Rua São Paulo n°1532" required class="form-control"
-                    value="<?php echo $Academia->endereco ?? null; ?>">
-            </div>
-
-            <div class="col-md-5">
-                <label for="bairro" class="form-label tituloDado">Bairro</label>
-                <input type="text" name="bairro" id="bairro" placeholder="Digite o Bairro da Academia" required
-                    class="form-control" value="<?php echo $Academia->bairro ?? null; ?>">
-            </div>
-
-            <div class="col-md-7">
-                <label for="cidade" class="form-label tituloDado">Cidade</label>
-                <input type="text" name="cidade" id="cidade" placeholder="Digite a Cidade da Academia" required
-                    class="form-control" value="<?php echo $Academia->cidade ?? null; ?>">
-            </div>
-
-            <div class="col-md-3">
-                <label for="cep" class="form-label tituloDado">CEP</label>
-                <input type="text" name="cep" id="cep" placeholder="Digite o CEP da Academia" required
-                    class="form-control" value="<?php echo $Academia->cep ?? null; ?>">
-            </div>
-
-            <div class="col-md-2">
-                <label for="estado" class="form-label tituloDado">Estado</label>
-                <select id="estado" name="estado" class="form-select" aria-label="Default select example">
-                    <option disabled <?= (!isset($Academia->estado)) ? 'selected' : '' ?>>UF</option>
-                    <option value="AC" <?= (isset($Academia->estado) && $Academia->estado == 'AC') ? 'selected' : '' ?>>AC
-                    </option>
-                    <option value="AL" <?= (isset($Academia->estado) && $Academia->estado == 'AL') ? 'selected' : '' ?>>AL
-                    </option>
-                    <option value="AP" <?= (isset($Academia->estado) && $Academia->estado == 'AP') ? 'selected' : '' ?>>AP
-                    </option>
-                    <option value="AM" <?= (isset($Academia->estado) && $Academia->estado == 'AM') ? 'selected' : '' ?>>AM
-                    </option>
-                    <option value="BA" <?= (isset($Academia->estado) && $Academia->estado == 'BA') ? 'selected' : '' ?>>BA
-                    </option>
-                    <option value="CE" <?= (isset($Academia->estado) && $Academia->estado == 'CE') ? 'selected' : '' ?>>CE
-                    </option>
-                    <option value="DF" <?= (isset($Academia->estado) && $Academia->estado == 'DF') ? 'selected' : '' ?>>DF
-                    </option>
-                    <option value="ES" <?= (isset($Academia->estado) && $Academia->estado == 'ES') ? 'selected' : '' ?>>ES
-                    </option>
-                    <option value="GO" <?= (isset($Academia->estado) && $Academia->estado == 'GO') ? 'selected' : '' ?>>GO
-                    </option>
-                    <option value="MA" <?= (isset($Academia->estado) && $Academia->estado == 'MA') ? 'selected' : '' ?>>MA
-                    </option>
-                    <option value="MS" <?= (isset($Academia->estado) && $Academia->estado == 'MS') ? 'selected' : '' ?>>MS
-                    </option>
-                    <option value="MT" <?= (isset($Academia->estado) && $Academia->estado == 'MT') ? 'selected' : '' ?>>MT
-                    </option>
-                    <option value="MG" <?= (isset($Academia->estado) && $Academia->estado == 'MG') ? 'selected' : '' ?>>MG
-                    </option>
-                    <option value="PA" <?= (isset($Academia->estado) && $Academia->estado == 'PA') ? 'selected' : '' ?>>PA
-                    </option>
-                    <option value="PB" <?= (isset($Academia->estado) && $Academia->estado == 'PB') ? 'selected' : '' ?>>PB
-                    </option>
-                    <option value="PR" <?= (isset($Academia->estado) && $Academia->estado == 'PR') ? 'selected' : '' ?>>PR
-                    </option>
-                    <option value="PE" <?= (isset($Academia->estado) && $Academia->estado == 'PE') ? 'selected' : '' ?>>PE
-                    </option>
-                    <option value="PI" <?= (isset($Academia->estado) && $Academia->estado == 'PI') ? 'selected' : '' ?>>PI
-                    </option>
-                    <option value="RJ" <?= (isset($Academia->estado) && $Academia->estado == 'RJ') ? 'selected' : '' ?>>RJ
-                    </option>
-                    <option value="RN" <?= (isset($Academia->estado) && $Academia->estado == 'RN') ? 'selected' : '' ?>>RN
-                    </option>
-                    <option value="RS" <?= (isset($Academia->estado) && $Academia->estado == 'RS') ? 'selected' : '' ?>>RS
-                    </option>
-                    <option value="RO" <?= (isset($Academia->estado) && $Academia->estado == 'RO') ? 'selected' : '' ?>>RO
-                    </option>
-                    <option value="RR" <?= (isset($Academia->estado) && $Academia->estado == 'RR') ? 'selected' : '' ?>>RR
-                    </option>
-                    <option value="SC" <?= (isset($Academia->estado) && $Academia->estado == 'SC') ? 'selected' : '' ?>>SC
-                    </option>
-                    <option value="SP" <?= (isset($Academia->estado) && $Academia->estado == 'SP') ? 'selected' : '' ?>>SP
-                    </option>
-                    <option value="SE" <?= (isset($Academia->estado) && $Academia->estado == 'SE') ? 'selected' : '' ?>>SE
-                    </option>
-                    <option value="TO" <?= (isset($Academia->estado) && $Academia->estado == 'TO') ? 'selected' : '' ?>>TO
-                    </option>
-                </select>
             </div>
 
             <div class="col-md-12">
@@ -357,8 +257,6 @@ endif;
         });
     </script>
     <script>
-        $('#telefone').mask('(00) 00000-0000');
-        $('#cep').mask('00000-000');
         $('#cnpj').mask('00.000.000/0000-00');
     </script>
     <!-- Foto -->

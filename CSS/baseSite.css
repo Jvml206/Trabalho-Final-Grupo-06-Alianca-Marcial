@@ -11,6 +11,7 @@ main.cadastro {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
   margin-top: 40px;
   margin-bottom: 40px;
+  position: relative;
 }
 
 .foto-instituicao {
@@ -233,6 +234,32 @@ main.cadastro {
   margin: 20px auto 0;
 }
 
+/* Status conta */
+
+.status-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    z-index: 10;
+}
+
+.status-validada {
+    background-color: #28a745;
+}
+
+.status-invalidada {
+    background-color: #dc3545;
+}
+
+.status-pendente {
+    background-color: #ffc107;
+}
+
 @media (max-width: 600px) {
   .politica-card {
     padding: 20px;
@@ -253,10 +280,6 @@ main.cadastro {
   main {
     width: 92%;
     margin: 40px auto;
-  }
-
-  .tituloh1 {
-    font-size: 2rem;
   }
 
   .porqueTitulo,

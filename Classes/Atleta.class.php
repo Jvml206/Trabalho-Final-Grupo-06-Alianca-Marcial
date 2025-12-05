@@ -259,7 +259,7 @@ class Atleta extends CRUD
             $mail->SMTPSecure = $config['SMTPSecure'];
             $mail->Port = $config['Port'];
 
-            $mail->setFrom($config['Username'], 'Aliança Marcial');
+            $mail->setFrom($config['Username'], 'Cooperativa Aliança Marcial');
             $mail->addAddress($emailInstrutor, $nomeInstrutor);
 
             $mail->isHTML(true);
@@ -320,7 +320,7 @@ class Atleta extends CRUD
             $mail->SMTPSecure = $config['SMTPSecure'];
             $mail->Port = $config['Port'];
 
-            $mail->setFrom($config['Username'], 'Aliança Marcial');
+            $mail->setFrom($config['Username'], 'Cooperativa Aliança Marcial');
             $mail->addAddress($email);
 
             // Corpo do email

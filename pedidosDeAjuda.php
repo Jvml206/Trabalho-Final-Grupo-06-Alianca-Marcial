@@ -31,8 +31,7 @@
                 $atleta = $Atleta->search('id_atleta', $idA);
                 $academia = $Academia->search('id_academia', $atleta->fk_id_academia);
                 ?>
-                <div
-                    class="cardPedido d-flex align-items-center flex-column <?php echo ($pa->meta === 'atingida') ? 'atingida' : ''; ?>">
+                <div class="cardPedido d-flex align-items-center flex-column <?php echo ($pa->meta === 'atingida') ? 'atingida' : ''; ?>">
                     <div class="card-img-container-pedido">
                         <img src="Images/pedidoDeAjuda/<?php echo htmlspecialchars($pa->imagem); ?>" alt="imagem pedido">
                     </div>
@@ -40,8 +39,8 @@
                     <p class="nomeAtleta text-center"><?php echo htmlspecialchars($atleta->nome_atleta); ?></p>
                     <p class="motivoAtleta text-center"><?php echo htmlspecialchars($pa->titulo); ?></p>
                     <p class="academiaAtleta text-center">Academia: <?php echo htmlspecialchars($academia->nome_fantasia); ?></p>
-                    <button type="button" class="btn btn-success btn-ajudar" data-bs-toggle="modal"
-                        data-bs-target="#pedidoModal<?php echo $id; ?>">
+                    <button type="button" class="btn btn-ajudar" data-bs-toggle="modal"
+                        data-bs-target="#pedidoModal<?php echo $id; ?>" onclick="this.blur()">
                         Ajudar
                     </button>
 
