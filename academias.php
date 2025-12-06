@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/index.css?v=<?php echo time(); ?>">
     <link rel="icon" href="Images/logo.png">
-    <title>Apoiadores</title>
+    <title>Academias</title>
 </head>
 
 <body>
@@ -20,7 +20,7 @@
     $Instrutor = new Instrutor();
     ?>
     <main class="container">
-        <h1 class="tituloh1">Instituições que nos apoiam</h1>
+        <h1 class="tituloh1">Academias</h1>
         <div class="box">
             <?php
             $academia = $Academia->all();
