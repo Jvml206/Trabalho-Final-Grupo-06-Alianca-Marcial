@@ -43,8 +43,16 @@ Integrantes:
     NuncaTirarParaNãoApagarAPasta.jpg
     SemFoto.png
   /campeonato
-    NuncaTirarParaNãoApagarAPasta.jpg
-    SemFoto.png
+    Aikidô.jpg
+    Boxe.jpg
+    Capoeira.jpg
+    Jiu-Jitsu Brasileiro.jpg
+    Judô.jpg
+    Karatê.jpg
+    Kung Fu.jpg
+    MMA.jpg
+    Muay Thai.jpg
+    Taekwondo.jpg
   /instituicao_apoiadora
     NuncaTirarParaNãoApagarAPasta.jpg
     SemFoto.png
