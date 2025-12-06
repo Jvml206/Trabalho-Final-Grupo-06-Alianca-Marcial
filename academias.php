@@ -56,7 +56,7 @@
                             <div class="modal-body">
                                 <p class="nomeAcademia">Razão social: <?php echo $a->razao_social ?></p>
                                 <p class="cnpjAcademia">CNPJ: <?php echo $a->cnpj ?></p>
-                                <p class="linkAcadAtleta">Link: <a href="https://<?php echo $a->link ?>" target="_blank"><?php echo $a->link ?></a>
+                                <p class="linkAcadAtleta">Link: <a href="<?php echo $a->link ?>" target="_blank"><?php echo $a->link ?></a>
                                 </p>
                                 <h4 class="nomeAcademia">Instrutores:</h4>
                                 <?php $instrutor = $Instrutor->instrutoresValidosAcademia('fk_id_academia', $id); ?>
