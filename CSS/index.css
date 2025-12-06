@@ -319,6 +319,7 @@
     z-index: 50;
     padding: 12px;
     pointer-events: auto;
+    min-width: 300px;
 }
 
 .cardPedido.atingida .nomeAtleta,
@@ -333,7 +334,7 @@
     bottom: 12px;
     left: 50%;
     transform: translateX(-50%);
-    min-width: 300px;
+    min-width: 120px;
     z-index: 60;
 }
 
