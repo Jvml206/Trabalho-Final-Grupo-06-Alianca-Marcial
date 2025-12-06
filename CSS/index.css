@@ -333,7 +333,7 @@
     bottom: 12px;
     left: 50%;
     transform: translateX(-50%);
-    min-width: 120px;
+    min-width: 300px;
     z-index: 60;
 }
 
