@@ -128,7 +128,7 @@ endif;
 
                     <div>
                         <label for="link" class="form-label tituloDado">Link</label>
-                        <input type="text" name="link" id="link"
+                        <input type="url" name="link" id="link"
                             placeholder="Digite um link da Academia" required class="form-control"
                             value="<?php echo $Academia->link ?? null; ?>">
                     </div>
