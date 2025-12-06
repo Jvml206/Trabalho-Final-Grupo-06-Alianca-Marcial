@@ -1,5 +1,5 @@
 <?php
-if (filter_has_var(INPUT_POST, "btnEditar")) {
+if (filter_has_var(INPUT_POST, "btnEditar") || filter_has_var(INPUT_GET, "acao")) {
     $nivelPermitido = ['Administrador', 'Atleta'];
 }
 else{
