@@ -152,20 +152,23 @@
                 <a href="campeonatos.php" class="btn btn-verMais">Ver campeonatos</a>
             </div>
         </section>
+        
+        <div class="box">
         <h1 class="tituloh1">Instituições que nos apoiam</h1>
-
-        <?php
-        $instituicaoApoiadora = $InstituicaoApoiadora->all();
-        foreach ($instituicaoApoiadora as $ia):
-            $id = intval($ia->id_instituicao_apoiadora);
-            ?>
-            <div class="cardinstituicao d-flex align-items-center flex-column">
-                <a href="<?php echo $ia->link; ?>" target="_blank"> <img src="Images/instituicao_apoiadora/<?php echo $ia->logo; ?>" title="<?php echo $ia->nome_fantasia; ?>" 
-                alt="<?php echo $ia->nome_fantasia; ?>" class="foto-instituicao"></a>
-            </div>
-        <?php endforeach; ?>
+            <?php
+            $instituicaoApoiadora = $InstituicaoApoiadora->all();
+            foreach ($instituicaoApoiadora as $ia):
+                $id = intval($ia->id_instituicao_apoiadora);
+                ?>
+                <div class="cardinstituicao d-flex align-items-center flex-column">
+                    <a href="<?php echo $ia->link; ?>" target="_blank"> <img
+                            src="Images/instituicao_apoiadora/<?php echo $ia->logo; ?>"
+                            title="<?php echo $ia->nome_fantasia; ?>" alt="<?php echo $ia->nome_fantasia; ?>"
+                            class="foto-instituicao"></a>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </main>
-
     <footer>
         <?php require_once "_parts/_footer.php"; ?>
     </footer>
