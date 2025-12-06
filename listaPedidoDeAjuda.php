@@ -77,7 +77,7 @@ if ($tipoUsuario === 'Atleta') {
             </div>
         <?php endif; ?>
 
-        <table class="table tabela text-center overflow-hidden table-hover align-middle">
+        <table class="table tabela text-center overflow-hidden table-hover align-middle dataTable">
             <thead>
                 <tr>
                     <th>#</th>
@@ -164,6 +164,16 @@ if ($tipoUsuario === 'Atleta') {
         <?php require_once "_parts/_footer.php"; ?>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- link jquery -->
+    <script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.min.js" type="text/javascript"></script>
+    <!-- link datatable JS -->
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
+    <!-- link datatable JS com bootstrap5 -->
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.min.js"></script>
+    <!-- paginacao.js -->
+    <script src="JS/paginacao.js"></script>
+
     <!-- Botão do VLibras -->
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
@@ -171,7 +181,6 @@ if ($tipoUsuario === 'Atleta') {
             <div class="vw-plugin-top-wrapper"></div>
         </div>
     </div>
-
     <!-- Script do VLibras -->
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>

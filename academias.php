@@ -21,56 +21,63 @@
     ?>
     <main class="container">
         <h1 class="tituloh1">Academias</h1>
+        <div class="input-group mb-3 w-50 mx-auto">
+            <span class="input-group-text" id="label-input">🔎</span>
+            <input type="text" class="form-control" aria-label="Pesquisar"
+                placeholder="Pesquisa por atleta, titúlo de ajuda ou qualquer campo" aria-describedby="label-input"
+                title="Digite sua pesquisa" id="pesquisaInput">
+        </div>
         <div class="box">
             <?php
             $academia = $Academia->all();
-            foreach ($academia as $a):
-                $id = intval($a->id_academia);
-                ?>
-                <div class="cardAcademia d-flex align-items-center flex-column">
-                    <div class="card-img-container-academia">
-                        <img src="Images/academia/<?php echo $a->logo; ?>" title="<?php echo $a->nome_fantasia; ?>"
-                            alt="<?php echo $a->nome_fantasia; ?>" class="foto-instituicao">
+            foreach ($academia as $a): ?>
+                <div class="card-pesq">
+                    <?php $id = intval($a->id_academia); ?>
+                    <div class="cardAcademia d-flex align-items-center flex-column">
+                        <div class="card-img-container-academia">
+                            <img src="Images/academia/<?php echo $a->logo; ?>" title="<?php echo $a->nome_fantasia; ?>"
+                                alt="<?php echo $a->nome_fantasia; ?>" class="foto-instituicao">
+                        </div>
+                        <p class="nomeAcademia"><?php echo $a->nome_fantasia; ?></p>
+                        <div class="text-center mt-3">
+                            <button type="button" class="btn btn-ajudar" data-bs-toggle="modal"
+                                data-bs-target="#pedidoModal<?php echo $id; ?>" onclick="this.blur()">
+                                Ver Mais
+                            </button>
+                        </div>
                     </div>
 
-                    <p class="nomeAcademia"><?php echo $a->nome_fantasia; ?></p>
+                    <div class="modal fade" id="pedidoModal<?php echo $id; ?>" tabindex="-1"
+                        aria-labelledby="pedidoModalLabel<?php echo $id; ?>" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="pedidoModalLabel<?php echo $id; ?>">
+                                        <?php echo $a->nome_fantasia ?>
+                                    </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="nomeAcademia">Razão social: <?php echo $a->razao_social ?></p>
+                                    <p class="cnpjAcademia">CNPJ: <?php echo $a->cnpj ?></p>
+                                    <p class="linkAcadAtleta">Link: <a href="<?php echo $a->link ?>"
+                                            target="_blank"><?php echo $a->link ?></a>
+                                    </p>
+                                    <h4 class="nomeAcademia">Instrutores:</h4>
+                                    <?php $instrutor = $Instrutor->instrutoresValidosAcademia('fk_id_academia', $id); ?>
+                                    <?php if ($instrutor == null) { ?>
+                                        <p>Sem instrutor cadastrado</p>
+                                    <?php } else { ?>
+                                        <ul>
+                                            <li><?= $instrutor->nome_instrutor ?? null ?></li>
+                                        </ul>
+                                    <?php } ?>
 
-                    <div class="text-center mt-3">
-                        <button type="button" class="btn btn-ajudar" data-bs-toggle="modal"
-                            data-bs-target="#pedidoModal<?php echo $id; ?>" onclick="this.blur()">
-                            Ver Mais
-                        </button>
-                    </div>
-                </div>
-
-                <div class="modal fade" id="pedidoModal<?php echo $id; ?>" tabindex="-1"
-                    aria-labelledby="pedidoModalLabel<?php echo $id; ?>" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="pedidoModalLabel<?php echo $id; ?>">
-                                    <?php echo $a->nome_fantasia ?>
-                                </h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="nomeAcademia">Razão social: <?php echo $a->razao_social ?></p>
-                                <p class="cnpjAcademia">CNPJ: <?php echo $a->cnpj ?></p>
-                                <p class="linkAcadAtleta">Link: <a href="<?php echo $a->link ?>" target="_blank"><?php echo $a->link ?></a>
-                                </p>
-                                <h4 class="nomeAcademia">Instrutores:</h4>
-                                <?php $instrutor = $Instrutor->instrutoresValidosAcademia('fk_id_academia', $id); ?>
-                                <?php if ($instrutor == null) { ?>
-                                    <p>Sem instrutor cadastrado</p>
-                                <?php }else{ ?>
-                                <ul>
-                                    <li><?= $instrutor->nome_instrutor ?? null ?></li>
-                                </ul>
-                                <?php } ?>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-modal" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-modal" data-bs-dismiss="modal">Fechar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -83,6 +90,7 @@
         <?php require_once "_parts/_footer.php"; ?>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JS/pesquisaCards.js"></script>
     <!-- Botão do VLibras -->
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
