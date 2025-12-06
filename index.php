@@ -152,9 +152,9 @@
                 <a href="campeonatos.php" class="btn btn-verMais">Ver campeonatos</a>
             </div>
         </section>
-        
-        <div class="box">
+
         <h1 class="tituloh1">Instituições que nos apoiam</h1>
+        <div class="box">
             <?php
             $instituicaoApoiadora = $InstituicaoApoiadora->all();
             foreach ($instituicaoApoiadora as $ia):
