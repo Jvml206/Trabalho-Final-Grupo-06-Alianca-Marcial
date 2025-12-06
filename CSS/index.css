@@ -300,7 +300,6 @@
     padding-bottom: 20px;
     transition: 0.3s;
     position: relative;
-    min-height: 100%;
 }
 
 .cardPedido.atingida .card-img-container-pedido img {
