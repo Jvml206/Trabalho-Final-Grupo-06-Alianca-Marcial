@@ -319,7 +319,6 @@
     z-index: 50;
     padding: 12px;
     pointer-events: auto;
-    min-width: 300px;
 }
 
 .cardPedido.atingida .nomeAtleta,
@@ -327,6 +326,10 @@
 .cardPedido.atingida .academiaAtleta,
 .cardPedido.atingida .btn-ajudar {
     display: none !important;
+}
+
+.cardPedido.atingida {
+    min-height: 100%;
 }
 
 .overlay-atingida .btn-ver-card {

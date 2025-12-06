@@ -49,7 +49,8 @@
 
                         <p class="nomeAtleta text-center"><?php echo htmlspecialchars($atleta->nome_atleta); ?></p>
                         <p class="motivoAtleta text-center"><?php echo htmlspecialchars($pa->titulo); ?></p>
-                        <p class="academiaAtleta text-center">Academia: <?php echo htmlspecialchars($academia->nome_fantasia); ?></p>
+                        <p class="academiaAtleta text-center">Academia:
+                            <?php echo htmlspecialchars($academia->nome_fantasia); ?></p>
                         <button type="button" class="btn btn-ajudar" data-bs-toggle="modal"
                             data-bs-target="#pedidoModal<?php echo $id; ?>" onclick="this.blur()">
                             Ajudar
